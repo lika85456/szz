@@ -1,2 +1,120 @@
 \subsection{SP-19 (PA1)}
 Datové typy v programovacích jazycích. Staticky a dynamicky alokované proměnné, spojové seznamy. Modulární programování, procedury a funkce, vstupní a výstupní parametry. Překladač, linker, debugger.
+
+\subsubsection*{Datové typy}
+V programovacích jazycích používáme proměnné, tedy něco, co uchovává datovou hodnotu s nějakou vnitřní strukturou. Proměnné jsou identifikovány svými jmény --- identifikátory.
+Datový typ proměnné definuje vnitřní strukturu/reprezentaci dat a jejich význam. Tím určuje jakých hodnot může proměnná nabývat a také jaké operace lze s proměnnou (její hodnotou) vykonávat.
+
+\textbf{Jednoduché datové typy:}
+\begin{itemize}
+
+	\item celočíselné
+	
+	\begin{itemize}
+		\item existují různé délky --- short, int, long (byte, long long, ...)
+		\item signed (znaménkové) --- umí uložit i záporné hodnoty, používá se doplňkový kód
+		\item unsigned (neznaménkové) --- ukládá jen kladné hodnoty, přímý kód
+	\end{itemize}
+	
+	\item s pohyblivou řádovou čárkou
+	
+	\begin{itemize}
+		\item existují různé délky --- float, double, long double
+		\item znaménko (1 bit) + mantisa (velikost=přesnost) + exponent (velikost=rozsah)
+	\end{itemize}
+	
+	\item znakové
+	
+		Znaky jsou kódovány jako čísla, používá se ASCII / extended ASCII / UNICODE.
+		
+	\item logická hodnota
+	
+		Není v C, ale často se v jazycích vyskytuje (boolean --- true/false).
+		
+\end{itemize}
+
+\textbf{Další datové typy:}
+\begin{itemize}
+	\item ukazatel (pointer)
+	
+		Adresy paměti, kde je uložen datový typ pointeru (pointer vždy ukazuje na konkrétní typ/funkci, případně void).
+		
+	\item výčtový typ (enum)
+	
+	\item struktura
+	
+		Je složena z dalších datových typů, klidně dalších struktur.
+		
+	\item union
+	
+		Ukládá více různých datových typů na stejné místo.
+		
+	\item třída (ve vyšších jazycích)
+	
+\end{itemize}
+
+\subsubsection*{Statická a dynamická alokace}
+Staticky alokované proměnné:
+\begin{itemize}
+	\item vzniknou běžnou deklarací
+	\item ukládají se na zásobník (lokální proměnné) či do části .BSS (neinicializované globální proměnné) a .DATA (inicializované globální proměnné)
+	\item v případě pole je nutno znát v době kompilace velikost (statická velikost)
+\end{itemize}
+
+Dynamicky alokované proměnné
+\begin{itemize}
+	\item vzniknou použitím speciální funkcí/operátorem
+	\item ukládají se na haldě (heap)
+	\item přistupujeme přes pointer
+	\item je možné alokovat paměť podle hodnot spočítaných za běhu programu
+\end{itemize}
+
+\subsubsection*{Spojové seznamy}
+\begin{itemize}
+	\item oproti poli nejsou položky seřazeny v paměti, ale každý prvek seznamu obsahuje ukazatel na další prvek.
+	\item podobně jako v dynamicky alokovaném poli lze ukládat předem neznámý objem dat
+	\item nelze jednoduše indexovat, ale lze libovolně přidávat či ubírat prvky z jakékoliv pozice v seznamu
+\end{itemize}
+
+\subsubsection*{Modulární programování}
+\begin{itemize}
+	\item složitější programy mohou být rozděleny do modulů
+	\item tyto moduly lze použít v různých dalších částech programu
+	\item modul má svou specifikační část (deklarace poskytovaných prostředků/rozhraní) a implementační část (definice/implementace poskytovaných prostředků)
+	\item v C/C++ typicky hlavičkový soubor (.h/.hpp) a implementační soubor (.c/.cpp)
+\end{itemize}
+
+\subsubsection*{Procedury, funkce a parametry}
+\begin{itemize}
+	\item procedura/funkce je posloupnost příkazů uložených v paměti programu
+	\begin{itemize}
+		\item procedura --- bez návratové hodnoty (typ void)
+		\item funkce --- s návratovou hodnotou
+	\end{itemize}
+	\item použijeme ji zavoláním přes její jméno 
+	\item deklarace je specifikace jejího rozhraní --- parametrů a typu návratové hodnoty
+	\item definice je samotný kód funkce
+	\item vstupní paramtery jsou informace, které využije kód funkce
+	\item výstupní parametry jsou výsledkem běhu funkce --- typicky se nějak změní a tím nám dají výsledek
+\end{itemize}
+
+\subsubsection*{Překladač}
+\begin{itemize}
+	\item překládá vyšší programovací jazyky do nižších
+	\item ze zdrojového kódu vzniká objektový soubor --- modul se strojovým kódem
+	\item front-end přeloží konkrétní jazyk do vnitřní reprezentace (abstrakce nezávislá ani na platformě ani na jazyku)
+	\item back-end přeloží vnitřní reprezentaci do strojového kódu konkrétní platformy
+\end{itemize}
+
+\subsubsection*{Linker}
+\begin{itemize}
+	\item spojuje přeložené moduly do výsledného celku --- programu
+	\item výstupem je spustitelný soubor
+\end{itemize}
+
+\subsubsection*{Debugger}
+\begin{itemize}
+	\item usnadňuje hledání chyb v kódu, také usnadňuje pochopení programu
+	\item je vhodné kompilovat s informacemi pro ladění
+	\item je možné si na nějakém místě běh programu zastavit a např. sledovat obsah proměnných, pouštět každý krok programu postupně...
+\end{itemize}

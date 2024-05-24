@@ -1,1 +1,66 @@
 \subsection{SP-30 (SAP)}
+Kódy pro zobrazení čísel se znaménkem a realizace aritmetických operací (paralelní sčítačka/odčítačka, realizace aritmetických posuvů, dekodér, multiplexor, čítač). Reprezentace čísel v pohyblivé řádové čárce.
+
+\subsubsection*{Čísla se znaménkem}
+Existuje několik možností, jak v počítači ukládat celá čísla:
+\begin{itemize}
+	\item Přímý kód
+	\begin{itemize}
+		\item první bit je znaménkový --- určuje tedy, zda je hodnota za ním kladná či záporná
+		\item ostatní bity představují absolutní hodnotu čísla
+		\item existuj zde kladná i záporná nula
+	\end{itemize}
+	
+	\item Doplňkový kód
+	\begin{itemize}
+		\item dle prvního bitu lze poznat znaménko čísla
+		\item převod kladné $\leftrightarrow$ záporné lze vysvětlit jako inverze bitů a následné přičtení jedničky
+		\item 0111 (7) $\rightarrow$ 1001 (-7)
+		\item není zde záporná nula
+	\end{itemize}
+	\item Aditivní kód
+	\begin{itemize}
+		\item uložené číslo je posunuto o nějakou konstantu, typicky polovina rozsahu
+		\item pro 4 bity určeme nulu jako 1000 --- pak 1111 je 7, 0000 je -8
+		\item nula není zobrazena jako nula
+		\item není zde záporná nula
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Čísla v pohyblivé řádové čárce}
+Reprezentace pohyblivé řádové čárky vychází ze zobrazení $A=M*z^e$ používaném např. ve fyzice, kde $z$ je základ soustavy (zde 2), $e$ je exponent jako celé číslo, $M$ je mantisa.
+\begin{itemize}
+	\item používá se normalizovaný tvar, tedy mantisa je zapsána tak, že ji nelze "posunout" více doleva.
+	\item v přímém kódu mantisy je vlevo vždy jednička, která se skrývá (zvýšení přesnosti)
+	\item pro mantisu se typicky používá přímý kód, pro exponent aditivní
+	\item float (32b) typicky vypadá jako 1b znaménko, pak 8b exponent a nakonec 23b mantisa (tedy přesnost 24b)
+\end{itemize}
+
+\subsubsection*{Realizace aritmetických operací}
+\begin{itemize}
+	\item Paralelní sčítačka
+	
+	Tvořena více jednobitovými sčítačkami. Jednobitová sčítačka má 3 vstupy: A, B (sčítané bity) a vstupní přenos (carry --- např. ze sčítačky nižšího řádu). Výstupy jsou S (výsledek) a výstupní přenos.
+	
+	\item Aritmetické posuvy
+	
+	Posun čísla vlevo/vpravo.
+	Realizuje posuvný registr. Existuje více různých posuvů:
+	\begin{itemize}
+		\item logický posuv --- doplňuje nuly
+		\item cyklický posuv --- doplňuje co vylezlo na druhé straně
+		\item aritmetický posuv --- doplňuje 1 nebo 0 podle znaménka čísla
+	\end{itemize}
+	
+	\item Dekodér
+	
+	Kombinační logický obvod, který má méně bitů na vstupu než na výstupu, a podle tabulky převádí. Kodér má opačnou funkci.
+	
+	\item Multiplexor
+	
+	Na základě řídícího signálu vybere, který ze vstupů pošle na výstup (má několik vstupů + řídící vstup, a jeden výstup).
+	
+	\item Čítač
+	
+	Registr s funkcí inkrementu/dekrementu, může čítat nahoru a/nebo dolů. Existují úplné čítače (do mocnin 2) či neúplné (do jiných čísel). Typicky čítají v binárním kódu, lze i např. v Grayově kódu.
+\end{itemize}
