@@ -1,0 +1,179 @@
+\subsection{SP-29 (SAP)}
+Architektura číslicového počítače, instrukční cyklus počítače, základní třídy souborů instrukcí (ISA). Paměťový subsystém počítače, paměťová hierarchie, skrytá paměť (cache).
+
+\subsubsection*{Architektura číslicového počítače}
+
+\begin{itemize}
+	\item architektura se zabývá strukturou a chováním počítače
+	
+	\item řeší specifikaci různých funkčních modulů jako procesor a paměť a nebo např. instrukční sadu
+	
+	\item podsměry:
+	\begin{itemize}
+		\item ISA --- Instruction Set Architecture --- architektura souboru instrukcí
+		\item Mikroarchitektura --- konkrétní sestavení a složení procesoru
+		\item Systémový design --- řeší další HW komponenty
+	\end{itemize}
+	
+	\item každý počítač je složen z následujících částí:
+	\begin{itemize}
+		\item datová část procesoru --- ALU, registry
+		\item řadič --- řídící jednotka procesoru
+		\item paměťový subsystém
+		\item vstupní zařízení
+		\item výstupní zařízení
+	\end{itemize}
+	
+	\item typy architektury:
+	\begin{itemize}
+		\item Von Neumannova architektura
+		
+		Data i instrukce jsou uložena spolu, nejsou explicitně označena/ny.
+		
+		\item Harvardská architektura
+		
+		Data a instrukce jsou rozdělené.
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Instrukční cyklus počítače}
+\begin{itemize}
+	\item čtení instrukce (IF --- Instruction Fetch)
+	\item dekódování instrukce (ID --- Instruction Decode)
+	\item načtení operandů (OF --- Operand Fetch)
+	\item provedení instrukce (IE --- Instruction Execution)
+	\item zapsání/uložení výsledku (WB --- Write Back / Result Store)
+	\item přerušení?
+\end{itemize}
+
+\textbf{Co je instrukce?}
+Obsahuje informace:
+\begin{itemize}
+	\item co se má provést
+	\item s čím se to má provést (operandy)
+	\item kam se má uložit výsledek
+	\item kde se má pokračovat
+\end{itemize}
+
+Tyto informace mohou být zadány explicitně, nebo mohou být dány typem instrukce, tedy architekturou počítače --- tedy implicitně.
+
+\paragraph*{ISA --- Architektura souboru instrukcí}
+
+Co je potřeba určit:
+\begin{itemize}
+	\item typy a formáty instrukcí, instrukční soubor
+	\item datové typy, kódování a reprezentace, způsob uložení dat v paměti
+	\item módy adresování paměti a přístup do paměti dat a instrukcí
+	\item mimořádné stavy
+\end{itemize}
+Výhody:
+\begin{itemize}
+	\item abstrakce --- možnost různě implementovat stejnou architekturu instrukcí
+	\item definice rozhraní mezi nízkoúrovňovým AW a HW
+	\item standardizuje instrukce, bitové vzory strojového jazyka
+\end{itemize}
+
+\subsubsection*{Třídy souborů instrukcí (ISA)}
+\begin{itemize}
+	\item Střadačově (akumulátorově) orientovaná ISA
+
+	Akumulátor je registr pro mezivýpočty, používá se implicitně jako zdroj pro výpočty i jako cíl pro výsledky. Používají se instrukce s jedním operandem. Nejstarší ISA (1949-60) --- vyvinula se z kalkulaček.
+	
+	\textbf{Výhody:}
+	\begin{itemize}
+		\item jednoduchý HW
+		\item minimální vnitřní stav procesoru --- rychlé přepínání kontextu
+		\item krátké instrukce
+		\item jednoduché dekódování instrukcí
+	\end{itemize}
+	
+	\textbf{Nevýhody:}
+	\begin{itemize}
+		\item častá komunikace s pamětí
+		\item omezený paralelismus mezi instrukcemi
+	\end{itemize}	
+	
+	Populární v 50. --- 70. letech, HW byl drahý, paměť byla rychlejší než CPU.
+	
+	\item Zásobníkově orientovaná ISA
+	
+	Pracovní registry jsou uspořádány do struktury zásobníku.
+	Přistupuje se k vrcholu tohoto zásobníku.
+	Využití pro vyhodnocení výrazů a vnořená volání podprogramů.
+	Většina instrukcí nemá operand (použije se implicitně např. vrchní 2 registry zásobníku).
+	
+	\textbf{Výhody:}
+	\begin{itemize}
+		\item jednoduchá a efektivní adresace operandů
+		\item krátké instrukce
+		\item krátké programy
+		\item jednoduché dekódování instrukcí
+		\item snadno lze napsat neoptimalizující překladač
+	\end{itemize}
+	
+	\textbf{Nevýhody:}
+	\begin{itemize}
+		\item nelze náhodně přistupovat k lokálním datům
+		\item omezený paralelismus --- zásobník je sekvenční
+		\item přístupy do paměti je těžké minimalizovat
+	\end{itemize}
+	
+	\item ISA orientovaná na registry pro všeobecné použití
+	
+	Dnes převládá. GPR --- General Purpose Registers. Typicky 2 nebo 3 operandy.
+	
+	\textbf{Výhody:}
+	\begin{itemize}
+		\item registry (a cache) jsou rychlejší než paměť
+		\item k registrům lze přistupovat náhodně
+		\item registry mohou obsahovat mezivýsledky a lokální proměnné
+		\item méně častý přístup do paměti
+	\end{itemize}
+	
+	\textbf{Nevýhody:}
+	\begin{itemize}
+		\item složitější překladač (optimalizace pro použití registrů)
+		\item přepnutí kontextu trvá déle
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Paměťový subsystém počítače}
+
+\begin{itemize}
+	\item cache (skrytá paměť) --- rychlá, drahá, umístěna blíž k procesoru
+	\item hlavní paměť --- pomalejší, levnější, větší
+	\item vnější paměť --- pomalá, velká
+	\item záložní paměť (CD, DVD, flash, magnetické pásky)
+\end{itemize}
+
+\begin{itemize}
+	\item RAM --- random access memory (přístup adresou)
+	\item CAM --- content adressable memory (přístup klíčem)
+\end{itemize}
+
+\subsubsection*{Paměťová hierarchie}
+
+\begin{itemize}
+	\item registry
+	\item L1 cache (SRAM)
+	\item L2 cache (SRAM)
+	\item L3 cache (SRAM)
+	\item hlavní paměť (DRAM)
+	\item HDD, SSD
+	\item Mass storage (optical disks, tapes)
+	\item Remote storage (cloud)
+\end{itemize}
+
+\subsubsection*{Cache}
+
+Kopie často používaných dat z hlavní paměti
+
+\begin{itemize}
+	\item časová lokalita 
+	
+	Data, ke kterým bylo právě přistupováno, budou pravděpodobně brzy potřeba znovu.
+	
+	\item prostorová lokalita
+	
+	Po přístupu k nějakým datům se pravděpodobně budou používat i vedlejší data.
+\end{itemize}
