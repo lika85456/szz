@@ -1,1 +1,90 @@
 \subsection{OB-3 (ADU)}
+Procesy a systémové služby v unixových operačních systémech: hierarchie a vzájemné vazby, limity, zapínání a vypínání systému, logování aktivit systému.
+
+\textbf{Procesy:}
+\begin{itemize}
+	\item vykonávané programy
+	\item mají svoje ID (PID), id uživatele (UID), id rodiče (PPID) ...
+	\item každý proces někdo vytvořil, tedy každý proces má nějaké PPID --- init proces je první proces spuštěn při bootu, má PID = 1 a PPID = 0
+	\item rodič typicky čeká, až mu dítě předá návratový kód
+	\item daemon = systémový proces (běží na pozadí bez nutnosti vstupu ... jako u windows služby)
+	\item orphan = proces, jehož rodič už neexistuje --- adoptuje se pod proces init
+	\item zombie = proces, který již skončil, ale ještě si rodič nepřevzal návratovou hodnotu
+	\item procesy si navzájem mohou posílat signály
+\end{itemize}
+
+\textbf{Limity:}
+\begin{itemize}
+	\item soft limit --- limit mezi 0 a hard limitem, lze uživatelsky přenastavit
+	\item hard limit --- může změnit jen root, nelze překročit
+	\item lze nastavit max počet procesů pro uživatele a další omezení využití zdrojů (paměť, velikost souborů, počet file descriptorů...)
+	\item příkaz ulimit
+\end{itemize}
+
+\textbf{BOOT}
+\begin{itemize}
+	\item Firmware fáze
+	\begin{itemize}
+		\item POST (Power On Self Test)
+		\item inicializace HW a driverů
+		\item výběr bootovacího zařízení
+		\item načtení a spuštění bootovacího kódu
+	\end{itemize}
+	\item Boot-loader fáze
+	\begin{itemize}
+		\item nalezení a načtení boot programu
+		\item boot program se nahrává do pevně daných adres v paměti
+		\item kontrola řízení se předá programu
+	\end{itemize}
+	\item GRUB (Grand Unified Boot Loader) fáze
+	\begin{itemize}
+		\item načte se GRUB konfigurace
+		\item vybere se odkud/co bootovat
+		\item kernel se načte a spustí
+	\end{itemize}
+	\item Kernel fáze
+	\begin{itemize}
+		\item inicializace datových struktur jádra
+		\item načtení driverů, inicializace HW
+		\item mount kořenového filesystému
+		\item načtení konfigurace jádra
+		\item načtení modulů
+		\item vytvoření init procesu
+	\end{itemize}
+	
+	\newpage
+	\item Init fáze
+	\begin{itemize}
+		\item dříve spouštění start/stop scriptů dle úrovní běhu systému (run levels / milestones)
+		\begin{itemize}
+			\item 0 --- systém vypnutý
+			\item 1, s, S --- single user mode
+			\item 2 --- multi user mode
+			\item 3 --- multi user mode + síť
+			\item 4 --- nepoužívaný (občas GUI)
+			\item 5 --- vypnutí
+			\item 6 --- restart
+		\end{itemize}
+		\item v dnešní době spouštění služeb
+		\item konfigurace procesu init --- /etc/inittab
+		\item init se přes fork() a exec() naklonuje a spouští další procesy
+	\end{itemize}
+\end{itemize}
+
+\textbf{Vypínání systému:}
+\begin{itemize}
+    \item shutdown \textit{level timeout -y} (přívětivý jak k uživatelům a aplikacím, tak k systému)
+    \item init \textit{level} (přívětivý k aplikacím a systému)
+    \item poweroff, restart (přívětivé k systému)
+    \item vypnout napájení (fuj)
+\end{itemize}
+
+\textbf{Logování:}
+\begin{itemize}
+	\item servrová logovací služba s dlouhou historií
+	\item umožňuje oddělit SW generující zprávy, SW který je ukládá a SW který je analyzuje a nahlašuje
+	\item konfigurace: /etc/syslog.conf
+	\item logovací složky: /var/log a /var/adm
+	\item mnoho variant
+	\item záznamy v logu mají info o službě a závažnosti logu (alert, critical, error, warning, notice, info, debug)
+\end{itemize}
