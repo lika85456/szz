@@ -1,1 +1,70 @@
 \subsection{SP-7 (DML)}
+Výroková logika: splnitelnost formulí, logická ekvivalence a důsledek, universální systém logických spojek, disjuntivní a konjunktivní normální tvary, úplné normální tvary.
+\begin{itemize}
+	\item \textbf{Prvotní výrok:} jednoduchá oznamovací věta, u které má smysl se ptát zda je či není pravdivá. Prvotní výroky označujeme velkými písmeny, říkáme jim \textbf{prvotní formule}.
+
+	\item \textbf{Pravdivostní ohodnocení:} ohodnocení množiny prvotních výroků je přiřazení $v$, které každé prvotní formuli přiřadí 0 nebo 1.
+	\begin{itemize}
+		\item Je-li $v(A)=1$, říkáme že $A$ je pravdivý při ohodnocení $v$.
+		\item Je-li $v(A)=0$, říkáme že $A$ je nepravdivý při ohodnocení $v$.
+	\end{itemize}
+
+	\item \textbf{Negace:} $\neg A$ výroku $A$ je pravdivá pro všechna ohodnocení, při kterých je $A$ nepravdivý. Pro ostatní je nepravdivá.
+
+	\item \textbf{Konjunkce:} $A \land B$ výroků $A$ a $B$ je pravdivá pro všechna ohodnocení, při kterých jsou $A$ i $B$ současně pravdivé. Pro ostatní ohodnocení je nepravdivá.
+
+	\item \textbf{Disjunkce:} $A \lor B$ výroků $A$ a $B$ je pravdivá pro všechna ohodnocení, při kterých je alespoň jeden z výroků $A$ a $B$ pravdivý. Pro ostatní ohodnocení je nepravdivá.
+
+	\item \textbf{Implikace:} $A \Rightarrow B$ mezi výroky $A$ a $B$ je nepravdivá pro všechna ohodnocení, kdy \textbf{předpoklad} $A$ platí a \textbf{závěr} $B$ neplatí. Pro ostatní ohodnocení je pravdivá.
+
+	\item \textbf{Ekvivalence:} $A \Leftrightarrow B$ mezi výroky $A$ a $B$ je pravdivá pro všechna ohodnocení, při kterých mají výroky $A$ a $B$ stejnou pravdivostní hodnotu. Pro ostatní je nepravdivá.
+
+	\item \textbf{Tautologie ($\top$):} Formule, která je pro každé ohodnocení pravdivá.
+
+	\item \textbf{Kontradikce ($\bot$):} Formule, která je pro každé ohodnocení nepravdivá.
+
+	\item \textbf{Splnitelná formule:} Formule, která je alespoň pro jedno ohodnocení pravdivá.
+
+	\item Nechť $E$ a $F$ jsou výroky. Pokud platí $E \Rightarrow F$, pak $E$ je \textbf{postačující podmínka} pro $F$. Na druhou stranu, $F$ je \textbf{nutná podmínka} pro $E$. Pokud platí $E \Leftrightarrow F$, pak je $E$ \textbf{nutná a postačující podmínka} pro $F$ a obráceně.
+
+	\item Nechť $E$ a $F$ jsou výrokové formule. $E$ a $F$ jsou logicky ekvivalentní, právě když pro každé ohodnocení $v$ je $v(E) = v(F)$. Píšeme $E \modeleq F$.
+
+	\item Nechť $E$ a $F$ jsou výrokové formule. $F$ je logickým důsledkem $E$, právě když pro každé ohodnocení $v$, pro které $v(E) = 1$, je i $v(F) = 1$. Píšeme $E \models F$.
+
+	\item \textbf{Základní principy logiky:}
+	\begin{itemize}
+		\item Zákon vyloučení sporu: $A \land \neg A \modeleq \bot$
+		\item Zákon vyloučení třetího: $A \lor \neg A \modeleq \top$
+		\item Zákon dvojí negace: $\neg\neg A \Leftrightarrow A \modeleq \top$
+	\end{itemize}
+
+	\item \textbf{Obměněná implikace:} $(E \Rightarrow F) \modeleq (\neg F \Rightarrow \neg E)$
+
+	\item Množina logických spojek tvoří \textbf{universální systém}, právě když ke každé formuli existuje logicky ekvivalentní formule, která obsahuje pouze tyto spojky.
+
+	\item Např. dvouprvkové systémy: \{$\neg,\lor$\}, \{$\neg,\land$\}, \{$\neg,\Rightarrow$\}
+
+	\item Existují i jednoprvkové systémy pouze z NAND ($\uparrow$) či NOR ($\downarrow$)
+
+	\item \textbf{Literál:} Výroková formule, která je prvotní formulí, nebo negací prvotní formule.
+
+	\item \textbf{Implikant:} Literál, či konjunkce několika literálů.
+
+	\item \textbf{Výroková formule v disjunktivním normálním tvaru (DNT)}, pokud je implikantem, či disjunkcí několika implikantů.
+
+	\item \textbf{Klausule:} Literál, či disjunkce několika literálů.
+
+	\item \textbf{Výroková formule v konjunktivním normálním tvaru (KNT)}, pokud je klausulí, či konjunkcí několika klausulí.
+
+	\item Každá výroková formule lze převést do logicky ekvivalentního KNT i DNT.
+
+	\item \textbf{Minterm:} minterm formule $F$ je takový její implikant, který obsahuje všechny prvotní formule vyskytující se v $F$ a každou právě jednou.
+
+	\item \textbf{Výroková formule v úplném disjunktivním normálním tvaru (ÚDNT)}, je-li mintermem nebo disjunkcí různých (logicky neekvivalentních) mintermů.
+
+	\item \textbf{Maxterm:} minterm formule $F$ je taková její klausule, která obsahuje všechny prvotní formule vyskytující se v $F$ a každou právě jednou.
+
+	\item \textbf{Výroková formule v úplném konjunktivním normálním tvaru (ÚDNT)}, je-li maxtermem nebo konjunkcí různých (logicky neekvivalentních) maxtermů.
+
+	\item Každá výroková formule lze převést do logicky ekvivalentního ÚKNT i ÚDNT.
+\end{itemize}
