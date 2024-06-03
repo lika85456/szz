@@ -1,0 +1,40 @@
+\subsection{OB-22 (UKB)}
+Bezpečnost kyber-fyzikálních systémů a Internetu věcí, specifické hrozby a specifika zabezpečení (ve srovnání s tradiční IT bezpečnosti). Možnosti detekce útoků vedených proti kyber-fyzikálních systémů. Purdue model pro informační a komunikační systémy (ICS) a specifika jejich bezpečnosti.
+
+\begin{itemize}
+	\item Internet of Things --- síť chytrých zařízení (chytrá domácnost, chytrá města, kamery, senzory, chytrá auta, ...)
+	\item CPS (Cyber-Physical Systems) --- propojuje fyzická zařízení s IT, může ovládat/monitorovat fyzické procesy v reálném čase (průmyslová zařízení, zdravotní vybavení, dopravní systémy...)
+	\item rozdíly Iot, CPS oproti tradiční IT bezpečnosti:
+	\begin{itemize}
+		\item selhání může způsobit fyzické škody/smrt
+		\item cíle útočníků typicky bývají způsobit škody
+		\item IoT zařízení mají většinou omezené zdroje (pomalé CPU, malou paměť...), tedy nelze vždy aplikovat stejná bezpečnostní řešení
+		\item zařízení mohou být provozována lidmi bez znalosti technologie/bezpečnosti
+		\item výrobní náklady jsou tlačeny na minimum
+		\item doba na návrh, vývoj, implementaci, vývoj a vyřazení z provozu jsou v řádu desetiletí (např. elek\-trár\-ny)
+	\end{itemize}
+	\item možnosti prevence útoků:
+	\begin{itemize}
+		\item lze i tradičním přístupem (firewall atd), ale je to nepraktické pro IoT
+		\item navrhovat systémy, ve kterých lze zabezpečení průběžně aktualizovat
+		\item zajistit dodatečná bezpečnostní řešení pro stávající starší systémy
+		\item přidání extra zařízení "na drát", které kontroluje pakety
+		\item extra zařízení blokující bezdrátové připojení neautorizovaných zařízení
+		\item "lehké" (lightweight) kryptografické algoritmy 
+		\item bezpečná mikrojádra (bezpečný malý OS)
+	\end{itemize}
+	\item detekce útoků na CPS
+	\begin{itemize}
+		\item důvěryhodný ověřovatel vnitřního stavu IoT zařízení, např. kontrola obsahu RAM
+		\item sledování interakcí CPS (něco jako IDS v klasických sítích, ale jednodušší, protože komunikace je méně pestrá a stabilnější)
+		\item sledování fyzických stavů / konfigurací efektorů --- např konfigurace co jsme zatím neviděli, nebo fyzikálně nesmyslná data senzoru
+		\item aktivní detekce --- pravidelné dotazování zařízení, detekce anomálií v odpovědích
+	\end{itemize}
+	\item mitigace
+	\begin{itemize}
+		\item konzervativní kontrola --- provozování systému s dostatečnými bezpečnostními rezervami
+		\item kontrola senzorů navzájem --- zda data dávají smysl
+		\item omezení aktivace --- v případě útočníka v systému chvíli trvá než může nějak zasáhnout a něco změnit
+		\item kontrola akcí systému --- referenční monitor, nepovede akce k nebezpečnému chování?
+	\end{itemize}
+\end{itemize}
