@@ -1,0 +1,75 @@
+\subsection{OB-20 (UKB)}
+Řízení rizik v kybernetické bezpečnosti, proces řízení rizik, základní pojmy (zranitelnosti, hrozby, rizika, aktiva) a související aktivity (analýza rizik, hodnocení primárních aktiv, reakci na rizika).
+
+\begin{itemize}
+	\item proč řídíme rizika?
+	
+		Nikdy není možné zabezpečit vše na 100 \%, je potřeba se připravit na možnost napadení a udržovat zabezpečení aktuální a silné.
+		
+	\item řízení rizik:
+		
+		Neustálý proces, který má za úkol neustále dokola identifikovat rizika v organizaci a navrhovat opatření, aby případné škody v případě působení rizika byly co nejmenší.
+		
+	\item analýza rizik:
+	
+		Identifikace rizik --- provádí se pravidelně a dle potřeby např. při implementaci nového systému. Riziko je hrozba primárním aktivům. Postup:
+		\begin{itemize}
+			\item určení rozsahu analýzy a míry detailu
+			\item identifikace primárních aktiv
+			\item identifikace podpůrných aktiv
+			\item identifikace rizik, tedy hrozeb primárním aktivům
+		\end{itemize}
+		
+	\item primární aktivum:
+	
+		Informace či procesy/služby, které organizace potřebuje pro svoje fungování. Příklady informace: seznam zákazníků, receptura, výsledky výzkumu. Příklady procesu: vytvoření objednávky, zápis studentů do studia, čištění odpadních vod.
+		
+	\item podpůrné aktivum:
+	
+		Jsou to např. informační systémy, servery, datová centra, síťové prvky... obecně komponenty, bez kterých nemohou fungovat primární aktiva. Vazba mezi primárními aktivy a podpůrnými je M:N.
+		
+	\item PDCA cyklus řízení rizik (Plan-Do-Check-Act)
+	
+		Začíná se na malém detailu, postupně se úroveň detailu zvětšuje. Postupně se tím zdokonaluje systém a bezpečnost.
+		
+	\item CIA triáda (Confidentiality, Integrity, Availability)
+	
+		Aktiva zabezpečujeme od nejdůležitějšího, každé nejprve ohodnotíme dle CIA. Každé kategorii přiřadí garant aktiva nějaké ohodnocení (jak velký problém bude, když se poruší C, I a A)
+		
+	\item Hrozba
+	
+		Událost nebo aktivita, která hrozí nějakému aktivu, a pokud nastane, tak způsobí nějakou škodu.
+		
+	\item Zranitelnost
+	
+		Nedostatek v návrhu nebo ve vlastnostech aktiva, který může být zneužit hrozbou (či hrozbami).
+		
+	\item hodnocení hrozeb a zranitelností
+	
+		Při tvorbě rizikových scénářů provádíme také hodnocení hrozeb a zranitelnosti vůči danému primárnímu aktivu. U hrozby řešíme s jakou pravděpodobností může nastat, u zranitelnosti jak snadné a prav\-dě\-po\-dob\-né je její zneužití. Pro taková hodnocení existují různé stupnice.
+		
+	\item Riziko
+	
+		Kombinace aktivum-zranitelnost-hrozba. Je to jev/událost, kdy hrozba zneužije zranitelnost, může s nějakou pravděpodobností nastat a nebo taky ne, a vznikne incident, který způsobí nějakou škodu. Riziko = dopad (hodnota aktiva) * hrozba * zranitelnost. 
+		
+	\item reakce na rizika
+	
+	Máme více možností reakce na identifikovaná rizika:
+		\begin{itemize}
+			\item Akceptovat --- přijmout možnost případného incidentu --- používá se, když řešení je dražší než dopad
+			\item Přenesení --- přesměrovat škodu jinam, např. pojištění
+			\item Mitigace (snížení) --- nejčastější způsob, riziko se sníží
+			\item Vyhnutí --- pokud je riziko příliš velké a nelze použít předchozí možnosti, projekt (s tímto rizikem) se nerealizuje
+		\end{itemize}
+		
+	Mitigace se typicky provádí přijetím nějakých nápravných opatření, technických a/nebo organizačních.
+	
+	\item dokumenty řízení rizik
+	
+	\begin{itemize}
+		\item Jmenování garantů primárních aktiv
+		\item Prohlášení o aplikovatelnosti --- aktuální stav řízení rizik
+		\item Definování rozsahu analýzy rizik
+		\item Plán zvládání rizik --- organizační proces, co s jakým rizikem udělat
+	\end{itemize}
+\end{itemize}

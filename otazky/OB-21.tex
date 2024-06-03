@@ -1,0 +1,33 @@
+\subsection{OB-21 (UKB)}
+Hrozby síťové bezpečnosti, základní kategorie síťových útoků, principy DoS útoků (konkrétní příklady/techniky). Principy obrany proti síťovým útokům v moderních sítích.
+
+\begin{itemize}
+	\item je nutné zabezpečit všechny vrstvy (ISO/OSI model)
+	\item základní rozdělení útoků:
+	\begin{itemize}
+		\item pasivní --- odposlech, analýza provozu
+		\item aktivní --- MAC/IP spoofing, modifikace/přerušení komunikace
+	\end{itemize}
+	\item příklady útoků:
+	\begin{itemize}
+		\item ping of death --- DoS, poslání pingu (ICMP) tak, že sestavený síťový packet měl více než 64 KiB, OS si s tím dříve neuměly poradit $\Rightarrow$ buffer overflow
+		\item ping flood --- DoS, zaplavení oběti pingy (ICMP Echo request), využíval pomalých linek připojení
+		\item smurf attack --- DoS, útočník zaslal ping requesty s podvrženou zdrojovou adresou na různá zařízení (klidně broadcast), která pak polala reply na oběť --- amplification attack, malý payload útočníka, velké zahlcení oběti
+		\item Man in the Middle --- útočník se vetře do komunikace mezi 2 uzly, díky tomu vidí a může měnit jejich komunikace (docílí se např. ARP poisoning, vystavením falešného AP, podvržením domény, napadením webových stránek...)
+		\item SYN flood attack --- oběť má omezený počet TCP spojení, která může otevřít, útočník všechny vyčerpá tím, že naváže hodně spojení (počátkem TCP handshake --- zprávou SYN), oběť je ve stavu DoS
+	\end{itemize}
+	\item DoS (Denial of Service) obecně -- snaha vyřadit službu z provozu, lze provést např. zahlcením linky, vyčerpáním HW zdrojů oběti zneužitím špatně nastavené aplikace poskytující službu
+	\item DDoS (Distributed DoS) --- DoS provedený z více míst najednou
+	\item možnosti obrany:
+	\begin{itemize}
+		\item zamezení fyzického přístupu k síťovým prvkům, zamezení připojení "kamkoliv"
+		\item segmentace sítě --- síťové oddělení např. různých oddělení firmy, každý vidí jen to co potřebuje
+		\item firewall --- pravidla pro provoz, filtrování provozu, hlídání provozu, inspekce paketů
+		\item používání šifrované komunikace
+		\item proxy server --- kontroluje obsah komunikace
+		\item DMZ (demilitarizovaná zóna) --- jediná část sítě přístupná přímo z internetu
+		\item logy
+		\item IDS/IPS
+		\item omezení přístupu, autentizace a autorizace, nejmenší oprávnění...
+	\end{itemize}
+\end{itemize}
