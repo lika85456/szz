@@ -1,0 +1,126 @@
+\subsection{OB-14 (EHA)}
+Etické hackování a penetrační testování. Metodologie provádění penetračních testů PTES a OWASP.
+
+\subsubsection*{Penetrační testování (pentest(ing))}
+\begin{itemize}
+	\item definované, úzké zaměření
+	\item typický cíl: počítačový systém, síťová služba, aplikace...
+	\item identifikace bezpečnostních zranitelností, rizik a nespolehlivých prvků a prostředí
+	\item výsledek je report/zpráva o výsledcích testu
+	\item penetrační tester bývá často zaměřený na jednu oblast
+\end{itemize}
+
+\subsubsection*{Etické hackování}
+\begin{itemize}
+	\item široké zaměření
+	\item všemožné hackerské metody objevování zranitelností
+	\item pentest je podmnožina těchto činností
+	\item Etický hacker má široké a hluboké znalosti, typicky nebývá specializovaný
+\end{itemize}
+
+Pojmy:
+\begin{itemize}
+	\item Black Hat Hacker
+	\begin{itemize}
+		\item různé, typicky škodlivé úmysly
+		\item primární motivace bývá osobní/finanční zisk
+		\item aktivity považovány za kyber-zločin
+	\end{itemize}
+	\item White Hat Hacker
+	\begin{itemize}
+		\item stejné metody jako Black Hat
+		\item dobré úmysly, s povolením vlastníka systému --- tedy legální, zranitelnosti nahlášeny vlastníkovi
+		\item motivace hlavně finanční odměna
+	\end{itemize}
+	\item Grey Hat aproach
+	\begin{itemize}
+		\item někdy legální, někdy ilegální aktivity
+		\item přístup typicky závisí na cílovém systému
+		\item nemívá škodlivé úmysly, ale občas porušuje zákony či etické standardy
+	\end{itemize}
+	\item Hrozba (Threat) --- událost/podmínka, která může způsobit škody nebo další následky
+	\item Attack vector --- cesta/metoda umožňující škodlivou činnost či odhaluje zranitelnosti
+	\item Attack Surface --- množina vektorů útoku
+	\item Zranitelnost (Vulnerability) --- slabina, která může být zneužita (použitím attack vectoru), vystavuje systém hrozbě
+	\item Zero-Day vulnerability --- nedávno nalezená zranitelnost, dříve neznámá
+	\item Penetrační test --- povolená simulace útoku, výsledek je report
+	\item různé metody testování:
+	\begin{itemize}
+		\item Black box --- tester má stejné informace jako běžný uživatel, žádná předchozí znalost systému
+		\item White box --- tester má stejné informace a přístupy jako vývojový tým aplikace/systému
+		\item Grey box --- podobné white box, ale informace jsou limitované
+	\end{itemize}
+	\item existují různé metodologie pro penetrační testování, jako PTES a OWASP
+\end{itemize}
+
+\subsubsection*{PTES metodologie}
+\begin{itemize}
+	\item Penetration Test Execution Standard
+	\item návody, jak strukturovat pentest
+	\item 7 fází pentestu
+	\item Pre-engagement interactions
+	\begin{itemize}
+		\item domluví se rozsah/zaměření testu (jaké konkrétní aplikace/stroje/systémy/služby budou testovány)
+		\item domluví se cena
+		\item domluví se časový rozsah --- od kdy do kdy
+		\item přijatelné praktiky sociálního inženýrství
+		\item kontakty
+		\item cíle klienta
+		\item poskytnuté zdroje klientem
+		\item pravidla vztahu --- oprávnění, testovaná verze, kdy se může testovat, odkud,...
+	\end{itemize}
+	\item Intelligence Gathering
+	\begin{itemize}
+		\item identifikace a pojmenování cíle
+		\item získávání informací o cíli --- infrastruktura cíle, mapa služeb a systémů, chování zaměstnanců... jednoduše vše co se dá zjistit
+	\end{itemize}
+	\item Threat Modeling
+	\begin{itemize}
+		\item vysokoúrovňové modelování hrozeb
+		\begin{itemize}
+		
+		\item analýza podnikového vlastnictví --- intelektuální vlastnictví, data zákazníků, kritičtí zaměstnanci
+		\item analýza procesů --- technická i lidská infrastruktura
+		\item analýza hrozeb ze strany lidí
+		\item analýza možností hrozeb
+		\end{itemize}
+		\item model infrastruktury
+		\begin{itemize}
+		\item síťová topologie
+		\item identifikace služeb
+		\item mapování možných hrozeb a zranitelností
+		\end{itemize}
+		\item je potřebná kooperace klienta
+	\end{itemize}
+	\item Vulnerability analysis
+	\begin{itemize}
+		\item nejdůležitější (a nejcennější) jsou znalosti a zkušenosti testera
+		\item hledání využitelných zranitelností
+	\end{itemize}
+	\item Exploitation
+	\begin{itemize}
+		\item na základě všech předchozích informací se ověřují zranitelnosti, tedy snaha využít domělé zranitelnosti
+		\item jak univerzální nástroje, tak přímo nástroje ke zranitelnostem
+		\item analýza zdrojového kódu/reverzní inženýrství
+		\item fuzzing
+	\end{itemize}
+	\item Post Exploitation
+	\begin{itemize}
+		\item již jsme získali přístup
+		\item ochránit data klienta
+		\item ochránit sebe --- neprovést nic co není dohodnuté
+		\item další analýza, co vše se dá zjistit / ukrást
+	\end{itemize}
+	\item Reporting
+	\begin{itemize}
+		\item vytvoření reportu, nejlépe na následující 2 části
+		\item Executive summary --- vysokoúrovňová zpráva pro vedení, dopad na byznys, krátké shrnutí vážných nálezů
+		\item Technical report --- podrobný popis celého procesu a postupu, popis nálezů, kroky pro replikaci a návrhy mitigace
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{OWASP}
+\begin{itemize}
+	\item seznamy top 10 nejčastějších bezpečnostních problémů v různých kategoriích, např, webové aplikace
+	\item lze použít pro vyzkoušení na testovaném cíli, a jako důkaz že se na nic důležitého nezapomnělo
+\end{itemize}
