@@ -1,0 +1,33 @@
+\subsection{OB-25 (ZSB)}
+Řízení přístupu v operačních systémech, obecný model řízení přístupu - Trusted Computing Base, vícestupňové (multilevel) a multilaterální modely, přístupy Discretionary Access Control a Mandatory Access Control, kon\-krét\-ní příklady implementace v OS.
+
+\subsubsection*{Model hrozeb OS}
+\begin{itemize}
+	\item důvernost --- ztráta dat procesu nebo uživatelské přihlašovací údaje
+	\item integrita --- úprava přístupových práv, úprava dat jiného procesu, instalace malware
+	\item dostupnost --- pád systému, využití všech systémových zdrojů, způsobení nedostupnosti dat
+	\item možné útoky:
+	\begin{itemize}
+		\item škodlivý software --- boot kits, škodlivá rozšíření (drivery, moduly)
+		\item chyby a bugy --- paměťové poškození, paměťové chyby, leaknutí dat
+		\item postranní kanály --- hardwarové, spekulativní, softwarové
+		\item DoS --- vyčerpání zdrojů, deadlock
+	\end{itemize}
+	\item vektory útoku:
+	\begin{itemize}
+		\item kód běžící v user space
+		\item rozšíření OS
+		\item kód z internetu (např. javascript)
+		\item škodlivé periferie
+		\item vzdálený systém
+	\end{itemize}
+	\item různé (historicky) návrhy OS
+	\begin{itemize}
+		\item single domain --- žádná izolace, vše běží přímo na HW
+		\item monolitické OS --- moderní univerzílní OS, každá aplikace ve vlastní bezpečnostní doméně, OS jako celek je pod všemi aplikacemi
+		\item microkernel based multi-server OS --- všechny součásti OS mají vlastní doménu
+		\item unikernel/library OS --- aplikace spolu s OS knihovnou ve svých doménách, pod nimi samotný plánovač
+	\end{itemize}
+\end{itemize}
+
+TODO

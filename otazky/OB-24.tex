@@ -1,0 +1,44 @@
+\subsection{OB-24 (ZSB)}
+Forenzní analýza souborových systémů, principy, možnosti obnovy smazaných dat.
+
+\subsubsection*{Soubory}
+\begin{itemize}
+	\item pojmenovaná množina dat přesně definovaného formátu, uložená na datovém médiu
+	\item na uživatelské úrovni lze typ souboru rozeznat dle přípony
+	\item strojově lze typ rozeznat dle přípony a podle hlavičky uvnitř souboru
+	\item existují otevřeně specifikované formáty a uzavřené formáty
+	\item typy souborů:
+	\begin{itemize}
+		\item textové/dokumentové soubory (txt, doc, docx, pdf, xls, pages, html,...)
+		\item obrázkové soubory (rastr --- jpg, png, bmb,...) (vektor --- psd, cdr, ai,...)
+		\item zvukové soubory (wav, mp3, midi (neni zvukovej lol), wma,...)
+		\item video (avi, mpg, mov, mp4,...)
+		\item archivy (zip, rar, gz,...)
+		\item spustitelné soubory (exe, dmg,...)
+		\item speciální...
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Souborové systémy}
+\begin{itemize}
+	\item organizuje data (soubory do složek)
+	\item obsahuje metadata popisující strukturu a některé vlastnosti souborů
+	\item příklady: FAT32, NTFS, EXT3, EXFAT...
+\end{itemize}
+
+\subsubsection*{Obnova smazaných dat}
+\begin{itemize}
+	\item co jsou to smazaná data?
+	\begin{itemize}
+		\item nechtěné smazání souborů či složek
+		\item reformátování filesystému
+		\item poškození superbloku/FAT/MFT
+		\item poškození záznamů o oddílech (partitions)
+		\item fyzické poškození hard disku
+	\end{itemize}
+	\item informace na discích se nemažou, když se smaže soubor
+	\item segmenty/clustery se pouze označí jako volné
+	\item obnovit se dá 2 způsoby --- pomocí metadat filesystému, a pomocí hledání hlaviček známých typů souborů
+	\item obnovení pomoví metadat vydá strukturu složek, názvy složek a souborů, metadata souborů a složek
+	\item obnovení pomocí file carvingu (hledání pomocí hlaviček) vydá surové bloky dat bez metadat a názvů složek a souborů
+\end{itemize}
