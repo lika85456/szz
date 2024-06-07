@@ -1,0 +1,98 @@
+\subsection{OB-16 (EHA)}
+Základní typy zranitelností webových aplikací, jejich testování a náprava. Bezpečnostní mechanismy webových prohlížečů.
+
+\subsubsection*{Webové aplikace}
+\begin{itemize}
+    \item struktura: klient (browser), server (webový server)
+    \item používané protokoly: DNS, TCP, TLS, DTLS, HTTP, WebSocket, ...
+    \item dále mnoho různých technologií, komponent jak na serveru tak na klientu --- mnoho míst pro zranitelnosti
+\end{itemize}
+
+\subsubsection*{Základní zranitelnosti}
+\begin{itemize}
+    \item Cross Site Request Forgery (CSRF/XSRF)
+    \begin{itemize}
+        \item Útočník ze své stránky (tedy z klienta oběti) pošle request na jinou stránku/službu, kde pokud je oběť přihlášena, může tento request uspět a tím se provede nějaká akce, např se pošlou útočníkovi peníze
+        \item možnosti testování moc nejsou, obrana je na prohlížeči (můžem otestovat max ten)
+        \item prohlížeč se může (musí) bránit tak, že nedovolí posílání requestů na jinou stránku/zdroj (cross origin)
+    \end{itemize}
+    \item Cross Site Scripting (XSS)
+    \begin{itemize}
+        \item stored XSS
+        \begin{itemize}
+            \item v databázi je uložený kus javascript kódu, který se spustí při načtení a zobrazení klientovi (např. jméno uživatele, v nějakém příspěvku...)
+            \item možnosti řešení: odebrat problematické sekvence znaků (může narušovat funkčnost, špatné ře\-še\-ní), vyescapovat nebezpečné znaky
+            \item jak testovat? prostě to zkusim několika způsoby vložit kde to jde (kde se něco ukládá a zobrazuje)
+        \end{itemize}
+        \item reflected XSS
+        \begin{itemize}
+            \item javascript není uložený, ale dostane se do nějaké zobrazované proměnné, která může být ov\-lád\-nu\-ta, jako např. hodnota z URL adresy
+            \item jak řešit? z klientského pohledu --- pozor na to co může přijít zvenčí za vstup --- jako správce je lepší takové proměnné navázat jinak, např. do payloadu POST requestu, a/nebo kontrolovat jejich hodnotu (VSTUP JE ZLO)
+            \item jak testovat? najít možná zranitelná místa (vstup z url) a vyzkoušet
+        \end{itemize}
+        \item DOM-based XSS
+        \begin{itemize}
+            \item založené na dynamicky generovaném obsahu, tedy jiný "typ" proměnné ovlivňující vzhled/obsah stránky, která může být ovládnuta uživatelem/útočníkem
+            \item podobně jako výše --- kontrola vstupů pro obranu, identifikace slabých míst a vyzkoušení pro test
+        \end{itemize}
+    \end{itemize}
+    \item SQL Injection
+    \begin{itemize}
+        \item vložení SQL kódu do nějakého vstupu, výsledkem je ovlivnění výsledku / nechtěné změny v DB / vyzrazení informací
+        \item jak se bránit? ošetřovat vstupy! escapování kritických znaků, prepared statements (nejlepší)
+        \item jak testovat? najdu vstup co možná jde do databáze, vyzkouším
+    \end{itemize}
+    \item Command Injection
+    \begin{itemize}
+        \item uživatel ovlivňuje nějakým vstupem příkaz na serveru aplikace, může provádět nechtěné příkazy
+        \item jak se bránit? blacklist/whitelist znaků, specifická kontrola vstupu pro konkrétní data ... případně upustit od této funkcionality
+        \item jak hledat? podobně jako předchozí...
+    \end{itemize}
+    \item File uploads
+    \begin{itemize}
+        \item ovlivňování jména nahrávaného souboru, možné nahrát někam kam autor nechtěl, něco přepsat...
+        \item obrana: kontrola vstupu, blacklist/whitelist znaků
+        \item jak testovat? pokud se něco tváří jako jméno souboru, vyzkoušet různé varianty vyšších složek a podobně
+    \end{itemize}
+    \item File inclusion
+    \begin{itemize}
+        \item uživatel může do aplikace přidat kód, může to být způsobeno nebezpečnými přímými odkazy
+        \item může přidat serverový kód, klientský kód, nebo např. /dev/random (způsobit DoS) nebo /etc/passwd (information disclosure)
+        \item jak bránit? nenechat uživatele volit soubory přímo, ale přes nepřímý odkaz, např. ID
+    \end{itemize}
+    \item Server side request forgery (SSRF)
+    \begin{itemize}
+        \item útočník může donutit aplikaci k vykonávání požadavků na další místa, např. v lokální síti serveru
+        \item lze díky tomu např. scanovat vnitřní síť nebo získat citlivá data
+        \item řešení: nepřímé odkazy, validace vstupů
+    \end{itemize}
+    \item XML external entity (XXE)
+    \begin{itemize}
+        \item při parsování XML souboru lze přidat odkaz na externí XML entitu, lze tím vykonat kód, přidat soubor...
+        \item obrana: správně nakonfigurovat parser, nebo zakázat externí entity úplně
+    \end{itemize}
+    \item server-side template injection (SSTI)
+    \begin{itemize}
+        \item do šablony (template) se dá zadat něco, co způsobí vykonávání kódu na serveru
+        \item obrana: použití logic-less template engine
+    \end{itemize}
+    \item open redirection
+    \begin{itemize}
+        \item neověřený uživatel může změnit, kam stránka jiného uživatele po přihlášení přesměruje
+        \item obrana: vyhnout se možnosti uživatelského nastavení přesměrování
+    \end{itemize}
+    \item formula injection
+    \begin{itemize}
+        \item týká se aplikací exportujících tabulky, .csv nebo .xlsx --- pokud se vyexportují neověřená data od útočníka, můžou se pak na PC oběti spustit nebezpečná makra
+        \item prostě ověřovat vstup lol
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Obrany prohlížeče}
+\begin{itemize}
+    \item security headers
+    \item Strict-Transport-Security --- řeší povinnost HTTPS
+    \item X-Frame-Options --- povolení vykreslování částí stránek v rámečcích (jako iframe)
+    \item X-Content-Type-Options --- definování typu obsahu, browser podle toho k obsahu přistupuje
+    \item Content-Security-Policy --- kontroluje povolený obsah k načtení
+\end{itemize}

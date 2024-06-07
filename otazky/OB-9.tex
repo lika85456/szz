@@ -1,0 +1,66 @@
+\subsection{OB-9 (BEK)}
+Řízení přístupových oprávnění. Běh programu při nízkých oprávněních.
+
+\subsubsection*{ACL}
+\begin{itemize}
+    \item ACL --- Access Control List, mocný nástroj zabezpečení, seznam ACE
+    \item ACE --- Access Control Entry (jeden bezpečnostní záznam)
+    \item SO --- Securable Object --- objekt, který může mít SD --- security descriptor
+    \item DACL (Discretionary ACL) --- seznam ACE, které povolují/zakazují přístup k SO
+    \item SACL --- seznam ACE, které definují typy přístupu k SO, které se logují
+    \item Určení ACL --- zajistit prostředky, zjištění požadavků na zabezpečení, určení ACL technologie a převedení požadavků do ACL
+\end{itemize}
+
+\subsubsection*{Přístupové tokeny}
+\begin{itemize}
+    \item pro práci s oprávněními se ve windows používají přístupové tokeny
+    \item popisují aktuální bezpečnostní kontext --- pravidla a atributy daého procesu/vlákna
+    \item obsahují SID vlastníka, skupiny, uživatelského účtu, výchozí DACL, seznam práv uživatele, ...
+    \item příklad bezpečnostního kontextu --- přihlášený uživatel, zadané heslo...
+    
+\end{itemize}
+
+\subsubsection*{Běh s nejnižsím oprávněním}
+\begin{itemize}
+    \item každý program má dělat pouze k čemu byl určen a nic navíc
+    \item má k tomu používat pouze nutná práva, ostatních se vzdát
+    \item proč programy často potřebují zvýšit práva na administrátorská?
+    \begin{itemize}
+        \item ACL --- zápis do administrátorských složek
+        \item problémy s právy --- pokud je právo opravdu nutné, holt s tím nic neuděláme, ale pokud ne, nesmíme ho vyžadovat
+        \item přístup k LSA secrets
+    \end{itemize}
+    \item určení nezbytné úrovně práv:
+    \begin{itemize}
+        \item zjistit všechny prostředky používané programem
+        \item zjistit všechny privilegovaná API, které program používá
+        \item posoudit uživatelský účet, pod kterým má program běžet
+        \item zjistit všechny práva tokenu
+        \item určit nezbytná práva pro aplikaci
+        \item změnit token --- zbavit se nepotřebných práv
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Windows UAC}
+\begin{itemize}
+    \item uživatel dostane po oprávnění token definující oprávnění
+    \item administrátor dostane token s vysokými právy
+    \item pro spuštění explorer.exe (a jeho potomků) se použije ořezaný token (ne admin práva)
+    \item admin může svůj plný token využít pro spuštění jiných programů
+    \item UAC kontroluje přístup, případně vyžádá administrátorské povolení
+    \item mody UAC:
+    \begin{itemize}
+        \item Elevate without prompting
+        \item promtp for consent
+        \item prompt for credentials
+    \end{itemize}
+    \item UAC komponenty:
+    \begin{itemize}
+        \item Application Information Service (AIS) --- zajišťuje spouštění dalších aplikací s právy (vyššími)
+        \item Consent.exe --- prezentuje uživateli UAC okno, výsledky předá AIS (je spouštěno AIS)
+        \item virtuální ovladač (pro nekompatibilní aplikace)
+    \end{itemize}
+
+    \item Manifest --- vystavení, jaká práva program chce 
+
+\end{itemize}

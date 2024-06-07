@@ -1,0 +1,43 @@
+\subsection{OB-8 (BEK)}
+Zranitelnosti desktopových aplikací: Přetečení bufferu, DLL hijacking, chyby v C.
+
+\subsubsection*{Buffer overflow}
+\begin{itemize}
+    \item přetečení bufferu nastává, přepíšeme-li jeden či více bytů za koncem bufferu
+    \item přetečení může být jak na zásobníku, tak na haldě
+    \item tím se mohou pozměnit důležitá data, např. návratová adresa, zálogy registrů...
+    \item obrany:
+    \begin{itemize}
+        \item DEP (řeší OS) --- Data Execution Prevention --- stránky zásobníku jsou nespustitelné
+        \item ASLR (řeší OS) --- Address Space Layout Randomization --- náhodné rozvržení adresního prostoru, takže adres haldy, zásobníku i instrukcí, při každém spuštění se mění
+        \item kanárci (řeší si program sám) --- náhodné hodnoty hlídající zásobník, pokud se přepíšou, program zjistí že má problém
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{DLL Hijacking}
+\begin{itemize}
+    \item jedná se o podvržení dynamické knihovny
+    \item útočník vytvoří dynamickou knihovnu se stejným názvem jako knihovna, kterou hledá software, a dle algoritmu vyhledávání dll se může stát, že útočníkova verze bude upřednostněna
+    \item existuje indirect varianta, kdy útočník cílí na použití své dll jinou dll, která je aplikací vyžadována
+    \item bránit se lze nastavením konkrétního místa, kde se DLL má hledat (a nestahovat blbosti)
+\end{itemize}
+
+\subsubsection*{Chyby v C}
+\begin{itemize}
+    \item v c existuje mnoho různých funkcí pro práci se "stringy" (pole znaků)
+    \item základní varianty těchto funkcí vůbec neřeší délku bufferu
+    \item existují bezpečnější varianty které řeší velikost bufferu --- i ty ale musí být použity správně
+    \item pozor na ukončovací nulu, na různých platformách se k ní přistupuje různě
+    \item knihovna StrSafe --- Windows knihovna pro bezpečnou práci se stringy, systematické a jasné pojmenování
+    \item pozor na přetečení datového typu
+    \item pozor na vstup, vstup je zlo
+    \item jak mít bezpečnější kód (v C)?
+    \begin{itemize}
+        \item nepoužívat některé funkce
+        \item důsledně používat ochranu zásobníku
+        \item na každou skupinu funkcí/třídu napsat testy
+        \item nechávat kód kontrolovat další osobou
+        \item statická a dynamická analýza kódu
+        
+    \end{itemize}
+\end{itemize}

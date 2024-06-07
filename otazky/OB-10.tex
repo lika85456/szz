@@ -1,0 +1,26 @@
+\subsection{OB-10 (BEK)}
+Zranitelnosti typu injection.
+
+\begin{itemize}
+    \item Injekce je souhrnný název pro všechny situace, kdy v důsledku nesprávného ošetření vstupu dojde k tomu, že uživatelský vstup (což by z principu měla vždy být data) získá charakter kódu. Tedy jde o spuštění kódu (svého) útočníkem.
+    \item Injekce SQL
+    \begin{itemize}
+        \item běžný, snadno exploitovatelný útok s rozsáhlými následky (zvlášť, pokud je použit účet s vysokou úrovní oprávnění)
+        \item Obrana: vyhnout se dynamicky generovaným dotazům kde to jde, a důsledně kontrolovat vstup
+        \item nejlepším řešením jsou parametrizované dotazy
+    \end{itemize}
+    \item Injekce souborů
+    \begin{itemize}
+        \item jde o útok na include souborů, jejiž jméno je dynamické
+        \item server načte buď vzdálený útočníkův soubor, nebo nějaký nechtěný lokální soubor
+        \item do vstupu se místo přímého jména souboru zadá cesta k útočníkovu souboru
+        \item i přes local file inclusion lze spustit vlastní kód, jen je potřeba ho na server dostat jinak
+        \item obrana: kontrola includů, nepoužívání přímých odkazů, implementace chroot jailu (virtuální pros\-tře\-dí), vypnout v nastavení PHP include a otevírání cizích souborů
+    \end{itemize}
+    \item Cross Site Scripting
+    \begin{itemize}
+        \item XSS nastává, když se útočníkův vstup dostane do serverem generovaných stránek a chová se tam jako spustitelný skript
+        \item tímto skriptem může útočník např. ukrást cookie uživatelů
+        \item obrana: escapování znaků, whitelist pro znaky, používat hlavičku COntent Security Policy (definuje jaký externí obsah smí být načítán)
+    \end{itemize}
+\end{itemize}
