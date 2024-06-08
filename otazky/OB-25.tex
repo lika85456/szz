@@ -30,4 +30,35 @@
 	\end{itemize}
 \end{itemize}
 
-TODO
+\subsubsection*{Řízení přístupu v OS}
+\begin{itemize}
+	\item principy:
+	\begin{itemize}
+		\item izolace --- oddělení bezpečnostních domén
+		\item domény by neměly mít mnoho společných mechanismů
+		\item zprostředkování komunikace mezi doménami by mělo být fail-secure
+		\item pouze povolené domény by měly mít přístup ke zdroji
+	\end{itemize}
+	\item primitiva pro izolaci a zprostředkování --- autentizace, autorizace, auditování, accountability (úč\-to\-va\-tel\-nost?)
+	\item příklady izolace
+	\begin{itemize}
+		\item android --- každá aplikace má svoje user id, nemohou spolu komunikovat a mají omezený přístup k OS
+		\item iOS --- sice stejné user-id, ale všechny aplikace běží v chroot jailu --- každá má svoje virtuální prostředí a nemůže přistupovat k souborům mimo
+	\end{itemize}
+	\item obecný model řízení přístupu --- Trusted Computing Base (TCB)
+	\begin{itemize}
+		\item TCB komponenty jsou zodpovědné za vynucování bezpečnostních politik
+		\item Reference monitor --- komponenta TCB validující přístup ke zdrojům, vynucuje bezpečnostní politiky
+		\item TCB musí být kompletní (vše musí být vyalidováno přes TCB), izolované (chráněné před nedovolenou změnou) a ověřitelné (TCB splňuje návrhové specifikace)
+	\end{itemize}
+	\item multilevel security model --- různé úrovně důvěrnosti informací (open , confidential, secret, top secret) --- pochází z armády
+	\item multi-lateral security model --- odděluje různé kategorie informací
+	\item bezpečnostní politiky --- kdo nastavuje?
+	\begin{itemize}
+		\item Discretionary Access Control (DAC) --- nastavuje vlastník  --- typický příklad: ACL
+		\item Mandatory Access Control (MAC) --- v celém systému stejné politiky --- většinou víceúrovňový model
+	\end{itemize}
+	\item v SELinux le implementováno jak DAC tak MAC
+	\item SELinux --- více kategorií, v každé různé úrovně důvěrnosti
+	\item existuje i např. ve Windows, kontrola úrovně integrity (integrity level --- od untrusted (0) po installer (5))
+\end{itemize}
