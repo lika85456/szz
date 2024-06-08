@@ -1,0 +1,44 @@
+\subsection{SP-12 (LA1)}
+Matice: součin matic, regulární matice, inverzní matice a její výpočet, vlastní čísla matice a jejich výpočet, diagonalizace matice.
+
+\begin{itemize}
+	\item Jednotková matice
+	
+	Jednotkovou maticí řádu $n$ rozumíme čtvercovou matici $\textbf{E} \in T^{n,n}$ splňující: $\textbf{E}_{ij}$ je 1 pokud $j=i$, jinak je to 0.
+	
+	\item Diagonální matice
+	
+	Diagonální maticí řádu $n$ nazveme libovolnou čtvercovou matici $\textbf{A} \in T^{n,n}$ splňující $\textbf{A}_{ij}$ je 0 pokud $j \neq i$.
+	
+	\item Inverzní a regulární matice
+	
+	Buď $\textbf{A} \in T^{n,n}$. Matici $\textbf{B} \in T^{n,n}$ nazveme \textbf{inverzní maticí} k matici $\textbf{A}$, pokud platí $\textbf{AB} = \textbf{BA} = \textbf{E}$. Značíme $\textbf{B} = \textbf{A}^{-1}$. Matici $\textbf{A}$ nazveme \textbf{regulární}, pokud existuje matice, která je k ní inverzní. Pokud matice není regulární, je singulární.
+\end{itemize}
+
+\subsubsection*{Vlastní číslo a vektor}
+\begin{itemize}
+	\item číslo $\lambda \in \mathbb{C}$ nazýváme vlastním číslem matice $\textbf{A} \in \mathbb{C}^{n,n}$, právě když existuje nenulový vektor $\textbf{x} \in \mathbb{C}^n$ splňující $\textbf{A} \cdot \textbf{x} = \lambda\textbf{x}$
+	\item takový vektor nazýváme vlastním vektorem matice $\textbf{A}$ příslušejícím vlastnímu číslu $\lambda$
+	\item spektrem matice je množina všech vlastních čísel matice (ozn. $\sigma(\textbf{A})$)
+	
+	\item výpočet vlastních vektorů ke konkrétnímu vlastnímu číslu $\lambda$ --- řešení homogenní soustavy$(\textbf{A} - \lambda \textbf{E})$
+\end{itemize}
+
+\subsubsection*{Charakteristický polynom}
+Charakteristický polynom matice $\textbf{A} \in \mathbb{C}^{n,n}$ ($p_{\textbf{A}}$) je zobrazení definované jako: $p_{\textbf{A}}(z):= \text{det}(\textbf{A} - z\textbf{E})$, $z \in \mathbb{C}$
+
+Vlastní čísla matice jsou kořeny tohoto polynomu.
+
+\begin{itemize}
+	\item algebraická násobnost vlastního čísla --- násobnost jako kořene charakteristického polynomu
+	\item geometrická násobnost --- dimenze vlastního podprostoru příslušejícího číslu 
+\end{itemize}
+
+\subsubsection*{Podobnost matic}
+Matice \textbf{A} a \textbf{B} jsou podobné, pokud $\textbf{A} = \textbf{P}^{-1} \cdot \textbf{B} \cdot \textbf{P}$.
+
+\subsubsection*{Diagonalizovatelnost matice}
+\begin{itemize}
+	\item (čtvercová) matice je diagonalizovatelná, pokud podobná nějaké diagonální matici
+	\item matice je diagonalizovatelná, pokud součet geometrických násobností vlastních čísel je roven rozměru matice
+\end{itemize} 
