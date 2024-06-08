@@ -1,0 +1,110 @@
+\subsection{SP-11 (LA1)}
+Soustavy lineárních rovnic: Frobeniova věta a související pojmy, vlastnosti a popis množiny řešení, Gaussova eliminační metoda.
+
+\subsubsection*{Základní pojmy}
+\begin{itemize}
+	\item \textbf{Grupa} --- Nechť $M$ je neprázdná množina a $\circ$ : $M \times M \rightarrow M$ binární operace. Platí li:
+	\begin{itemize}
+		\item \textbf{asociativní zákon}:  $(\forall a, b, c \in M)(a \circ (b \circ c) = (a \circ b) \circ c)$
+		\item existence \textbf{neutrálního prvku}: existuje $e \in M$ tak, že $(\forall a \in M)(a \circ e = e \circ a = a)$
+		\item existence \textbf{inverzních prvků}: $(\forall a \in M)(\exists a^{-1} \in M)(a \circ a^{-1} = a^{-1} \circ a = e)$
+	\end{itemize}
+	říkáme, že uspořádaná dvojice $G=(M,\circ)$ je \textbf{grupa}.
+	\item Pokud navíc platí \textbf{komutativní zákon}: $(\forall a, b \in M)(a \circ b = b \circ a)$, mluvíme o \textbf{abelovské grupě}.
+	\item \textbf{Těleso} --- Nechť $M$ je neprázdná množina a $+$ : $M \times M \rightarrow M$, $\cdot$: $M \times M \rightarrow M$ dvě binární operace. Platí-li, že
+	\begin{itemize}
+		\item $(M,+)$ je \textit{abelovská grupa} (neutrální prvek 0 --- nulový prvek)
+		\item $(M \setminus \{0\}, \cdot)$ je grupa (neutrální prvek značíme 1 --- jednotkový prvek)
+		\item platí levý a pravý \textbf{distributivní zákon}: $(\forall a, b, c \in M)(a(b+c)=ab+ac \land (b+c)a = ba + ca)$ 
+	\end{itemize}
+	nazýváme uspořádanou trojici $T=(M,+,\cdot)$ tělesem.
+	\item Je-li navíc $(M \setminus \{0\}, \cdot)$ abelovská grupa, je $T$ \textbf{komutativní těleso}.
+\end{itemize}
+
+\subsubsection*{Maticový zápis SLR}
+\begin{itemize}
+	\item nechť $m,n \in \mathbb{N}, \textbf{A} \in T^{m,n},\textbf{b} \in T^{m}$
+	\item rovnici $\textbf{Ax} = \textbf{b}$ nazýváme soustavou $m$ lineárních rovnic pro $n$ neznámých $x_1, x_2,...,x_n$
+	\item vektor $\textbf{x} = \begin{pmatrix} x_1\\ x_2\\ \vdots\\ x_n \end{pmatrix}$ nazýváme \textbf{vektorem neznámých}
+	\item vektor $\textbf{b} = \begin{pmatrix} b_1\\ b_2\\ \vdots\\ b_n \end{pmatrix}$ nazýváme vektorem \textbf{pravých stran}
+	\item matici $\textbf{A}$ nazýváme \textbf{maticí soustavy}
+	\item matici $(\textbf{A} | \textbf{b})$ \textbf{rozšířenou maticí soustavy}
+	\item je-li $\textbf{b} = \theta \in T^m$, mluvíme o \textbf{homogenní soustavě}
+	\item soustavu $\textbf{Ax} = \theta$ nazýváme \textbf{přidruženou homogenní soustavou lineárních rovnic} k soustavě $\textbf{Ax} = \textbf{b}$
+	\item \textbf{množinu všech řešení soustavy $\textbf{Ax} = \textbf{b}$} značíme $S$ a \textbf{množinu řešení přidružené homogenní soustavy} $S_0$
+	
+\end{itemize}
+
+\subsubsection*{Horní stupňovitý tvar}
+\begin{itemize}
+	\item o matici $\textbf{D} \in T^{m,n}$ řekneme, že je v \textbf{horním stupňovitém tvaru}, jestliže jsou všechny řádky nulové ($\textbf{D} = \Theta$), nebo jsou splněny obě následující podmínky:
+	\begin{itemize}
+		\item případné nulové řádky jsou pouze v dolní části matice: existuje $k \in \hat{m}$ tak, že řádky 1 až $k$ matice $\textbf{D}$ jsou nenulové a ostatní řádky jsou nulové
+		\item v nenulových řádcích je vždy první nenulový prvek až za prvním nenulovým prvkem z předchozího řádku: máme-li $k$ z předchozího bodu a označíme-li pro každé $i \in \hat{k}$ index nejlevějšího nenulového prvku v $i$-tém řádku jako $j_i$, tj. $j_i =$ min$\{l \in \hat{n} | \textbf{D}_{il} \neq 0\}$ --- potom platí $j_1 < j_2 < ... < j_k$
+	\end{itemize}
+	\item je-li matice v HST, potom sloupcům , ve kterých se vyskytuje první nenulový prvek řádku, říkáme  \textbf{hlavní sloupce}, ostatním říkáme \textbf{vedlejší sloupce}
+	\item soustava $\textbf{Ax} = \textbf{b}$ je v HST, pokud je v HST rozšířená matice soustavy $(\textbf{A} | \textbf{b})$
+\end{itemize}
+
+\subsubsection*{Operace GEM}
+Pro matici $\textbf{A} \in T^{m,n}$ s prvky $a_{ij}$ definujeme tyto operace:
+\begin{itemize}
+	\item \textbf{(G1)} --- prohození dvou řádků
+	\item \textbf{(G2)} --- vynásobení jednoho řádku nenulovým číslem
+	\item \textbf{(G3)} --- přičtení libovolného násobku jednoho řádku k jinému řádku
+\end{itemize}
+
+\subsubsection*{Vektorový prostor}
+Nechť $T$ je libovolné těleso a $n \in \mathbb{N}$. Množinu $n$-tic $\{(x_1,...,x_n) | x_i \in T$ pro každé $i \in \hat{n}\}$ spolu s operacemi $+, \cdot$ definovaných po složkách takto: pro každé $\alpha \in T$ a pro každé $\textbf{x, y} \in T^n$ položíme
+	\begin{itemize}
+		\item $\textbf{x} + \textbf{y} = (x_1,...,x_n) + (y_1,...,y_n) := (x_1 + y_1,...,x_n + y_n)$
+		\item $\alpha \cdot \textbf{x} = \alpha \cdot (x_1,...,x_n) := (\alpha x_1,...,\alpha x_n)$
+	\end{itemize}
+nazýváme \textbf{vektorovým prostorem} $\textbf{T}^n$
+
+\subsubsection*{Podprostor}
+\begin{itemize}
+	\item Nechť $P$ je podmnožina $T^n$. Řekneme, že P je \textbf{podprostor} vektorového prostoru $T^n$, právě když platí:
+	\begin{itemize}
+		\item množina $P$ je neprázdná, tedy $P \neq \emptyset$
+		\item množina $P$ je uzavřená vůči sčítání vektorů v ní, tedy $(\forall \textbf{x, y} \in P)(\textbf{x} + \textbf{y} \in P)$
+		\item množina P je uzavřená vůči násobení vektorů v ní libovolným skalárem, tedy $(\forall \alpha \in T)(\forall \textbf{x} \in P)(\alpha \textbf{x}, \in P)$
+	\end{itemize}
+	vztah "být podprostorem" pak značíme $P \subset\subset T^n$
+	\item podprostory $\{\theta \}$ a $T^n$ vektorového prostoru $T^n$ nazýváme \textbf{triviálními podprostory}
+	\item každý podprostor $P \subset \subset T^n$, pro který současně platí $P \neq T^n$ nazýváme \textbf{vlastním podprostorem}
+\end{itemize}
+
+\subsubsection*{Lineární kombinace}
+\begin{itemize}
+	\item Nechť $\textbf{x} \in T^n$ a ($\textbf{x}_1,...,\textbf{x}_m$) je soubor vektorů z $T^n$. Říkáme, že vektor $\textbf{x}$ je lineární kombinací souboru ($\textbf{x}_1,...,\textbf{x}_m$), právě když existují čísla $\alpha_1,...,\alpha_m \in T$ taková, že \[\textbf{x} = \sum_{i=1}^m \alpha_i\textbf{x}_i \]
+	
+	\item čísla $\alpha_i$. $i \in \hat{m}$ nazýváme koeficienty lineární kombinace
+	\item jestliže jsou všechny koeficienty nulové, nazýváme takovou kombinaci triviální
+	\item v opačném případě se jedná o netriviální lineární kombinaci
+\end{itemize}
+
+\subsubsection*{Další pojmy}
+\begin{itemize}
+	\item Lineární (ne)závislost
+	
+	Nechť $(\textbf{x}_1,...,\textbf{x}_m)$ je soubor vektorů z $T^n$. Řekneme, že soubor je \textbf{lineárně nezávislý (LN)}, právě když pouze triviální lineární kombinace tohoto souboru je rovna nulovému vektoru $\theta$. V opačném případě je soubor nazýván \textbf{lineárně závislým (LZ)}.
+	
+	\item \textbf{lineární obal} souboru vektorů --- množina všech lineárních kombinací, značí se $\langle \textbf{x}_1,...,\textbf{x}_m \rangle$
+	\item soubor \textbf{generuje} podprostor $P$ právě když jeho lineární obal je roven podprostoru
+	\item LN soubor který generuje podprostor je jeho \textbf{báze}
+	\item \textbf{dimenze podprostoru} --- délka nejdelšího možného LN souboru z daného podprostoru
+\end{itemize}
+
+\subsubsection*{Frobeniova věta}
+Nechť $A \in T^{m, n}$ a $b \in T^{m,1}$.
+\begin{itemize}
+	\item soustava $m$ lineárních rovnic pro $n$ neznámých $\textbf{Ax} = \textbf{b}$ je řešitelná ($S \neq \emptyset$) právě tehdy, když \[h(\textbf{A}) = h(\textbf{A}|\textbf{b})\]
+	
+	Pokud platí, pak $ S = \tilde{\textbf{x}} + S_0$, kde $\tilde{\textbf{x}}$ je \textbf{partikulární řešení}, tj. $\textbf{A}\tilde{\textbf{x}} = \textbf{b}$.
+	\item množina řešení homogenní soustavy $\textbf{Ax} = \theta$ je podprostor dimenze $n - h(\textbf{A})$, neboli:
+	\begin{itemize}
+		\item pokud $h(\textbf{A}) = n$, pak $S_0 = \{\theta\}$
+		\item pokud $h(\textbf{A}) < n$, pak existuje LN soubor $(\textbf{z}_1,...,\textbf{z}_{n-h})$ vektorů z $T^n$ tak, že $S_0 = \langle \textbf{z}_1,...,\textbf{z}_{n-h} \rangle$
+	\end{itemize}
+\end{itemize}

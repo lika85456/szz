@@ -96,7 +96,7 @@ Asymetrické kryptosystémy (šifra RSA, Diffie-Hellman, RSA digitální podpis)
 	\item nepodepisuje se zpráva (moc dlouhá) ale její hash
 	\item bezkoliznost zaručuje, že je složité nalézt 2 dokumenty se stejným hashem --- proto lze podepisovat hash
 	\item \textbf{Bezkoliznost 2. řádu:} Hash funkce $h$ je odolná proti kolizi 2. řádu, jestliže pro jakýkoliv vzor $x$ je výpočetně nezvládnutelné nalézt 2. vzor $y \neq x$ tak, že  $h(x) = h(y)$
-	\item \textbf{Odolnost pro nalezení kolize 1. řádu:} pokud se hash funkce s hashem délky $n$ bude chovat jako náhodné orákulum, složitost nalezení kolize s 50 \% pravděpodobností je $\approx 2^{n \over 2}$ (narozeninový paradox)
+	\item \textbf{Odolnost pro nalezení kolize 1. řádu:} pokud se hash funkce s hashem délky $n$ bude chovat jako náhodné orákulum, složitost nalezení kolize s 50 \% pravděpodobností je $\approx 2^{\frac{n}{2}}$ (narozeninový paradox)
 	\item \textbf{Odolnost proti nalezení kolize 2. řádu:} pokud se hash funkce s hashem délky $n$ bude chovat jako náhodné orákulum, složitost nalezení 2. vzoru je $\approx 2^{n}$
 	\item pokud pro konkrétní hash funkci lze nalézat vzory/kolize rycheji, hovoříme o prolomení hashovací funkce
 	\item při hashování se typicky zpráva rozdělí na bloky, poslední blok se doplní (např. jednou 1 a pak samé 0, aby otisky zpráv co by na konci měly např. jen víc nul byly jiné)
