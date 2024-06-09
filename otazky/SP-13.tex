@@ -1,0 +1,94 @@
+\subsection{SP-13 (MA1)}
+Limita posloupnosti, limita a spojitost reálné funkce jedné reálné proměnné, nástroje pro výpočet limit, asymptotické chování funkcí a posloupností (horní, dolní a těsné asymptotické meze, asymptotická ekvivalence).
+
+\subsubsection*{Reálná čísla}
+Množinu reálných čísel $\mathbb{R}$ chápeme jako číselné těleso ($\mathbb{R},+,\cdot$), které je vybavené úplným uspořádáním $<$ a které splňuje axiom úplnosti.
+
+\subsubsection*{Rozšířená reálná osa}
+Množinu reálných řísel spolu se symboly $+\infty$ a $-\infty$, tedy množinu $\mathbb{R} \cup \{+\infty, -\infty\}$, nazýváme rozšířenou množinou reálných čísel (případně rozšířenou reálnou osou) a značíme $\overline{\mathbb{R}}$.
+
+\subsubsection*{Okolí bodu}
+\begin{itemize}
+	\item Nechť $a \in \mathbb{R}$ a $\epsilon \in \mathbb{R} \land \epsilon > 0$. Otevřený interval $(a - \epsilon, a + \epsilon)$ nazýváme \textbf{okolím bodu $a$ o poloměru $\epsilon$} a značíme $U_a(\epsilon)$. Někdy též o této množině mluvíme jako o \textbf{$\epsilon$-okolí bodu $a$}.
+	\item Nechť $a \in \mathbb{R}$ a $\epsilon \in \mathbb{R} \land \epsilon > 0$. Polouzavřený interval $\langle a, a + \epsilon)$,  respektive $(a - \epsilon, a \rangle$, nazýváme \textbf{pravým}, respektive \textbf{levým} $\epsilon$-okolí bodu $a$ a značíme ho $U_a^+(\epsilon)$, resp. $U_a^{\minus}(\epsilon)$.
+	\item Nechť $c\in \mathbb{R}$. Otevřený interval $(c, + \infty)$, resp. $(- \infty, c)$ nazýváme \textbf{okolím bodu $\pm \infty$} v $\mathbb{R}$, a značíme $U_{\pm\infty}(c)$.
+	\item Pod okolím bodu $a \in \overline{\mathbb{R}}$ (značíme $U_a$) máme na mysli buď klasicky okolí $U_a(\epsilon)$ pro nějaké $a \in \mathbb{R}$ a $\epsilon > 0$, nebo okolí $U_{\pm \infty}(c)$ pro nějaké $c \in \mathbb{R}$.
+\end{itemize}
+
+\subsubsection*{Hromadný bod množiny}
+Bod $\alpha \in \overline{\mathbb{R}}$ nazýváme \textbf{hromadným bodem množiny} $M \subset \mathbb{R}$, právě když v každém okolí $U_\alpha$ bodu $\alpha$ leží nějaký prvek množiny $M$ různý od $\alpha$.
+
+\subsubsection*{Reálná funkce a vlastnosti}
+\begin{itemize}
+	\item mějme $n \in \mathbb{N}$ a $A \subset \mathbb{R}^n$ neprázdnou množinu --- zobrazení $f$ neprázdné množiny $A$ do množiny $\mathbb{R}$ ($f: A \rightarrow \mathbb{R}$) nazýváme \textbf{reálnou funkcí}
+	\item množina $A$ je definiční obor funkce  $f$, značíme $D_f$
+	\item obor hodnot funkce $f$ ($H_f$) --- $H_f:= \{y \in \mathbb{R} \mid (\exists x \in A)(f(x) = y)\}$
+	\item zobrazení $f: D_f \rightarrow \mathbb{R}$, kde $D_f \subset \mathbb{R}$ je neprázdná množina reálných čísel, nazýváme \textbf{reálnou funkcí reálné proměnné}
+	\item omezená funkce --- funkce s omezeným definičním oborem (existuje konstanta $K \in \mathbb{R}$ tak, že $|f(x)| \leq K$)
+	\item konstantní funkce --- funkce, kde pro všechna $x \in D_f$ platí $f(x) = c$, $c \in \mathbb{R}$
+	\item monotónní funkce --- klesající nebo rostoucí
+	\item ryze monotónní funkce --- ostře rostoucí či ostře klesající
+	\item sudá funkce --- funkce se symetrickým $D_f$ vůči počátku, pro kterou platí $f(-x) = f(x)$ (zrcadlově dle osy $y$)
+	\item lichá funkce --- funkce se symetrickým $D_f$ vůči počátku, pro kterou platí $f(-x) = -f(x)$ (zrcadlově dle osy 1. a 3. kvadrantu)
+	\item periodická funkce --- perioda $T$ (konstanta), pro každé $x \in D_f$ platí $f(x \pm T) = f(x)$
+\end{itemize}
+
+\subsubsection*{Asymptotické meze}
+\begin{itemize}
+	\item mějme 2 funkce $f, g$ a bod $a \in \overline{\mathbb{R}}$ takový, že $a$ je hromadným bodem množiny $D_f \cap D_g$ a existuje okolí $V_a$ splňující $V_a \cap D_f = V_a \cap D_g$
+	\item řekneme, že funkce $f$ je\textbf{ asymptoticky shora omezená funkcí $g$ pro $x$ jdoucí k $a$}, symbolicky $f(x) = \mathcal{O}(g(x))$ pro $x \rightarrow a$, právě když existuje kladná konstanta $c \in \mathbb{R}$ a okolí $U_a$ bodu $a$ tak, že pro všechna $x \in (U_a \cap D_f \cap D_g) \setminus \{a\}$ platí $|f(x)| \leq c \cdot |g(x)|$
+	\item řekneme, že funkce $f$ je\textbf{ asymptoticky shora striktně omezená funkcí $g$ pro $x$ jdoucí k $a$}, symbolicky $f(x) = o(g(x))$ pro $x \rightarrow a$, právě když \textit{pro každé} kladné $c \in \mathbb{R}$ existuje okolí $U_a$ bodu $a$ tak, že pro všechna $x \in (U_a \cap D_f \cap D_g) \setminus \{a\}$ platí $|f(x)| < c \cdot |g(x)|$
+\end{itemize}
+
+\subsubsection*{Posloupnost}
+Zobrazení množiny přirozených čísel $\mathbb{N}$ do množiny reálných čísel $\mathbb{R}$ nazýváme reálná číselná posloupnost. Podobné vlastnosti jako u funkcí:
+\begin{itemize}
+	\item (ostře) stoupající/klesající, (ryze) monotónní, konstantní, omezená
+	\item hromadný bod má v každém jeho okolí nekonečně mnoho členů dané posloupnosti
+\end{itemize}
+
+\subsubsection*{Podposloupnost (vybraná posloupnost)}
+Nechť $(a_n)_{n=1}^\infty$ je libovolná posloupnost a $(k_n)_{n=1}^\infty$ je ostře rostoucí posloupnost přirozených čísel. Pak posloupnost $(a_{k_n})_{n=1}^\infty$ nazýváme posloupností vybranou z posloupnosti $(a_n)_{n=1}^\infty$, nebo také podposloupností.
+
+\subsubsection*{Limita číselné posloupnosti}
+Reálná posloupnost $(a_n)^\infty_{n=1}$ má limitu $\alpha \in \overline{\mathbb{R}}$, právě když pro každé okolí bodu $\alpha$ lze nalézt $N \in \mathbb{N}$ takové, že pro všechna $n \in \mathbb{N}$ větší nebo rovno $N$ platí $a_n \in U_\alpha$. V symbolech: \[(\forall U_\alpha)(\exists N \in \mathbb{N})(\forall n \in \mathbb{N})(n \geq N \Rightarrow a_n \in U_\alpha)\]
+Tuto skutečnost můžeme zapsat několika ekvivalentními způsoby, a to: \[\lim_{n\to\infty} a_n = \alpha \text{ nebo } \lim a_n = \alpha \text{ nebo } a_n\to\alpha \]
+
+\subsubsection*{Limita funkce}
+Mějme funkci $f: A \rightarrow \mathbb{R}$, hromadný bod $a \in \overline{\mathbb{R}}$ množiny $A$ a bod $b \in \overline{\mathbb{R}}$. Funkce $f$ má v bodě $a$ limitu rovnou $b$, právě když pro každé okolí $U_b$ bodu $b$ existuje okolí $U_a$ bodu $a$ takové, že pokud $x \in U_a \cap A$ a $x \neq a$ pak $f(x) \in U_b$.
+\[(\forall U_b)(\exists U_a)(\forall x \in (A \cap U_a) \setminus \{a\})(f(x) \in U_b)\]
+
+\subsubsection*{Asymptotická ekvivalence}
+Mějme dvě funkce $f$, $g$ a bod $a \in \overline{\mathbb{R}}$ takový, že $a$  je hromadným bodem množiny $D_f \cap D_g$ a existuje okolí $V_a$ splňující $V_a \cap D_d = V_a \cap D_g$. Řekneme, že funkce $f$ je asymptoticky ekvivalentní funkci $g$ pro $x$ jdoucí k $a$ ($f(x) \sim g(x) \text{ pro } x\to a$) právě když existuje okolí bodu $a$ a funkce $u$ definovaná na $U_a$ pro jejíž limitu v bodě $a$ platí $\lim_{x\to a} u(x) = 1$ tak, že pro všechna $x \in U_a \cap D_f \cap D_g$ platí $f(x) = u(x)g(x)$.
+
+\subsubsection*{Konvergentní posloupnost}
+Posloupnost je konvergentní, pokud $\lim_{n\to\infty} a_n \in \mathbb{R}$, jinak je divergentní.
+
+\subsubsection*{Podílové kritérium pro posloupnosti}
+Buď $(a_n)_{n=1}^{\infty}$ posloupnost kladných čísel a nechť existuje limita $$q:= \lim_{n\to\infty} \frac{a_{n+1}}{a_n} $$
+Potom platí následující 2 implikace:
+\begin{itemize}
+	\item pokud $q < 1$, pak limita posloupnosti $(a_n)_{n=1}^{\infty}$ je rovna nule
+	\item  pokud $q>1$, pak je limita posloupnosti rovna $+\infty$
+\end{itemize}
+
+\subsubsection*{Spojitost}
+\begin{itemize}
+	\item nechť $f$ je reálná funkce reálné proměnné a nechť bod $a \in D_f$
+	\item řekneme, že funkce $f$ je spojitá v bodě $ a$, právě když pro její limitu v bode $a$ platí $\lim_{x\to a} f(x) = f(a)$
+	\item funkce $f$ je spojitá v bodě $a$ zprava, právě když pro jednostrannou limitu $\lim_{x\to a+} f(x) = f(a)$
+	\item funkce $f$ je spojitá v bodě $a$ zprava, právě když pro jednostrannou limitu $\lim_{x\to a-} f(x) = f(a)$
+	\item funkce $f$ je spojitá na intervalu $J$, právě když $f|_J$ ($f$ zůženo na $J$) je spojitá v každém bodě intervalu $J$
+	\item funkce $f$ je spojitá, právě když je $f$ spojitá v každém bodě svého definičního oboru
+\end{itemize}
+
+\subsubsection*{Nástroje na počítání limit}
+\begin{itemize}
+	\item limita součtu funkcí je součtem limit
+	\item limita součinu funkcí je součinem limit
+	\item limita podílu funkcí je podíl limit
+	\item vytlačení do nekonečna (2 funkce, v okolí bodu $a$ mají vztah $\leq$, pokud menší má limitu $+\infty$ tak i větší a obráceně)
+	\item o 2 policajtech (limita sevřené funkce)
+	\item limita složené funkce 
+	\item podílové kritérium (jen posloupnosti)
+\end{itemize}
