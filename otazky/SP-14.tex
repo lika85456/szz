@@ -1,0 +1,52 @@
+\subsection{SP-14 (MA1)}
+Diferenciální počet reálné funkce jedné reálné proměnné: derivace a její geometrický význam, vztah derivací funkce s její monotonií a konvexitou/konkavitou, lokální extrémy funkce jedné proměnné a metody jejich hledání, asymptoty funkce.
+
+\subsubsection*{Derivace funkce v bodě}
+Nechť $f$ je funkce definovaná na okolí bodu $a \in \mathbb{R}$. Pokud existuje limita $$\lim_{x\to a} \frac{f(x) - f(a)}{x - a}$$
+nazveme její hodnotu \textbf{derivací funkce $f$ v bodě $a$} a označíme $f'(a)$. Pokud je tato limita konečná, řekneme, že $f$ je \textbf{diferencovatelná v bodě $a$}.
+
+\subsubsection*{Derivace}
+Buď $f$ funkce s definičním oborem $D_f$. Nechť $M$ označuje množinu všech $a \in D_f$ takových, že $f$ má konečnou derivaci v bodě $a$. \textbf{Derivací funkce $f$} nazýváme funkci s definičním oborem $M$, která každému $x \in M$ přiřadí $f'(x)$. Tuto funkci značíme $f'$.
+
+\subsubsection*{Tečna}
+Mějme funkci $f$ a bod $a \in D_f$ a nechť existuje $f'(a)$. Tečnou funkce $f$ v bodě $a$ nazýváme:
+
+\begin{itemize}
+	\item přímku s rovnicí $x = a$, je-li funkce $f$ spojitá v bodě $a$ a $f'(a) = \pm \infty$
+	\item přímku s rovnicí $y = f(a) + f'(a)(x-a)$ je-li $f'(a) \in \mathbb{R}$ (tedy pokud je diferencovatelná v $a$)
+\end{itemize}
+
+\subsubsection*{Věty}
+\begin{itemize}
+	\item je-li funkce $f$ diferencovatelná v bodě $a$, pak je i spojitá v bodě $a$
+	\item derivace součtu funkcí je součet derivací
+	\item derivace součinu: $(f \cdot g)'(a) = f'(a)g(a) + f(a)g'(a)$
+	\item derivace podílu: $(\frac{f}{g})'(a) = \frac{f'(a)g(a) - f(a)g'(a)}{g(a)^2}$, pokud $g(a) \neq 0$
+	\item derivace složené funkce je součin derivace vnější'(vnitřní($x$)) a derivace vnitřní'($x$)
+	\item derivace inverzní funkce: $f'(c) = \frac{1}{(f^{-1})'(f(c))}$
+\end{itemize}
+
+\subsubsection*{Analýza průběhu funkce}
+\begin{itemize}
+	\item minimum, maximum, infimum, supremum
+	\item lokální maximum, lokální minimum, globální...
+	\item Rolleova věta --- funkce je spojitá na $\langle a,b\rangle$, má derivaci v každém bodě $(a,b)$ a $f(a) = f(b)$ --- pak existuje bod $c \in (a,b)$, tak že $f'(c) = 0$
+	\item Lagrangeova věta (o přírůstku funkce) --- f je spojitá na $\langle a,b\rangle$, má derivaci v každém bodě intervalu $(a,b)$ --- potom existuje bod $c \in (a, b)$ tak, že $f'(c) = \frac{f(b) - f(a)}{b - a}$
+\end{itemize}
+
+\subsubsection*{l'Hospitalovo pravidlo}
+Nechť pro funkce $f$ a $g$ a bod $a \in \overline{\mathbb{R}}$ platí:
+\begin{itemize}
+	\item $\lim_a f = \lim_a g nebo \lim_a |g| = +\infty$
+	\item existuje okolí $U_a$ bodu $a$ splňující $U_a \setminus \{a\} \subset D_{f/g} \cap d_{f'/g'}$
+	\item existuje limita podílu derivací $\lim_a \frac{f'}{g'}$
+\end{itemize}
+Potom existuje $\lim_a \frac{f}{g} = \lim_a \frac{f'}{g'}$.
+
+\subsubsection*{Inflexní bod}
+Nechť $f$ je spojitá  v bodě $c$. Bod $c$ nazýváme inflexním bodem funkce $f$, právě když existuje $\delta > 0$ takové, že $f$ je ryze konvexní na intervalu $(c - \delta, c)$ a ryze konkávní na intervalu $(c, c + \delta)$, nebo naopak.
+
+\subsubsection*{Asymptoty funkce}
+Řekneme, že funkce $f$ má v bodě $a \in \mathbb{R}$ asymptotu $x = a$, právě když limita $\lim_{x\to a\pm}$ je rovna $\pm \infty$. Řekneme, že přímka $y = kx + q$ je asymptotou funkce $f$ v $+\infty$ nebo $-\infty$, pokud $$lim_{x\to\pm\infty} (f(x) - kx - q) = 0$$
+$$k = \lim_{x\to\pm\infty} \frac{f(x)}{x}$$
+$$q = \lim_{x\to\pm\infty} f(x) - kx$$
