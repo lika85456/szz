@@ -1,0 +1,95 @@
+\subsection{SP-16 (MA2)}
+Funkce více proměnných: diferenciální počet funkcí více proměnných (limita, parciální derivace, derivace, gradient, Hessova matice), kvadratické formy a jejich definitnosti, analytická metoda hledání lokálních extrémů funkcí více proměnných (bez omezení).
+
+\subsubsection*{Euklidovská norma a vzdálenost}
+Euklidovskou normu vektoru $\textbf{x} \in \mathbb{R}^n$ definujeme předpisem $$ \| \textbf{x} \| := \sqrt{\sum_{j=1}^n x^2_j}$$
+Euklidovskou vzdálenost dvou bodů $\textbf{x} \in \mathbb{R}^n$ a $\textbf{y} \in \mathbb{R}^n$ pak představuje číslo $$d(\textbf{x},\textbf{y}) := \| \textbf{x} - \textbf{y} \| = \sqrt{\sum_{j=1}^n (x_j - y_j)^2}$$
+
+\subsubsection*{Nerovnosti}
+\begin{itemize}
+	\item $\langle \textbf{x} | \textbf{y} \rangle$ je skalární součin vektorů (součet součinů čísel na stejné pozici)
+	\item Schwarzova nerovnost --- pro každé $\textbf{x}, \textbf{y} \in \mathbb{R}^n$ platí nerovnost $| \langle \textbf{x} | \textbf{y} \rangle | \leq \|x\| \cdot \|y\|$, navíc rovnost nastává právě tehdy, když jeden z vektorů je násobkem druhého
+	\item trojúhelníková nerovnost --- pro každé $\textbf{x}, \textbf{y} \in \mathbb{R}^n$ platí $\|\textbf{x} + \textbf{y} \| \leq \|\textbf{x}\| + \| \textbf{y} \|$
+\end{itemize}
+
+\subsubsection*{Okolí bodu}
+Mějme bod $\textbf{a} \in \mathbb{R}^n$ a poloměr $\epsilon > 0$. Potom okolím bodu $\textbf{a}$ o poloměru $\epsilon$ nazýváme množinu všech bodů $\textbf{x} \in \mathbb{R}^n$, jejichž vzdálenost od bodu $\textbf{a}$ je menší než $\epsilon$ a značíme ho $U_\textbf{a}(\epsilon)$. Tedy:
+$$U_\textbf{a}(\epsilon) := \{\textbf{x} \in \mathbb{R}^n \mid d(\textbf{x},\textbf{a}) < \epsilon\} \subset \mathbb{R}^n$$
+
+\subsubsection*{Hromadný bod}
+Bod $\textbf{a} \in \mathbb{R}^n$ nazýváme hromadným bodem množiny $M \subset \mathbb{R}^n$, právě když v každém okolí bodu $\textbf{a}$ leží bod množiny $M$ různý od $\textbf{a}$.
+
+\subsubsection*{Vnitřní bod množiny}
+O bodu $\textbf{a} \in M \subset \mathbb{R}^n$ řekneme, že je vnitřním bodem množiny $M$, právě když existuje okolí $U_\textbf{a}$ bodu $\textbf{a}$ takové, že $U_\textbf{a} \in M$. 
+
+\subsubsection*{Otevřená množina}
+O množině $M \subset \mathbb{R}^n$ řekneme, že je otevřená, právě když pro každý bod $\textbf{a} \in M$ existuje okolí $U_\textbf{a}$ takové, že $U_\textbf{a} \in M$. 
+
+\subsubsection*{Limita vektorové posloupnosti}
+Řekneme, že posloupnost $(\textbf{x}_k)_{k=1}^\infty$ vektorů $\textbf{x}_k \in \mathbb{R}^n$ má limitu (případně konverguje k) $\textbf{a} \in \mathbb{R}^n$, právě když pro každé okolí bodu $U_\textbf{a}$ bodu $\textbf{a}$ existuje $N \in \mathbb{N}$ takové, že pro každé přirozené $k > N$ platí $\textbf{x}_k \in U_\textbf{a}$. Tento fakt značíme $\lim_{k\to\infty} \textbf{x}_k = \textbf{a}$. Vektorovou posloupnost mající limitu, která je dle definice nutně prvkem $\mathbb{R}^n$, nazýváme konvergentní. Všechny ostatní posloupnosti jsou divergentní.
+
+\subsubsection*{Limita funkce více proměnných}
+Mějme funkci $n$ reálných proměnných $F: D_F \rightarrow \mathbb{R}^m, D_F \subset \mathbb{R}^n$ a hromadný bod $\textbf{a}$ množiny $D_F$. Potom funkce $F$ má v bodě $\textbf{a}$ limitu $\textbf{b} \in \mathbb{R}^m$, právě když pro každé okolí $U_\textbf{b}$ existuje okolí $U_\textbf{a}$ takové, že kdykoliv $\textbf{x} \in (U_\textbf{a} \cap D_f) \setminus \{\textbf{a}\}$ pak platí $F(\textbf{x}) \in U_\textbf{b}$.
+Symbolicky zapisujeme jako $\lim_{\textbf{x} \to \textbf{a}} F(\textbf{x}) = \textbf{b}$.
+Pokud $m = 1$, pak lze výsledek vybírat z rozšířené reálné osy, tedy navíc s prvky $+\infty$ a $-\infty$.
+
+\subsubsection*{Parciální derivace}
+\begin{itemize}
+	\item Mějme reálnou funkci $n$ reálných proměnných $f: D_f \rightarrow \mathbb{R}, D_f \subset \mathbb{R}^n$, definovanou na okolí bodu $\textbf{a} \in D_f$ a $j \in \hat{n} $. Existuje-li limita $$\lim_{h\to 0} \frac{f(\textbf{a} + h\textbf{e}_j) - f(\textbf{a})}{h}$$
+pak její hodnotu nazýváme parciální derivací funkce $f$ v bodě $\textbf{a}$ podle $j$-té proměnné a značíme ji $\frac{\partial f}{\partial x_j}(\textbf{a})$, případně $\partial_{x_j} f(\textbf{a})$.
+	\item označme $M$ jako množinu všech vnitřních bodů $\textbf{a}$ množiny $D_f$, v kterých existuje parciální derivace. Potom funkci přiřazující hodnotu $\frac{\partial f}{\partial x_j}(\textbf{a})$ každému $\textbf{a} \in M \subset \mathbb{R}^n$ nazýváme parciální derivací funkce $f$ podle $j$-té proměnné a značíme ji $\frac{\partial f}{\partial x_j}$. případně $\partial_{x_j} f$.
+\end{itemize}
+
+\subsubsection*{Gradient}
+Mějme reálnou funkci $n$ reálných proměnných $f: D_f \rightarrow \mathbb{R}, D_f \subset \mathbb{R}^n$ mající všechny parciální derivace v bodě $\textbf{a} \in D_f$. Potom řádkový vektor $$ (\frac{\partial f}{\partial x_1}(\textbf{a}), \frac{\partial f}{\partial x_2}(\textbf{a}), \ldots , \frac{\partial f}{\partial x_n}(\textbf{a})) \in \mathbb{R}^{1,n}$$
+nazýváme gradientem funkce $f$ v bodě $\textbf{a}$ a používáme pro něj značení $\nabla f(\textbf{a})$ nebo $\text{grad}f(\textbf{a})$.
+
+\subsubsection*{Derivace vektorové funkce}
+Mějme zobrazení $F: D_F \rightarrow \mathbb{R}^m, D_F \subset \mathbb{R}^n$, definované na okolí bodu $\textbf{a}$. Derivací zobrazení $F$ v bodě $\textbf{a}$ nazýváme matici $DF(\textbf{a}) \in \mathbb{R}^{m, n}$ splňující: $$\lim_{\textbf{x}\to \textbf{a}} \frac{\|F(\textbf{x}) - F(\textbf{a}) - DF(\textbf{a})\cdot (\textbf{x} - \textbf{a})\|}{\| \textbf{x} - \textbf{a}\|} = 0$$
+
+\subsubsection*{Složky matice $DF(\textbf{a})$}
+Pokud má zobrazení $F: D_f \rightarrow \mathbb{R}^m, D_f \subset \mathbb{R}^n$, definované na okolí bodu $\textbf{a}$, derivaci $DF(\textbf{a}) \in \mathbb{R}^{m,n}$ v bodě $\textbf{a}$, potom $$DF(\textbf{a}) = \begin{pmatrix} 
+\frac{\partial F_1}{\partial x_1}(\textbf{a}) & \cdots & \frac{\partial F_1}{\partial x_n}(\textbf{a})\\
+\vdots & \ddots & \vdots \\
+\frac{\partial F_n}{\partial x_1}(\textbf{a}) & \cdots & \frac{\partial F_n}{\partial x_n}(\textbf{a}) 
+\end{pmatrix}$$
+
+\subsubsection*{Hessova matice}
+Na derivaci, resp. gradient, funkce $f: D_f \rightarrow \mathbb{R}, D_f \subset \mathbb{R}^n$, lze nahlížet jako na zobrazení $Df: A \rightarrow \mathbb{R}^n, A \subset	D_f$, jeho derivací v bodě $\textbf{a} \in A$ je pak matice typu $\mathbb{R}^{n,n}$, kterou nazýváme Hessovou maticí a znaříme $\nabla^2 f(\textbf{a})$. Pokud existuje, pak platí:
+$$\nabla^2 f(\textbf{a}) = \begin{pmatrix} 
+\frac{\partial^2 f}{\partial x_1^2}(\textbf{a}) & \frac{\partial^2 f}{\partial x_2 \partial x_1}(\textbf{a}) & \cdots & \frac{\partial^2 f}{\partial x_n \partial x_1}(\textbf{a})\\
+\frac{\partial^2 f}{\partial x_1 \partial x_2}(\textbf{a}) & \frac{\partial^2 f}{\partial x_2^2}(\textbf{a}) & \cdots & \frac{\partial^2 f}{\partial x_n \partial x_2}(\textbf{a}) \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial^2 f}{\partial x_1 \partial x_n}(\textbf{a}) & \frac{\partial^2 f}{\partial x_2 \partial x_n}(\textbf{a}) & \cdots & \frac{\partial^2 f}{\partial x_n^2}(\textbf{a}) 
+\end{pmatrix}$$
+
+\subsubsection*{Kvadratická forma}
+Funkci $q: \mathbb{R}^n \rightarrow \mathbb{R}$ nazýváme kvadratickou formou, právě když existuje symetrická matice $M \in \mathbb{R}^{n,n}$ splňující $$q(\textbf{x}) = \sum_{j,k=1}^n M_{j,k}x_j x_k, \quad \text{ pro každé } \textbf{x} = (x_1,...,x_n)^T \in \mathbb{R}^n$$
+
+\subsubsection*{Typy definitnosti kvadratických forem}
+Kvadratickou formu $q: \mathbb{R}^n \rightarrow \mathbb{R}$ nazveme:
+\begin{itemize}
+	\item pozitivně definitní (PD), právě když $q(\textbf{x}) > 0$ pro každé nenulové $\textbf{x} \in \mathbb{R}^n$
+	\item pozitivně semidefinitní (PSD), právě když $q(\textbf{x}) \geq 0$ pro každé $\textbf{x} \in \mathbb{R}^n$
+	\item indefinitní (ID), právě když existují vektory $\textbf{x}, \textbf{y} \in \mathbb{R}^n$ splňující  $q(\textbf{x}) > 0$ a $q(\textbf{y}) < 0$
+	\item negativně semidefinitní (NSD), právě když $q(\textbf{x}) \leq 0$ pro každé $\textbf{x} \in \mathbb{R}^n$
+	\item negativně definitní (ND), právě když $q(\textbf{x}) < 0$ pro každé nenulové $\textbf{x} \in \mathbb{R}^n$
+\end{itemize}
+
+\subsubsection*{Určování definitnosti KF}
+\begin{itemize}
+	\item pokud má symetrická matice $M$ na diagonále prvky s různým znaménkem, potom je ID
+	\item podle vlastních čísel (pouze kladná $\Rightarrow$ PD, nezáporná $\Rightarrow$ PSD, různá znaménka $\Rightarrow$ ID,...)
+	\item podle úpravy na čtverce
+	\item Sylvesterovo kritérium --- determinanty postupně pro podmatice z levého horního rohu, pokud vždy kladné číslo $\Rightarrow$ PD, pokud se střídají $\Rightarrow$ ND
+\end{itemize}
+
+\subsubsection*{Lokální extrémy}
+\begin{itemize}
+	\item pokud existuje okolí bodu, kde je bod největší/nejmenší atd tak je to (ostré) lokální maximum/minimum
+	\item pokud je v bodě extrém, parciální derivace podle $j$-té proměnné buď je nula nebo neexistuje
+	\item pokud je v bodě extrém a existují všechny parciální derivace, gradient je nulový
+	\item jak hledat lokální extrémy? najdeme stacionární body (kde je gradient nula) a prozkoumáme
+	\item ve zkoumaných bodech vytvoříme Hessovu matici --- musí být aspoň PSD nebo NSD, aby mohl existovat extrém 
+	\item pokud je Hessova matice PD nebo ND, je to minimum/maximum (postačující podmínka)
+\end{itemize}

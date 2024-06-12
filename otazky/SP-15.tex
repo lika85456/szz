@@ -1,0 +1,89 @@
+\subsection{SP-15 (MA2)}
+Integrální počet funkce jedné proměnné (neurčitý integrál a Riemannův určitý integrál, metody integrace pomocí substituce a per partes), číselné řady a kritéria jejich konvergence, asymptotické odhady chování posloupností částečných součtů řad pomocí integrálu.
+
+\subsubsection*{Primitivní funkce}
+Nechť $f$ je definovaná na intervalu $(a, b)$, kde $-\infty \leq a < b \leq +\infty$. Funkci $F$ splňující podmínku $F'(x) = f(x)$ pro každé $x \in (a, b)$ nazýváme primitivní funkcí k funkci $f$ na intervalu $(a, b)$.
+
+\subsubsection*{Neurčitý integrál}
+Nechť k funkci $f$ existuje primitivní funkce na intervalu $(a, b)$. Množinu všech primitivních funkcí k funkci $f$ na $(a, b)$ nazýváme neurčitým integrálem a značíme jej $\int f$ nebo $\int f(x)$.
+
+\subsubsection*{Věty}
+\begin{itemize}
+    \item Nechť funkce $f$ je spojitá na intervalu $(a, b)$. Pak má funkce $f$ na tomto intervalu primitivní funkci.
+    \item $F + G$ je primitivní funkcí k $f + g$
+    \item $\alpha F$ je primitivní funkcí k $\alpha f$
+\end{itemize}
+
+\subsubsection*{Per Partes}
+Nechť funkce $f$ je diferencovatelná na intervalu $(a, b)$ a $G$ je primitivní funkce k funkci $g$ na intervalu $(a, b)$. Nechť existuje primitivní funkce k $fG'$. Potom existuje primitivní funkce k $fg$ a platí $$\int fg = fG - \int f'G$$
+
+\subsubsection*{Substituce}
+Nechť pro funkce $f$ a $\varphi$ platí:
+\begin{itemize}
+    \item $f$ má primitivní funkci $F$ na intervalu $(a,b)$
+    \item $\varphi$ je na intervalu $(\alpha, \beta)$ diferencovatelná
+    \item $\varphi((\alpha, \beta)) \subset (a,b)$
+\end{itemize}
+pak funkce $f(\varphi(x)) \cdot \varphi'(x)$ má primitivní funkci na intervalu $(\alpha, \beta)$ a platí $$\int f(\varphi(x)) \cdot \varphi'(x)dx = F(\varphi(x)) + C$$
+kde $C \in \mathbb{R}$ je  integrační konstanta.
+
+\subsubsection*{Riemannův určitý integrál}
+Mějme funkci definovanou na uzavřeném intervalu.
+\begin{itemize}
+    \item dělení intervalu --- interval hraničními body rozdělen na úseky
+    \item ekvidistantní dělení --- úseky jsou stejně dlouhé
+    \item dolní/horní součet funkce (na intervalu) --- dle dělení intervalu se pro každý úsek ručí infimum/supremum, a z toho se spočítá dolní/horní obdélník
+    \item dolní/horní integrál funkce na intervalu --- supremum dolních / infimum horních součtů
+    \item Riemannův integrál funkce na intervalu --- pokud se rovná dolní a horní integrál, tak je to jejich hodnota
+    \item pokud je na intervalu funkce spojitá, existuje Riemannův integrál
+\end{itemize}
+
+\subsubsection*{Zobecněný Riemannův integrál}
+Nechť $f$ je funkce definovaná na intervalu $\langle a,b)$ pro nějaké $a \in \mathbb{R}$ a $b \in (a, +\infty) \cup \{+\infty\}$, která má Riemannův integrál na intervalu $(a,c \rangle$ pro každé $c\in (a, b)$. Pokud existuje konečná limita $$\lim_{c\to b_{-}} \int_a^c f(x)\text{d}x$$
+pak její hodnotu značíme $$\int_a^b f(x)\text{d}x$$
+a nazýváme ji zobecněným Riemannovým integrálem funkce $f$ na intervalu $\langle a,b)$ a říkáme že integrál $\int_a^b f(x)\text{d}x$ konverguje.
+
+\subsubsection*{Číselná řada}
+Formální výraz tvaru \[ \sum_{k=n_0}^\infty a_k = a_{n_0} + a_{n_1} + \cdots\] kde $(a_k)^\infty_{k=n_0}$ je zadaná číselná posloupnost, nazýváme číselnou řadou. Pokud je posloupnost částečných součtů $(s_n)_{n=n_0}^\infty$ definovaná předpisem \[ s_n := \sum^n_{k=n_0} a_k, \quad n\in \mathbb{N}_0, n \geq n_0 \] konvergentní, nazýváme příslušnou řadu také konvergentní. V opačném případě o ní mluvíme jako o divergentní (číselné) řadě. Součtem konvergentní řady $\sum_{k=n_0}^\infty a_k$ a nazýváme hodnotu limity $\lim_{n\to\infty} s_n$.
+
+\subsubsection*{Kritéria konvergence číselných řad}
+\begin{itemize}
+	\item Nutná podmínka konvergence
+	
+	Pokud řada $\sum^\infty_{k=0} a_k$ konverguje, potom pro limitu jejích sčítanců platí $lim_{k\to\infty} a_k = 0$.
+	
+	\item Bolzano-Cauchy
+	
+	Řada $\sum_{k=0}^\infty a_k$ konverguje právě tehdy, když pro každé $\epsilon > 0$ existuje $n_0 \in \mathbb{R}$ tak, že pro každé přirozené $n \geq n_0$ a $p \in \mathbb{N}$ platí $|a_n + a_{n+1} + \cdots + a_{n+p}| < \epsilon$.
+	
+	\item Absolutní konvergence
+	
+	Řadu $\sum_{k=0}^\infty a_k$ nazýváme absolutně konvergentní, pokud číselná řada $\sum_{k=0}^\infty |a_k|$ konverguje. Pokud řada absolutně konverguje, potom konverguje.
+	
+	\item Leibnizovo kritérium
+	
+	Buď $(a_k)^\infty_{k=0}$ monotónní posloipnost konvergující k nule. Potom je řada $\sum_{k=0}^\infty (-1)^k a_k$ konvergentní.
+	
+	\item Srovnávací kritérium
+	
+	Buďte $\sum_{k=0}^\infty a_k$ a $\sum_{k=0}^\infty b_k$ číselné řady. Potom platí následující 2 tvrzení:
+	\begin{enumerate}
+		\item Nechť existuje $k_0 \in \mathbb{N}$ takové, že pro každé $k \in \mathbb{N}$ větší než $k_0$ platí nerovnosti $0 \leq |a_k| \leq b_k$ a nechť řada $\sum_{k=0}^\infty b_k$ konverguje. Potom řada $\sum_{k=0}^\infty a_k$ absolutně konverguje.
+		\item Nechť existuje $k_0 \in \mathbb{N}$ takové, že pro každé $k \in \mathbb{N}$ větší nebo rovno než $k_0$ platí nerovnosti $0 \leq a_k \leq b_k$ a $\sum_{k=0}^\infty a_k$ diverguje. potom i řada $\sum_{k=0}^\infty b_k$ diverguje.
+	\end{enumerate}
+	
+	\item d'Alembertovo kritérium
+	
+	Nechť $a_k > 0$ pro každé $k \in \mathbb{N}_0$. Pokud $\lim_{k\to\infty} \frac{a_{k+1}}{a_k} > 1$, potom řada $\sum_{k=0}^\infty a_k$ diverguje. Pokud ovšem $\lim_{k\to\infty} \frac{a_{k+1}}{a_k} < 1$, potom $\sum_{k=0}^\infty a_k$ konverguje. 
+\end{itemize}
+
+\subsubsection*{Odhad posloupnosti částečných součtů}
+Nechť $f$ je spojitá funkce na $\langle 1, +\infty )$ a $n \in \mathbb{N}$. Je-li $f$ klesající, pak platí $$f(n) + \int_1^n f(x)\text{d}x \leq \sum_{k=1}^n f(k) \leq f(1) + \int_1^n f(x)\text{d}x$$
+Je-li $f$ rostoucí, pak platí $$f(1) + \int_1^n f(x)\text{d}x \leq \sum_{k=1}^n f(k) \leq f(n) + \int_1^n f(x)\text{d}x$$
+
+\subsubsection*{Integrální kritérium}
+Buď $\sum_{k=0}^\infty a_k$ číselná řada s kladnými členy taková, že existuje spojitá funkce definovaná na $\langle 1, +\infty)$ taková, že $f(n) = a_n$ pro každé $n$. Potom:
+\begin{itemize}
+	\item pokud zobecněný Riemannův integrál $\int_1^\infty f(x)\text{d}x$ konverguje, pak číselná řada $\sum_{k=0}^\infty a_k$ konverguje
+	\item pokud zobecněný Riemannův integrál $\int_1^\infty f(x)\text{d}x$ diverguje, pak číselná řada $\sum_{k=0}^\infty a_k$ diverguje
+\end{itemize}
