@@ -1,2 +1,91 @@
 \subsection{SP-23 (PA2)}
 Abstraktní datový typ, jeho specifikace a implementace. Zásobník, fronta, pole, seznam, tabulka, množina. Implementace pomocí spojových struktur, stromů a pole.
+
+\subsubsection*{Klasické datové typy}
+\begin{itemize}
+	\item specifikují množinu hodnot
+	\item specifikují množinu operací s hodnotami
+	\item mají jasně stanovenou implementaci, tedy vnitřní reprezentaci hodnot a realizaci operací
+	\item dělíme na:
+	\begin{itemize}
+		\item jednoduché/primitivní --- nedělitelné/atomické hodnoty
+		\item strukturované --- skládají se ze složek
+		\item ukazatele --- adresy do paměti, závislé na typu na který ukazují
+		\item jiné --- např. funkce
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Abstraktní Datový Typ (ADT)}
+\begin{itemize}
+	\item specifikuje množinu hodnot a množinu operací nezávisle na implementaci
+	\item syntax je popsaná signaturou operace --- popis operace jako např. "\_ + \_ : int, int $\rightarrow$ int"
+	\item sémantika je popsána pomocí axiomů, slovně nebo jinak
+\end{itemize}
+
+\subsubsection*{Zásobník (stack)}
+\begin{itemize}
+	\item kontejner, kde nejnovější prvky jsou odebrány první (LIFO)
+	\item rozhraní: push(s, $x$), pop(s), top(s), isEmpty(s)
+	\item implementace:
+	\begin{itemize}
+		\item pomocí pole --- má omezení, buď musí být konstantní velikost, nebo v případě nafukovacího může být push() lineární
+		\item pomocí spojového seznamu
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Fronta (queue)}
+\begin{itemize}
+	\item kontejner, kde nejstarší prvky jsou odebrána první (FIFO)
+	\item rozhraní: push(q, $x$), pop(q), front(q), isEmpty(q)
+	\item implementace:
+	\begin{itemize}
+		\item pomocí pole --- má omezení, kromě problémy s velikostí je nutné pole "protočit" při operaci pop(), což je opět lineární 
+		\item pomocí spojového seznamu
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Pole}
+\begin{itemize}
+	\item kontejner, kde lze ke všem prvkům přistupovat přímo v čase $O(1)$
+	\item může být vícerozměrné (pak ale problémy s nafukováním)
+	\item implementace:
+	\begin{itemize}
+		\item pomocí jednorozměrného pole (lze i více dimenzí, např. ukládat řádky za sebe)
+		\item pomocí vícerozměrného pole 
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Seznam (list)}
+\begin{itemize}
+	\item kontejner, kde lze přistupovat ke všem prvkům
+	\item implementace:
+	\begin{itemize}
+		\item (obousměrný) spojový seznam (pozor, přístup a vkládání jinam než na konec/konce seznamu je lineární)
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Množina (set)}
+\begin{itemize}
+	\item kontejner, který obsahuje prvky bez duplikátů
+	\item implementace:
+	\begin{itemize}
+		\item seřazené/neseřazené pole --- fuj, bylo by to pomalý i na seřazeném
+		\item pomocí spojového seznamu (seřazeného) --- fuj
+		\item binární vyhledávací strom
+		\item hash table
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Tabulka (asi mapa?)}
+\begin{itemize}
+	\item kontejner, který obsahuje data identifikovaná klíčem
+	\item chová se jako množina, která má pod klíči navíc data
+	\item implementace:
+	\begin{itemize}
+		\item pole (klíče == indexy v poli)
+		\item pole (seřazené dle klíčů, obsahuje páry key-value)
+		\item spoják (seřazený dle klíčů, obsahuje páry key-value)
+		\item hash table
+		\item binární vyhledávací strom
+	\end{itemize}
+\end{itemize}
