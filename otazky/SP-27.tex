@@ -1,2 +1,76 @@
 \subsection{SP-27 (PST)}
 Základy matematické statistiky, náhodný výběr, bodové odhady pro střední hodnotu a rozptyl, intervalové odhady pro střední hodnotu, testování statistických hypotéz o střední hodnotě.
+
+\subsubsection*{Úvod}
+\begin{itemize}
+	\item na základě skutečných výsledků/dat vybíráme pravděpodobnostní model (tedy opačný přistup než u pravděpodobnosti)
+	\item nejprve odhadneme tvar rozdělení dle kontextu a zkušenosti
+	\item odhadneme parametry rozdělení
+	\begin{itemize}
+		\item bodové odhady --- určení nejpravděpodobnější hodnoty parametru
+		\item intervalové odhady --- určení intervalu, kde parametr leží s vysokou pravděpodobností
+	\end{itemize}
+	\item ověření správnosti modelu --- testování hypotéz
+\end{itemize}
+
+\subsubsection*{Bodové odhady}
+Chceme, aby odhady byly nestranné (střední hodnota odhadu byla rovna reálné hodnotě) a konzistentní (pro nekonečno pokusů se odhad musí rovnat reálu)
+Nejčastější bodové odhady:
+\begin{itemize}
+	\item výběrový průměr --- bodový odhad střední hodnoty
+	\item výběrový rozptyl --- bodový odhad rozptylu
+	\item výběrová směrodatná odchylka
+	\item $k$-tý výběrový moment
+	\item výběrová kovariance
+	\item výběrový korelační koeficient
+\end{itemize}
+
+Metoda momentů:
+\begin{itemize}
+	\item máme rozdělení určené $d$-rozměrným parametrem
+	\item musíme si tedy vypočítat prvních $d$ teoretických momentů
+	\item vyjádříme parametry jako funkce momentů
+	\item odhadneme teoretické momenty pomocí výběrových momentů
+	\item odhad rozptylu a střední hodnoty:
+	\begin{itemize}
+		\item první 2 momenty jsou: $$\text{E}X_i = \mu, \quad \text{E}X_i^2 = \text{var}X_i + (\text{E}X_i)^2 = \sigma^2 + \mu^2$$
+		\item parametry lze vyjádřit jako funkce momentů: $\mu = \text{E}X_i, \sigma^2 = \text{E}X_i^2 - (\text{E}X_i)^2$
+		\item odhadneme $\text{E}X_i$ pomocí $m_1$ a $\text{E}X_i^2$ pomocí $m_2$
+	\end{itemize}
+\end{itemize}
+Metoda maximální věrohodnosti:
+\begin{itemize}
+	\item vytvoříme věrohodnostní funkci
+	\item jako hodnotu parametru použijeme takovou hodnotu, která maximalizuje věrohodnostní funkci
+\end{itemize}
+
+\subsubsection*{Intervalové odhady}
+\begin{itemize}
+	\item Konfidenční intervaly / intervaly spolehlivosti pro konkrétní parametr $\theta$ zkoumaného rozdělení jsou takové meze $L$ a $U$, pro které $$P(L < \theta < U) = 1 - \alpha$$
+	\item oboustranný konfidenční interval pro střední hodnotu, pokud známe rozptyl, lze nalézt jako: $$(\bar{X}_n - \mathcal{Z}_{\alpha / 2} \frac{\sigma}{\sqrt{n}}, \bar{X}_n + \mathcal{Z}_{\alpha / 2} \frac{\sigma}{\sqrt{n}})$$ 
+kde $\mathcal{Z}$ značí kritickou hodnotu standardního normálního rozdělení
+	\item pokud neznáme rozptyl, dosadíme výběrovou směrodatnou odchylku a místo normálního rozdělení po\-u\-ži\-je\-me Studentovo $t$-rozdělení $t_{n-1}$
+\end{itemize}
+
+\subsubsection*{Testování hypotéz}
+\begin{itemize}
+	\item máme k dispozici náhodný výběr, chceme ověřit nějaké tvrzení o rozdělení dat
+	\item tvrzení = hypotéza
+	\item testujeme nulovou hypotézu $H_0$ oproti alternativní hypotéze $H_A$, výsledkem je potvrzení/zamítnutí $H_0$
+	\item chyba prvního druhu --- zamítneme, přestože platí
+	\item chyba druhého druhu --- nezamítneme, přestože neplatí
+	\item typicky máme pod kontrolou pouze jednu z předchozích chyb
+	\item chceme, aby pravděpodobnost chyby prvního druhu byla nejvýše hladině významnosti testu $\alpha$
+	\item síla testu je $1 - P(\text{chyba druhého druhu})$
+	\item za nulovou hypotézu volíme tu, jejíž neoprávněné zamítnutí je závažnější 
+	\item zamítnutí $H_0$ je silný výsledek
+	\item postup:
+	\begin{itemize}
+		\item typicky chceme prozkoumat, zda nějaký parametr rozdělení $\theta$ odpovídá nějaké udávané/zkoumané hodnotě
+		\item $H_0: \theta = \theta_0$
+		\item $H_A: \theta \neq \theta_0$
+		\item sestavíme konfidenční interval pro $\theta$ na základě náhodného výběru
+		\item otestujeme, zda $\theta_0 \in (L,U)$
+		\item pokud ne, $H_0$ zamítáme, jinak nezamítáme
+	\end{itemize}
+\end{itemize}
