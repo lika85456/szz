@@ -1,0 +1,98 @@
+\subsection{SP-22 (PA2)}
+Objektově orientované programování v C++, zapouzdření, dědičnost, atributy a metody, statické atributy a metody, virtuální metody, polymorfismus, abstraktní třídy, výjimky, šablony, přetěžování operátorů, mělká a hluboká kopie.
+
+\subsubsection*{Objektové programování obecně}
+\begin{itemize}
+	\item základem je objekt
+	\item objekt je obdoba proměnné z neobjektového programování
+	\item obdobou datového typu je třída
+	\item objekt má nějaký vnitřní stav, reprezentovaný hodnotami atributů (členských proměnných)
+	\item operace nad objekty se nazývají metody (členské funkce) a jsou stejně jako atributy definované ve třídě
+	\item metody se dají chápat jako služby/rozhraní poskytované uživateli 
+	\item OOP vzniklo snahou popsat a modelovat okolní svět v počítači
+	\item OOP urychluje vývoj a zjednodušuje znovupoužitelnost odladěného kódu
+\end{itemize}
+
+\subsubsection*{Zapouzdření}
+\begin{itemize}
+	\item lze specifikovat přístup k atributům a metodám
+	\item public --- přístupné zvenčí třídy
+	\item private --- přístupné pouze zevnitř konkrétní třídy (a z friend funkcí)
+	\item protected --- podobné private, ale dostupné navíc potomků třídy
+\end{itemize}
+
+\subsubsection*{Dědičnost}
+\begin{itemize}
+	\item mezi třídami může být vztah rodič --- potomek
+	\item potomek od rodiče může dědit atributy a metody
+	\item stejně tak jako každá třída si může vytvořit svoje atributy a metody
+	\item navíc může přepsat metodu předka
+\end{itemize}
+
+\subsubsection*{Statické metody a atributy}
+\begin{itemize}
+	\item nejsou součástí objektu, ale třídy jako takové (instanční vs třídní)
+	\item musí se uložit mimo objekty
+	\item statické metody nemohou používat nestatické položky
+\end{itemize}
+
+\subsubsection*{Virtuální metody}
+\begin{itemize}
+	\item pro každou třídu existuje tabulka virtuálních metod
+	\item podle VMT (virtual method table) se za běhu dle typu objektu vybere, jaká metoda se má použít (z aktuálního typu, nebo podtřídy)
+	\item aby šlo této dynamické vazby využít, musí být objekt referencován ukazatelem, přímo to nejde
+\end{itemize}
+
+\subsubsection*{Polymorfismus}
+\begin{itemize}
+	\item ukazatel na nadtřídu může ukazovat i na podtřídu
+	\item objekt se chová podle toho, které třídy je instancí
+	\item tedy se volají správně metody podtřídy a ne nadtřídy
+	\item volaná metoda se určí až v okamžiku volání
+\end{itemize}
+
+\subsubsection*{Abstraktní třídy}
+\begin{itemize}
+	\item obsahují alespoň jednu abstraktní metodu
+	\item nemůže mít instance
+	\item abstraktní metoda je pouze deklarovaná, není definovaná (až v podtřídě)
+\end{itemize}
+
+\subsubsection*{Výjimky}
+\begin{itemize}
+	\item způsob ošetření chyb za běhu programu v C++
+	\item klíčové slovo "throw"
+	\item pro efekt musí být "testovaný" kód v "try" bloku, v catch bloku se následně případná výjimka zpracuje
+	\item při vyhození výjimky se vykonávání kódu zastaví, a postupně se skáče nahoru a čistí zásobník (a volají destruktory objektů) k nejbližšímu "ovladači" výjimek
+\end{itemize}
+
+\subsubsection*{Šablony}
+\begin{itemize}
+	\item parametrizovaná deklarace (a definice) funkce/třídy, ze které kompilátor dosazením za parametry vytvoří instanci šablony
+	\item parametr $T$ šablony může být typ argumentů, typ proměnných, návratových hodnot...
+\end{itemize}
+
+\subsubsection*{Přetěžování operátorů}
+\begin{itemize}
+	\item operátory je možné přetížit podobně jako funkce/metody
+	\item lze přetížit (friend) funkcemi, nebo metodami na objektech/třídách
+	\item klíčové slovo "operator"
+	\item nemění se priorita ani asociativita operátorů, ale mění se typy operandů a sémantika operací
+\end{itemize}
+
+\subsubsection*{Mělká a hluboká kopie}
+\begin{itemize}
+	\item mělká kopie
+	\begin{itemize}
+		\item kopie objektu obsahuje ukazatele/reference na stejná data
+		\item je nutné vyřešit destruktor, aby data uvolnil až je nic nebude používat
+		\item lze řešit počítáním referencí
+	\end{itemize}
+	\item hluboká kopie
+	\begin{itemize}
+		\item kopie objektu si zkopíruje všechna dynamicky alokovaná data na nové místo
+		\item při destrukci objektu se data vždy uvolní
+		\item data se v kopiích po čase mohou lišit
+	\end{itemize}
+	\item často, když objekt obsahuje přímo dynamicky alokovaná data (ne v dalším objektu, který to má vyřešené jako vector), tak se hodí vytvořit vlastní operátor přiřazení, kopírující konstruktor a destruktor
+\end{itemize}
