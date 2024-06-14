@@ -1,0 +1,99 @@
+\subsection{SP-20 (AG1 + PA1)}
+Časová a paměťová složitost algoritmů. Algoritmy vyhledávání (sekvenční, půlením intervalu), slučování a řazení (BubbleSort, SelectSort, InsertSort, MergeSort, QuickSort). Dolní mez složitosti řazení v porovnávacím modelu. Řazení v lineárním čase.
+
+\subsubsection*{Složitost}
+\begin{itemize}
+	\item vyjadřuje závislost potřebného času / paměti pro vykonání algoritmu v závislosti na velikosti vstupních dat
+	\item popisuje se asymptotickým horním odhadem
+	\item typicky se řeší nejhorší možný průběh algoritmu
+	\item asymptotický odhad nám zjednodušuje vyjádření složitosti --- zanedbávají se multiplikativní konstanty, v případě složeného výrazu se uvažuje pouze nejvýraznější člen
+\end{itemize}
+
+\subsubsection*{Vyhledávání}
+\begin{itemize}
+	\item sekvenční
+	\begin{itemize}
+		\item procházení prvků popořadě, dokud se nenajde hledaný nebo neprojdou všechny
+		\item neklade žádné nároky na seřazení prvků
+		\item časová složitost lineární vzhledem k datům, tedy $O(n)$
+	\end{itemize}
+	\item půlení intervalu
+	\begin{itemize}
+		\item binární vyhledávání
+		\item vyžaduje seřazené prvky
+		\item vždy zkontroluje prvek uprostřed aktuálního intervalu, podle porovnání s hledaným prvkem pokračuje dále do levé nebo pravé poloviny (zanoří se)
+		\item časová složitost logaritmická, tedy $O(\log n)$ 
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Slučování a řazení}
+\begin{itemize}
+	\item bubble sort
+	\begin{itemize}
+		\item postupně projde všechny prvky, vždy porovná sousední 2, pokud jsou seřazené špatně tak je prohodí
+		\item tyto průchody všemi prvky jsou opakovány dokud se alespoň jednou za průchod něco prohodí
+		\item in-place algoritmus (nevyžaduje paměť navíc)
+		\item složitost $O(n^2)$
+		\item stabilní algoritmus (pořadí prvků se stejnými klíči zůstane stejné)
+		\item citlivý na vstupní data (doba běhu ovlivněna pořadím dat na vstupu)
+	\end{itemize}
+	\item select sort
+	\begin{itemize}
+		\item rozděluje prvky na seřazené a neseřazené, z neseřazených vybere nejmenší a prohodí ho s prvním prvkem v neseřazené části, tím rozšíří seřazenou část o 1
+		\item in-place algoritmus (nevyžaduje paměť navíc)
+		\item složitost $O(n^2)$
+		\item údajně nestabilní, asi je tím myšleno že závisí na implementaci vybírání prvku z neseřazené části
+		\item necitlivý na vstupní data (doba běhu není ovlivněna pořadím dat na vstupu)
+	\end{itemize}
+	\item insert sort 
+	\begin{itemize}
+		\item opačný postup než u select sortu --- vezme první prvek neseřazené části, a vloží ho na správné místo v seřazené části (na počátku seřazená část $=$ první prvek)
+		\item in-place algoritmus (nevyžaduje paměť navíc)
+		\item složitost $O(n^2)$
+		\item stabilní (řekl bych ale že také závisí na implementaci)
+		\item citlivý na vstupní data
+	\end{itemize}
+	\item merge sort 
+	\begin{itemize}
+		\item rekurzivní algoritmus --- rozdělí prvky napůl, seřadí poloviny svým rekurzivním zavoláním, následně seřazené poloviny sloučí
+		\item out-of-place algoritmus (vyžaduje paměť navíc kvůli slučování do nového pole, s rozumnou implementací stačí $O(n)$ paměti navíc)
+		\item složitost $O(n \cdot \log n)$ (ale celkem vysoká multiplikativní konstanta)
+		\item necitlivý na vstupní data
+	\end{itemize}
+	\item quick sort 
+	\begin{itemize}
+		\item vybere se prvek zvaný pivot (snaha je, aby byl co nejblíže mediánu všech prvků, závisí na tom efektivita celého algoritmu)
+		\item nalevo od pivota se dají prvky menší jak on, napravo větší
+		\item na levou i pravou část se rekurzivně použije znovu stejný proces
+		\item takto se postupuje, dokud se nedojde na velikost samostatných prvků
+		\item složitost $O(n \cdot \log n)$, teoreticky v nejhorším případě $O(n^2)$ (citlivý na vstupní data)
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Dolní mez složitosti řazení}
+\begin{itemize}
+	\item uvažujeme řazení v porovnávacím modelu
+	\begin{itemize}
+		\item prvky se mezi sebou mohou pouze porovnávat a přesouvat, není např. žádné omezení na rozsah hodnot
+		\item prohození 2 prvků i porovnání je $O(1)$
+	\end{itemize}
+	\item požadujeme deterministický algoritmus, tedy musí postupovat na základě dat a předchozích akcí, ne náhodně
+	\item při takových požadavcích je řazení ekvivalentní rozpoznání, o kterou permutaci z $n!$ možných jde --- hloubka nejméně $\log (n!)$,  DML magií převedeno na $\Omega (n\log n)$
+	
+	\item pro dolní mez vyhledávání podobný postup --- (ternární) strom možností s hloubkou max $\log_3 n$
+\end{itemize}
+
+\subsubsection*{Řazení v lineárním čase}
+\begin{itemize}
+	\item je možné dosáhnout, pokud nepracujeme v klasickém porovnávacím modelu
+	\item algoritmus counting sort
+	\begin{itemize}
+		\item dosahuje lineární složitosti díky předpokladu omezené vstupní množiny hodnot
+		\item řadí $n$ celých čísel z množiny např. $\{1,...,r\}$ 
+		\item pro každé číslo se spočte histogram (kolikrát je ve vstupu obsaženo)
+		\item z histogramu se spočítají pozice prvků ve výsledném poli, a v druhém průchodu se přesunou na správná místa
+		\item složitost $\Theta (n + r)$ (jak paměťová, tak časová)
+		\item necitlivý (datově) a není in-place
+		\item stabilní
+	\end{itemize}
+\end{itemize}
