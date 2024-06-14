@@ -1,0 +1,67 @@
+\subsection{SP-6 (DBS)}
+Transakce a jejich vlastnosti - ACID.
+
+\subsubsection*{Požadavky na databázi}
+\begin{itemize}
+	\item ochrana dat před chybami, havárií serveru --- řeší recovery modul (při systémových/hw chybách se DB vždy vrátí do konzistentního stavu)
+	\item korektní, rychlý a asynchronní přístup pro větší počet uživatelů --- řeší concurency control modul (každý uživatel vidí konzistentní stav)
+\end{itemize}
+
+\subsubsection*{Transakce}
+\begin{itemize}
+	\item sekvence souvisejících akcí, která dostane DB z jednoho konzistentního stavu do druhého
+	\item v průběhu může existovat nekonzistentní stav, ale vždy se musí dostat opět do konzistentního stavu
+	\item tedy se provede buď celá, nebo vůbec
+	\item začátek transakce --- vznik session nebo konec předchozí transakce
+	\item konec transakce --- ukončení session, nebo klíčová slova COMMIT/ROLLBACK
+	\item stavy transakce:
+	\begin{itemize}
+		\item aktivní (A) --- probíhají DML příkazy
+		\item částečně potvrzená (PC) --- po provedení poslední transakce
+		\item potvrzená (C --- Commited) --- po úspěšném zakončení (COMMIT)
+		\item chybná (F) --- nelze pokračovat v normálním průběhu transakce
+		\item zrušená (AB --- aborted) --- po skončení operace ROLLBACK
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{ACID vlastnosti transakce}
+\begin{itemize}
+	\item Atomicity --- proběhne celá nebo vůbec
+	\item Consistency --- transformuje DB z konzistentního stavu do konzistentního stavu
+	\item Independence --- dílčí efekty jedné transakce nejsou viditelné jiným transakcím
+	\item Durability --- uložené efekty jsou trvale uloženy
+\end{itemize}
+
+\subsubsection*{Recovery}
+\begin{itemize}
+	\item využívá se žurnál (log) obsahující změnové vektory
+	\item různé typy chyb: globální (pád serveru, ztráta spojení, incident na disku) a lokální (logické chyby v konkrétní transakci)
+	\item nedokončené transakce se odvolávají (ROLLBACK)
+	\item potvrzené transakce, jejichž efekt se nestihl např. zapsat na disk se zopakují
+\end{itemize}
+
+\subsubsection*{Rozvrhování transakcí}
+\begin{itemize}
+	\item transakce a jejich dílčí operace se musí nějak rozplánovat
+	\item toto rozvržení musí zajistit korektní asynchronní přístup pro více uživatelů
+	\item pro snazší realizaci se používá zamykání a uzamykací protokoly
+	\item legální rozvrh (nezaručuje uspořádatelnost):
+	\begin{itemize}
+		\item transakce musí mít objekt zamknutý, aby s ním mohla pracovat
+		\item transakce nemůže zamykat již zamknuté objekty
+	\end{itemize}
+	\item tam se používají takzvané dobře formované transakce
+	\begin{itemize}
+		\item transakce zamyká objekt, chce-li k němu přistupovat
+		\item transakce nezamyká objekt, pokud ho již zamkla
+		\item transakce neodemyká objekt, který nezamkla
+		\item na konci nezůstane žádný objekt zamčený
+	\end{itemize}
+	\item pro zamezení deadlocku se využívá dvoufázový uzamykací protokol
+	\begin{itemize}
+		\item 1. fáze --- pouze se uzamyká co je potřeba (klidně postupně spolu s dílčími operacemi transakcí, ale nesmí se nic odemykat)
+		\item 2. fáze --- pouze se odemyká, po prvním odemčení se již nesmí nic zamykat
+	\end{itemize}
+	\item pokud jsou všechny transakce dobře formované a dvoufázové, lze pro ně vytvořit uspořádatelný rozvrh (aby na sebe nečekaly a nezamkly se)
+	\item používá se rozvrhování i jiných operací, pak v případě deadlocku se u jedné operace prostě provede rollback
+\end{itemize}
