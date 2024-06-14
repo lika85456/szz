@@ -1,2 +1,67 @@
 \subsection{SP-21 (AG1 + PA1)}
 Rekurzivní rozklad problému na podproblémy metodou Rozděl-a-panuj. Rekurze vs iterace. Dynamické programování.
+
+\subsubsection*{Rozděl a panuj}
+\begin{itemize}
+	\item rekurzivní algoritmus je postup řešení problému, při kterém:
+	\begin{itemize}
+		\item se stejný postup aplikuje na jednu nebo více částí vstupních dat
+		\item se poskytne přímé řešení triviální instance problému
+		\item řešení celého problému se sestaví z podproblémů
+	\end{itemize}
+	\item rozděl a panuj je metoda řešení problému rozložením na podproblémy řešené stejným způsobem
+	\item rekurze se typicky používá na rekurzivně definovaných datových strukturách jako zakořeněné stromy
+	\item konkrétní problémy:
+	\begin{itemize}
+		\item merge sort
+		\item karacubův algoritmus rychlého násobení čísel
+		\item quickselect
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Rekurze vs iterace}
+\begin{itemize}
+	\item rekurze je takový způsob programování, kde funkce volá sebe sama
+	\item rekurzivní volání typicky řeší menší instanci problému
+	\item je nutné si ohlídat ukončovací podmínky, aby se zanořování někdy zastavilo
+	\item iterace oproti tomu provádí kód v cyklu, nezanořuje se, nezabírá tolik místo na zásobníku
+	\item rekurze bývá kratší, přehlednější, líp umí napodobit okolní svět (opakování problémů)
+	\item rekurze lze vždy převést na iteraci
+\end{itemize}
+
+\subsubsection*{Dynamické programování}
+\begin{itemize}
+	\item další technika návrhu algoritmů založená na rekurzivním rozkladu problému na podproblémy
+	\item využívá opakování řešení podproblémů
+	\item podmínkou pro využití je právě opakovaný výskyt stejných podproblémů při rekurzivním rozkladu
+	\item výsledky vyřešených podproblémů se ukládají, při příštím výskytu se použije již hotový výsledek (memoizace)
+	\item typický postup:
+	\begin{itemize}
+		\item máme rekurzivní algoritmus, typicky s exponenciální složitostí
+		\item odhalíme opakované podproblémy
+		\item vytvoření tabulky pro zápis řešení podproblémů
+		\item v rekurzivních voláních nejprve zkontrolujeme zda již problém není vyřešen, a pokud ne tak vy\-po\-čí\-tá\-me, jinak vrátíme již hotovou hodnotu
+		\item tabulka často lze plnit i iterativně, to může být rychlejší než rekurze
+	\end{itemize}
+	\item příklady využití:
+	\begin{itemize}
+		\item fibonacciho čísla
+		\begin{itemize}
+			\item začíná se rekurzivně od $n$-tého fibonacciho čísla (to chceme spočítat)
+			\item rekurzivně zavoláme výpočet fib(n) = fib(n-1) + fib(n-2)
+			\item do tabulky ukládáme postupné výsledky odspoda (F(1), F(2), ...)
+		\end{itemize}
+		\item nejdelší rostoucí podposloupnost
+		\begin{itemize}
+			\item máme pole čísel, chceme podposloupnost takovou aby byla rostoucí a zároveň co nejdelší
+			\item zavoláme na každý prvek funkci, která nám vrátí nejdelší podposloupnost z tohoto prvku
+			\item v daném prvku se postouně vyzkouší všechny následující, a vždy pokud je konkrétní další prvek větší, opět se pro něj zavolá stejná funkce
+			\item výsledky postupně ukládáme pro každý prvek v poli (je zbytečné to pro stejný prvek počítat víckrát, výsledek bude stejný)
+		\end{itemize}
+		\item editační vzdálenost 2 řetězců
+		\begin{itemize}
+			\item zavoláme funkci na začátek, která vyřeší aktuální znak a zavolá sama sebe na zbytek řetězce
+			\item postupně ukládáme výsledky pro různé varianty změny v konkrétním znaku
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
