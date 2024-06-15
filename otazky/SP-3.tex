@@ -1,2 +1,94 @@
 \subsection{SP-3 (AG1)}
 Základní pojmy teorie grafů. Grafové algoritmy: procházení grafu do šířky, určení souvislých komponent, topologické uspořádání, vzdálenosti v grafech, konstrukce minimální kostry a nejkratších cest v ohodnoceném grafu.
+
+\subsubsection*{Základní pojmy}
+\begin{itemize}
+	\item neorientovaný graf --- uspořádaná dvojice $(V, E)$, kde $V$ je neprázdná konečná množina vrcholů a $E$ je množina hran
+	\item hrana je dvouprvková podmnožina $V$, značíme $\{u,v\}$
+	\item množina všech možných hran je $\binom{V}{2}$
+	\item nechť $e = \{u, v\}$ je hrana grafu $G$, pak jsou $u,v$ koncové vrcholy / incidentní s $e$, a $u$ je sousedem $v$ a naopak 
+	\item sled v grafu: sekvence vrcholů a hran v grafu dané délky (délka dána počtem hran), hrany musí být mezi navazujícími vrcholy (prostě jak a přes co se někam dostat) 
+	\item cesta: sled, ve kterém se neopakují vrcholy (a tedy ani hrany)
+	\item orientovaný graf --- dvojice $(V, E)$, kde $E$ je množina orientovaných hran
+	\item stupeň vrcholu --- počet hran obsahujících vrchol (nebo také počet sousedů, pokud nepovolíme více hran mezi stejnými vrcholy)
+	\item okolí vrcholu: množina sousedů
+	\item regulární graf --- všechny vrcholy stejný stupeň
+	\item úplný graf ($K_n$) --- množina vrcholů $E$ = $\binom{V}{2}$
+	\item úplný bipartitní graf ($K_{m,n}$) --- tvořen 2 partitami, hrany vedou pouze z jedné do druhé
+	\item cesta $P_m$
+	\item kružnice $C_n$
+	\item doplněk grafu $\overline{G}$ --- stejné vrcholy, ale doplněk hran (kde byly nejsou, kde nebyly jsou)
+	\item podgraf --- množiny $V$ a $E$ jsou podmnožinami původního grafu
+	\item indukovaný podgraf --- podgraf, jehož množina hran je maximální možná
+	\item princip sudosti --- součet stupňů vrcholů je 2krát počet hran
+	\item u orientovaných grafů je vstupní a výstupní stupeň vrcholu
+	\item vstupní stupeň 0 --- zdroj
+	\item výstupní stupeň 0 --- stok
+	\item graf je souvislý, pokud mezi každými 2 vrcholy existuje cesta, jinak je nesouvislý
+	\item souvislá komponenta --- maximální souvislý podgraf
+	\item paměťová reprezentace grafu --- seznam sousedů ($O(|V| + |E|)$) nebo matice sousednosti ($O(|V|^2)$)
+	\item symetrizace orientovaného grafu: pokud mezi vrcholy vede jakákoliv orientovaná hrana, nahradíme neorientovanou
+	\item slabá souvislost --- symetrizace je souvislá
+	\item silná souvislost --- pro každé dva vrcholy musí existovat cesta tam a zase zpátky 
+	\item izomorfismus grafů --- $f(G)$ bijekce vrcholů na vrcholy, hrany musí být pořád ''mezi stejnými vrcholy''
+	\item strom --- graf, který je souvislý a neobsahuje kružnici
+	\item kostra grafu --- podgraf, který obsahuje všechny vrcholy původního grafu a je to strom
+	\item topologické uspořádání orientovaného grafu --- seřazení vrcholů tak, aby hrany vždy vedly "zleva doprava" 
+\end{itemize}
+
+\subsubsection*{Grafové algoritmy}
+\begin{itemize}
+	\item BFS
+	\begin{itemize}
+		\item prohledávání grafu do šířky
+		\item začne v daném vrcholu, postupně nově nalezené vrcholy přidává do fronty a z fronty postupně zpracovává a rozšiřuje dál
+		\item lze použít pro hledání vzdálenosti mezi vrcholy (délka nejkratší cesty)
+		\item také lze využít např. pro hledání souvislých komponent nebo kostry grafu
+		\item při reprezentaci seznamem sousedů je časová i paměťová složitost $O(n + m)$
+	\end{itemize}
+	\item DFS
+	\begin{itemize}
+		\item prohledávání grafu do hloubky
+		\item rozšiřuje v nejnověji nalezených vrcholech, lze použít zásobník místo fronty, nebo implementovat rekurzí
+		\item lze použít pro hledání kostry
+		\item také lze využít např. pro hledání souvislých komponent
+		\item při reprezentaci seznamem sousedů je časová i paměťová složitost $O(n + m)$
+	\end{itemize}
+	\item TopSort
+	\begin{itemize}
+		\item výsledkem je topologické uspořádání vrcholů
+		\item spočítá vstupní stupně vrcholů, najde zdroje (vstupní stupeň je nula) a postupně odebírá zdroje, tím vznikají vždy další (pokud b grafu není orientovaný cyklus)
+		\item časová i paměťová složitost $O(n + m)$
+	\end{itemize}
+	\item Jarník
+	\begin{itemize}
+		\item výsledkem je minimální kostra ohodnoceného grafu
+		\item začne v jednom vrcholu, postupně přidává další vrcholy podle toho, jaká je v aktuálním řezu grafu (mezi již vybranými vrcholy a ostatními) hrana s nejmenší hodnotou
+		\item paměťová složitost $O(n + m)$, naivní implementace má časovou složitost $O(mn)$, implementace s použitím binárních minimových hald $O(m\log n)$
+	\end{itemize}
+	\item Kruskal
+	\begin{itemize}
+		\item výsledkem je minimální kostra ohodnoceného grafu
+		\item začne se všemi vrcholy, ale bez hran
+		\item postupně přidává hrany od nejlevnějších, zahazuje ty, které by vytvořily cyklus
+		\item implementace s keříky (struktura Union-find) má složitost $O(m\log n)$
+	\end{itemize}
+	\item Dijkstra
+	\begin{itemize}
+		\item prohledávání ohodnoceného grafu (omezení na kladné ohodnocení hran)
+		\item hledá nejkratší cesty
+		\item podobně jako BFS prochází vrcholy, jde vždy ale do vrcholu, který je aktuálně nejblíže startovnímu vrcholu
+		\item otevře nový vrchol (nejbližší startu), podívá se na hrany z něj a přepočítá případné rychlejší cesty do dosud neuzavřených sousedů
+		\item pojem relaxace --- přepočítání sousedů vrcholu
+		\item  složitost $O(m\log n)$ při implementaci s binární haldou
+	\end{itemize}
+	\item Bellman-Ford
+	\begin{itemize}
+		\item další relaxační algoritmus prohledávání ohodnoceného grafu (obecné ohodnocení hran, jen nesmí existovat záporné cykly)
+		\item hledá nejkratší cesty
+		\item podobně jako dijkstra, ale prochází vrcholy "náhodně" (ne podle vzdálenosti od startu, ale podle toho který byl dříve nalezený, podobně jako BFS)
+		\item počítá se s tím, že uzavřené vrcholy lze znovu otevřít
+		\item otevře nový vrchol, podívá se na hrany z něj a přepočítá případné rychlejší cesty do sousedních vrcholů, které mohou být i uzavřené, tedy je znovu otevře
+		\item  složitost $O(m \cdot n)$
+	\end{itemize}
+\end{itemize}
