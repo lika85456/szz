@@ -1,3 +1,125 @@
 \subsection{SP-4 (AG1)}
 Binární haldy, binomiální haldy. Binární vyhledávací stromy a jejich vyvažování. Hešovací tabulky.
 
+\subsubsection*{Stromy}
+\begin{itemize}
+	\item zakořeněný strom --- jeden vrchol prohlášen za kořen, vzniká vazba mezi vrcholy předek-potomek
+	\item binární strom --- zakořeněný strom, kdy každý vrchol může mít nejvýše 2 syny, a rozlišujeme, který je levý/pravý
+	\item binomiální strom
+	\begin{itemize}
+		\item binomiální strom má vždy nějaký řád $k$
+		\item obsahuje právě $2^k$ vrcholů
+		\item nultý řád je jeden izolovaný vrchol
+		\item další řády získáme tak, že vezmeme stromy všech předchozích řádů, a nad ně přidáme kořen
+		\item to samé získáme tak, že vezmeme 2 binomiální stromy řádku $k-1$ a jeden připojíme pod kořen druhého
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Binární halda}
+\begin{itemize}
+	\item datová struktura tvaru binárního stromu
+	\item v každém vrcholu je uložen klíč
+	\item haldový tvar --- všechny hladiny kromě poslední musí být obsazené, poslední je obsazená zleva
+	\item haldové uspořádání --- pro každou dvojici předek-potomek platí, že klíč v předku je menší nebo roven potomku
+	\item základní operace:
+	\begin{itemize}
+		\item insert() --- dle tvaru haldy vloží na konec, pak probublá nahoru ($O(\log n)$)
+		\item findMin() --- vrátí minimum, které je vždy v kořenu ($O(1)$)
+		\item extractMin() --- odstraní z haldy minimum tak, že ho prohodí s posledním prvkem, smaže poslední prvek a zabublá kořen dolů ($O(\log n)$)
+	\end{itemize}
+	\item heapBuild() --- postavení haldy odspodu, každý list je korektní halda, postupně jdeme do vyšších hladin a nový kořen vždy probubláme dolů ($O(n)$)
+	\item typicky se implementuje pomocí pole
+\end{itemize}
+
+\subsubsection*{Binomiální halda}
+\begin{itemize}
+	\item uspořádaná množina binomiálních stromů
+	\item stromy jsou uspořádány vzestupně dle svých řádů
+	\item celkový počet prvků v hladě je součet velikostí stromů
+	\item pro každý řád $k$ se v haldě vyskytuje maximálně jeden binomiální strom
+	\item vrcholy (podobně jako v binární haldě) obsahují klíče
+	\item stromy si drží haldové uspořádání
+	\item množina stromů se implementuje spojovým seznamem
+	\item $n$-prvková halda má až $O(\log n)$ binomiálních stromů
+	\item základní operace:
+	\begin{itemize}
+		\item findMin() --- vrátí minimum, které musí být v kořeni některého ze stromů (složitost $O(\log n)$, v případě implementace ukazatele na minimum je složitost $O(1)$)
+		\item merge() --- sloučení 2 binomiálních hald
+		\begin{itemize}
+			\item postupuje se jako při binárním sčítání --- stromy se slučují od nejnižších řádů
+			\item sloučení dvou binomiálních stromů je $O(1)$ --- stačí porovnat kořeny a zařadit větší pod menší
+			\item složitost celého spojení je úměrná počtu stromů v haldách, tedy $O(\log n)$
+		\end{itemize}
+		\item insert() --- vytvoření jednoprvkové nové haldy, následně merge ($O(\log n)$)
+		\item extractMin() --- nalezne se strom, kde se minimum nachází, tomuto stromu se utrhne kořen, a ze vzniklých stromů se vytvoří nová halda a provede se merge s původní ($O(\log n)$)
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Binární vyhledávací stromy}
+\begin{itemize}
+	\item binární stromy, kde v každém vrcholu je uložený unikátní klíč, a kde klíče v levém podstromu jsou vždy menší a v pravém větší než v aktuálním vrcholu
+	\item $h(T)$ --- hloubka stromu
+	\item operace:
+	\begin{itemize}
+		\item BVSShow() --- vypsání klíčů ve vzestupném pořadí ($O(n)$)
+		\item BVSMin() --- nalezení nejmenšího prvku, je to ten nejvíc vlevo ($O(h(T))$)
+		\item BVSMax() --- podobně jako Min()
+		\item BVSPred() --- vrátí předchůdce prvku (ve vzestupném výpisu by byl levým sousedem) $O(h(T))$
+		\begin{itemize}
+			\item pokud má prvek levý podstrom, pak je předchůdce maximum z podstromu
+			\item jinak je to první prvek, do kterého vstoupíme zprava při průchodu stromem nahoru
+		\end{itemize}
+		\item BVSSucc() --- následník, podobně jako Pred()
+		\item BVSFind() --- hledá prvek s konkrétním klíčem ($O(h(T))$)
+		\item BVSInsert() --- vloží prvek na správné místo ($O(h(T))$)
+		\item BVSDelete() --- odstraní prvek ($O(h(T))$)
+		\begin{itemize}
+			\item pokud je prvek list, můžeme odtrhnout
+			\item pokud má jednoho syna, nahradíme tímto synem
+			\item pokud má 2 syny, prohodíme s následníkem/předchůdcem a smažeme potom (následník/před\-chůd\-ce existují a je v pravém/levém podstromu aktuálního vrcholu, a mají maximálně 1 syna)
+		\end{itemize}
+	\end{itemize}
+	\item rychlost velké části operací závisí na hloubce stromu $h(T)$
+	\item v nejhorším případě může být $h(T) == |T|$, tedy složitost operací by byla $O(n)$
+	\item hloubku budeme regulovat vyvažováním
+	\item lze vyvažovat "dokonale'' --- tedy rozdíl počtu prvků v levém a pravém podstromu každého prvku je maximálně 1, to ale není efektivní --- při jakékoliv implementaci bude složitost insert() nebo delete() $O(n)$
+	\item proto využíváme hloubkově vyvážené stromy jako AVL
+	\item AVL:
+	\begin{itemize}
+		\item rozdíl hloubek podstromů každého vrcholu může být maximálně 1
+		\item hloubka celého BVS je pak $\Theta (\log n)$
+		\item operace insert() a delete() musí udržovat hloubkové vyvážení (jiné ho nemění)
+		\item v každém vrcholu se udržuje znaménko vyvážení
+		\item pokud je více  než (mínus) jedna, je potřeba rotovat
+		\item rotace se provede ve směru podle znaménka (podle nevyvážení stromu)
+		\item vyvážení se opravuje jednoduchými nebo dvojitými rotacemi
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Hashovací tabulky}
+\begin{itemize}
+	\item skloubení nízkých paměťových nároků s efektivitou operací (pouze v průměrném případě)
+	\item implementace slovníku --- klíč a hodnota, klíč je unikátní
+	\item zvolíme konečné pole přihrádek a hashovací funkci $h$, která každému klíči univerza přiřadí jednu přihrádku
+	\item pokud chceme vložit prvek s klíčem $k$ do tabulky, vložíme ho do přihrádky $h(k)$
+	\item pokud budeme hledat prvek s klíčem $k$, víme že musí být v přihrádce $h(k)$
+	\item protože ale univerzum klíčů bývá zásadně větší než počet přihrádek, stávají se kolize --- více klíčů se přiřadí do stejné přihrádky
+	\item ideální hashovací funkce vypočte číslo přihrádky v konstantním čase a rozprostře zadanou $n$-prvkovou množinu rovnoměrně do všech $m$ přihrádek, tedy každá přihrádka max $\lceil n/m \rceil$ prvků
+	\item příklady dobře fungujících hashovacích funkcí:
+	\begin{itemize}
+		\item lineární kongruence ($k \rightarrow a\cdot k \text{ mod } m$) --- $m$ je typicky prvočíslo, $a$ je vysoká konstanta nesoudělná s $m$
+		\item vyšší bity součinu ($k \rightarrow \lfloor (ak \text{mod} 2^\omega)/2^{\omega - \mathcal{L}}$) --- hashujeme $\omega$-bitové klíče do $m = 2^\mathcal{L}$ přihrádek, vybereme $\omega$-bitovou lichou konstantu $a$, pak spočítáme $ak$, ořízneme na $\omega$ bitů a z nich vezmeme nejvyšších $\mathcal{L}$
+		\item pro posloupnosti --- skalární součin nebo polynom
+	\end{itemize}
+	\item řešení kolizí
+	\begin{itemize}
+		\item chaining (řetězení) --- prvky se při kolizi vloží do stejné přihrádky do spojáku
+		\item otevřená adresace --- klíč se při kolizi vloží na jiné. volné místo dle určitého pravidla:
+		\begin{itemize}
+			\item lineární přidávání --- prostě se posune o 1 vedle
+			\item dvojité hashování --- znovu, novou hashovací funkcí se klíč přehashuje a uloží jinam ($h(k,i) = (f(k) + i \cdot g(k)) mod m$ --- $f,g$ jsou 2 různé hash funkce, $i$ značí kolikátý pokus to je na umístění)
+			\item při mazání musíme označit, že tam nějaký prvek byl (aby se našly ty další co se daly jinam), říká se tomu náhrobek
+		\end{itemize}
+	\end{itemize}
+	\item tabulka se může moc naplnit, pak ji chceme zvětšit, a klíče musíme přehashovat a umístit do rozšířené tabulky
+\end{itemize}
