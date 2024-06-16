@@ -1,0 +1,75 @@
+\subsection{SP-2 (AAG)}
+Bezkontextové jazyky: Bezkontextové gramatiky, zásobníkové automaty a jejich varianty. Modely syntaktické analýzy bezkontextových jazyků.
+
+\subsubsection*{Bezkontextové jazyky}
+\begin{itemize}
+	\item formální jazyk je bezkontextový právě tehdy, kdy jej lze generovat bezkontextovou gramatikou
+	\item lze přijímat zásobníkovým automatem
+	\item BJ jsou uzavřené vůči sjednocení, zřetězení a iteraci
+	\item nejsou uzavřené pro průnik, doplněk a rozdíl
+\end{itemize}
+
+\subsubsection*{Bezkontextové gramatiky}
+\begin{itemize}
+	\item uspořádaná čtveřice: $G = (N, \Sigma, P, S)$, kde pravidla jsou ve tvaru: $A \rightarrow \alpha \quad (\alpha \in (N \cup \Sigma)^* A \in N)$
+	\item bezkontextová gramatika gramatika může být zkracující
+	\item nejednoznačná BG --- lze pro jeden řetězec z jazyka sestavit alespoň 2 různé derivační stromy
+	\item jednoznační BG --- pro všechny řetězce existuje právě jeden derivační strom
+	\item nejednoznačný bezkontextový jazyk --- neexistuje pro něj jednoznačná gramatika
+	\item jednoznačný BJ --- lze generovat jednoznačnou gramatikou
+	\item $\varepsilon$-pravidlo --- pravidlo tvaru $A \rightarrow \varepsilon$
+	\item jednoduché pravidlo --- pravidlo tvaru $A \rightarrow B$
+	\item gramatika je bez cyklů ($A \Rightarrow^+ A$), pokud neobsahuje jednoduchá a $\varepsilon$ pravidla
+\end{itemize}
+
+\subsubsection*{Zásobníkové automaty}
+\begin{itemize}
+	\item můžeme si představit jako konečný automat se zásobníkem
+	\item (nedeterministický) ZA formálně: $R = (Q, \Sigma, G, \delta, q_0, Z_0, F)$
+	\begin{itemize}
+		\item $Q$ je konečná neprázdná množina stavů
+		\item $\Sigma$ je konečná vstupní abeceda
+		\item $G$ je konečná neprázdná abeceda zásobníku
+		\item $\delta$ je přechodová funkce, definována jako zobrazení z $Q \times (\Sigma \cup \{\epsilon\}) \times G^*$ do množiny konečných podmnožin množiny $Q \times G^*$
+		\item $q_0 \in Q$ je počáteční stav
+		\item $Z_0 \in G$ je počáteční symbol na zásobníku
+		\item $F \subset Q$ je množina koncových stavů
+	\end{itemize}
+	\item nedeterministický ZA je výpočetně silnější než deterministický
+	\item DZA přijme řetězec, pokud přečte celý řetězec, a skončí buď v koncovém stavu, nebo s prázdným zásobníkem (výpočetně ekvivalentní způsoby, jdou na sebe převádět)
+\end{itemize}
+
+\subsubsection*{Syntaktická analýza}
+\begin{itemize}
+	\item levá derivace --- v každém kroku generování věty bezkontextovou gramatikou se nahradí neterminál, který je nejvíce vlevo
+	\item pravá derivace --- v každém kroku generování věty bezkontextovou gramatikou se nahradí neterminál, který je nejvíce vpravo
+	\item levý rozklad věty --- posloupnost čísel pravidel použitých v levé derivaci
+	\item pravý rozklad věty --- posloupnost čísel pravidel použitých v pravé derivaci
+	\item syntaktická analýza je proces, který pro danou bezkontextovou gramatiku $G$ a řetězec $\omega$ určí, zda $\omega \in L(G)$
+	\item v kladném případě také získáme syntaktickou strukturu řetězce v podobě levého nebo pravého rozkladu
+	\item metody syntaktické analýzy:
+		\begin{itemize}
+			\item shora dolů (top-down), která nalezne levý rozklad
+			\item zdola nahoru (bottom-up), která nalezne pravý rozklad
+		\end{itemize}
+	\item jak pro danou gramatiku vytvořit ZA jako model syntaktického analyzátoru metodou shora dolů?
+	\begin{itemize}
+		\item 1 stav, přijímá prázdným zásobníkem
+		\item provádí 2 operace --- expanzi a srovnání
+		\begin{itemize}
+			\item expanze: pokud mám na vrcholu zásobníku neterminál, vyndám ho a nahradím pravidlem gramatiky, ze vstupu nečtu nic
+			\item srovnání: pokud mám na vrcholu zásobníku terminál, vyndám ho a zároveň přečtu ze vstupu
+		\end{itemize}
+		\item na začátku je na zásobníku počáteční neterminál
+	\end{itemize}
+	\item jak pro danou gramatiku vytvořit ZA jako model syntaktického analyzátoru metodou zdola nahoru?
+	\begin{itemize}
+		\item 2 stavy, přijímá přechodem do koncového stavu
+		\item provádí 3 operace --- redukci, přesun a přijetí
+		\begin{itemize}
+			\item redukce: zůstávám ve stejném stavu, nečtu nic ze vstupu, pokud je na vrcholu zásobníku pravá strana pravidla, vyndám a nahradím příslušným neterminálem
+			\item přesun: přečtu terminál ze vstupu a vložím na zásobník, zůstávám ve stejném stavu
+			\item přijetí: na zásobníku je počáteční neterminál --- vyndám spolu s počátečním symbolem a přejdu do koncového stavu
+		\end{itemize}
+	\end{itemize}
+\end{itemize}

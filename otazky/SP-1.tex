@@ -1,0 +1,188 @@
+\subsection{SP-1 (AAG)}
+Regulární jazyky: Deterministické a nedeterministické konečné automaty. Determinizace konečného automatu. Minimalizace deterministického konečného automatu. Operace s konečnými automaty. Regulární gramatiky, regulární výrazy, regulární rovnice.
+
+\subsubsection*{Regulární jazyky}
+\begin{itemize}
+	\item jsou podmnožinou bezkontextových, kontextových i rekurzivně spočetných jazyků
+	\item jazyk je regulární právě tehdy, kdy lze generovat regulární gramatikou
+	\item regulární jazyk lze přijmout (ne)deterministickým konečným automatem
+	\item regulární jazyk lze popsat regulárním výrazem
+	\item regulární jazyky jsou uzavřené pro všechny operace: sjednocení, průnik, doplněk, rozdíl, zřetězení, iterace
+	\item konečný jazyk je vždy regulární
+\end{itemize}
+
+\subsubsection*{Gramatiky}
+\begin{itemize}
+	\item prostředek pro popis jazyků
+	\item uspořádaná čtveřice: $G = (N, \Sigma, P, S)$, kde:
+	\begin{itemize}
+		\item $N$ je konečná neprázdná množina neterminálních symbolů
+		\item $\Sigma$ je abeceda symbolů, které nazýváme terminální symboly ---abeceda generovaného jazyka
+		\item $N \cap \Sigma = \emptyset$
+		\item $P$ je konečná množina přepisovacích pravidel ve tvaru $\alpha A \beta \rightarrow \gamma \quad (\alpha, \beta	, \gamma \in (N \cup \Sigma)^*, A \in N)$
+		\item $S$ je počáteční symbol gramatiky
+	\end{itemize}
+	\item regulární gramatika má pravidla ve tvaru $A \rightarrow a$ nebo $A \rightarrow aB \quad (a \in \Sigma, A,B \in N)$
+	\item jediná povolená výjimka je pravidlo $S \rightarrow \varepsilon$, které může být přítomno pouze pokud symbol $S$ není na pravé straně žádného pravidla
+	\item regulární gramatika je tedy nezkracující
+\end{itemize}
+
+\subsubsection*{Konečné automaty}
+\begin{itemize}
+	\item výpočetní model skládající se z řídící jednotky (stavy a přechodová funkce), read-only vstupní pásky a čtecí hlavy, která čte jednotlivé symboly na pásce
+	\item na počátku je automat v počátečním stavu, a hlava ukazuje na první symbol na pásce
+	\item v každém kroku se přečte symbol, na základě něj se může změnit stav automatu, a hlava se přesune na další znak
+	\item tento proces se opakuje, dokud existuje na vstupu nějaký symbol
+	\item formálně: konečný automat je uspořádaná pětice: $M = (Q, \Sigma, \delta, q_0, F)$, kde:
+	\begin{itemize}
+		\item $Q$ je konečná neprázdná množina stavů
+		\item $\Sigma$ je konečná vstupní abeceda
+		\item $\delta$ je přechodová funkce
+		\begin{itemize}
+			\item pro deterministický KA je to zobrazení z množiny $Q \times \Sigma$ do množiny stavů $Q$ (tedy $\delta: Q \times \Sigma \rightarrow Q$)
+			\item pro nedeterministický KA je to zobrazení z $Q \times \Sigma$ do všech podmnožin $Q$
+			\item NKA se dá navíc rozšířit o $\varepsilon$-přechody, přechodová funkce tedy je z množiny $Q \times (\Sigma \cup \varepsilon)$
+			\item NKA se také dá rozšířit tak, že má více počátečních stavů
+		\end{itemize}
+		\item $q_0$ je počáteční stav
+		\item $F \subset Q$ je množina koncových stavů
+	\end{itemize}
+	\item NKA i s $\varepsilon$-přechody a více počátečními stavy lze vždy převést na jednodušší variantu, tedy až na DKA
+	\item KA lze zapsat více různými způsoby, liší se v zápisu přechodové funkce (formálně, orientovaný ohodnocený graf, tabulka,...)
+	\item homogenní KA --- do konkrétního stavu se lze vždy dostat za pomocí právě jednoho symbolu
+	\item výsledkem "práce" automatu je přijmutí/nepřijmutí řetězce (rozhodnutí, zda patří do jazyka)
+	\item řetězec se přijme, pokud se přečte celý, a automat skončí v některém z koncových stavů
+\end{itemize}
+
+\subsubsection*{Úpravy konečných automatů}
+\begin{itemize}
+	\item nedosažitelný stav: stav, do kterého se nedá dostat z počátečního stavu žádnou posloupností přechodů
+	\item zbytečný stav: stav, ze kterého se nedá dostat do žádného koncového stavu
+	\item nedosažitelné a zbytečné stavy lze odstranit, a nemá to vliv na jazyk přijímaný automatem
+	\item odstranění $\varepsilon$-přechodů
+	\begin{itemize}
+		\item vypočteme funkci $\varepsilon$-closure pro všechny stavy (pro daný stav vrací množinu stavů, kam se lze dostat bez přečtení znaku ze vstupu, tedy kam se dá dostat $\varepsilon$-přechody, obsahuje i sebe sama)
+		\item z automatu odstraníme $\varepsilon$- přechody, a pomocí $\varepsilon$-closure upravíme přechodovou funkci automatu (pokud pro daný stav $S$ je $\varepsilon$-closure $\{S, A\}$, přidáme přechody ze stavu $S$ do stavů, kam vedou přechody z $A$)
+		\item upravíme množinu koncových stavů --- pokud stav v $\varepsilon$-closure měl původní koncový stav, je teď nově také koncový
+	\end{itemize}
+	\item odstranění více počátečních stavů --- přidáme nový, jediný počáteční, a z něj uděláme $\varepsilon$-přechody do původních počátečních
+	\item determinizace (převod NKA na DKA)
+	\begin{itemize}
+		\item na vstupu předpokládáme NDA s jedním počátečním stavem a bez $\varepsilon$-přechodů
+		\item tvoříme nová (D)KA tak, že procházíme původní NKA po množinách jeho stavů (stav nového DKA --- množina všech původních stavů, kde NKA v tu chvíli může být)
+		\item pro každou takto objevenou množinu dále tvoříme přechodovou funkci
+		\item ve chvíli, kdy již máme všechny objevené množiny "zpracované", máme hotovo
+	\end{itemize}
+	\item minimalizace
+	\begin{itemize}
+		\item ekvivalentní stavy --- stavy, po jejichž sloučení se nezmění přijímaný jazyk
+		\item minimální DKA --- takový automat pro daný jakzyk $L$, který má co nejméně stavů, tedy nemá ani nedosažitelné, zbytečné ani ekvivalentní stavy
+		\item nejprve odstraníme nedosažitelné a zbytečné stavy (zjistíme jednoduše BFS z počátečního/koncových stavů)
+		\item rozdělíme stavy na koncové a nekoncové, stavy přejmenujeme podle toho, do které skupiny patří
+		\item pro tyto přejmenované stavy vyplníme přechodovou funkci podle tohoto nového pojmenování
+		\item projdeme, zda všechny stavy v rámci jedné skupiny mají shodné přechody
+		\item pokud najdeme ve skupině odlišný stav, vytvoříme pro něj novou skupinu, případně pokud už jsme v aktuálním průchodu narazili na "stejně odlišný" stav, tak je dáme do stejné nové skupiny
+		\item předchozí 3 kroky opakujeme, dokud se nějakým způsobem mění složení skupin a pojmenování stavů
+	\end{itemize}
+	\item ekvivalentní KA --- převedeme na minimální DKA, a nalezneme isomorfismus
+\end{itemize}
+
+\subsubsection*{Skládání KA}
+\begin{itemize}
+	\item sjednocení
+	\begin{itemize}
+		\item pokud jsou vstupem NKA, NKA s $\varepsilon$-přechody nebo DKA --- buď prostě více počátečních stavů, nebo nový 1 počáteční stav a $\varepsilon$-přechody z něj
+		\item pokud vstupem jsou úplně určené DKA nebo NKA, lze využít paralelní činnosti
+		\begin{itemize}
+			\item podobné jako determinizace
+			\item začne se ve stavu, který představuje počáteční stavy obou vstupních automatů
+			\item postupuje se podle přechodových funkcí vstupních automatů, každý nový stav je kombinací stavů z obou původních automatů
+		\end{itemize}
+	\end{itemize}
+	\item průnik
+	\begin{itemize}
+		\item pomocí paralelní činnosti, podobně jako sjednocení, ale automaty nemusí být úplně určené
+		\item tam kde v jednom automatu není přechod, nebude existovat ani ve výsledném automatu
+		\item koncové stavy jsou navíc jen ty, které "obsahují" pouze koncové stavy obou vstupních automatů
+	\end{itemize}
+	\item doplněk jazyka --- vstup je úplně určený DKA, prohodíme koncové a nekoncové stavy
+	\item rozdíl --- $L(M_1) \setminus L(M_2) = L(M_1) \cap \overline{L(M_2)}$
+	\item součin (zřetězení) --- ze všech koncových stavů $M_1$ $\varepsilon$-přechody do počátečního stavu $M_2$, koncové stavy budou jen $M_2$ a počáteční jen $M_1$
+	\item iterace --- nový počáteční stav (zároveň koncový), $\varepsilon$-přechod do původního počátečního, ze všech koncových vedeme $\varepsilon$-přechody do nového počátečního
+\end{itemize}
+
+\subsubsection*{Regulární výrazy}
+\begin{itemize}
+	\item $\varnothing, \varepsilon, a$ jsou regulární výrazy pro všechna $a \in \Sigma$
+	\item pokud jsou $x, y$ regulární výrazy nad $\Sigma$, pak $(x + y), (x \cdot y)$ a $(x)^*$ jsou regulární výrazy nad $\Sigma$
+	\item hodnota regulárního výrazu je regulární jazyk, který daný výraz reprezentuje
+	\begin{itemize}
+		\item $h(\varnothing) = \varnothing$ --- prázdný výraz reprezentuje prázdný jazyk
+		\item $h(\varepsilon) = \{\varepsilon\}$
+		\item $h(a) = \{a\}$
+		\item $h(x + y) = h(x) \cup h(y)$
+		\item $h(x\cdot y) = h(x)\cdot h(y)$
+		\item $h(x^*) = h(x)^*$
+	\end{itemize}
+	\item lze podle různých pravidel zjednodušovat (např $\varnothing$ se chová jako 0 při násobení i sčítání, $\varepsilon$ se chová jako 1 při násobení)
+	\item regulární rovnice
+	\begin{itemize}
+		\item levá regulární rovnice $x = x\alpha + \beta$
+		\item pravá regulární rovnice $x = \alpha x + \beta$
+		\item $\alpha, \beta$ jsou známé výrazy, $x$ neznámý
+		\item potřebujeme dostat neznámý výraz "ven" z podvýrazů, aby se dala aplikovat levá/pravá rovnice
+		\item soustavu řešíme tak, že co jde dosadit rovnou do dalších rovnic dosadíme, jinak jednu vyřešíme klasickým způsobem a pak dosadíme
+	\end{itemize}
+	\item derivace regulárních výrazů --- odebírání předpony 
+	\item pokud nejde odebrat konkrétní předponu, výsledek je $\varnothing$
+	\item pravidla:
+	\begin{itemize}
+		\item $\frac{\text{d}V}{\text{d}\varepsilon} = V$
+		\item $\frac{\text{d}\varepsilon}{\text{d}a} = \varnothing$
+		\item $\frac{\text{d}\varnothing}{\text{d}a} = \varnothing$
+		\item $\frac{\text{d}b}{\text{d}a} = \varnothing$
+		\item $\frac{\text{d}a}{\text{d}a} = \varepsilon$
+		\item $\frac{\text{d}(U + V)}{\text{d}a} = \frac{\text{d}U}{\text{d}a} + \frac{\text{d}V}{\text{d}a}$
+		\item $\frac{\text{d}(UV)}{\text{d}a} = \frac{\text{d}U}{\text{d}a}V + \{\frac{\text{d}V}{\text{d}a}:\varepsilon \in h(U)\}$
+		\item $\frac{\text{d}(V^*)}{\text{d}a} = \frac{\text{d}V}{\text{d}a}\cdot V^*$
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Převody}
+\begin{itemize}
+	\item RG $\leftrightarrow$ KA --- stavy jsou většinou stejné jako neterminály, jen se musí pořešit koncové stavy
+	\item RV $\rightarrow$ KA
+	\begin{itemize}
+		\item metoda sousedů
+		\begin{itemize}
+			\item každý znak se "očísluje" --- tedy každý znak se považuje za jiný
+			\item vytvoří se množiny znaků co můžou být na začátku, na konci, a množina možných sousedních znaků
+			\item každý znak má v automatu vlastní stav + 1 nový počáteční stav, koncové jsou koncové, z nového počátečního (pokud $\varepsilon \in L$ tak zároveň koncového) hrany do počátečních znaků, pak se doplní hrany podle množiny sousedů
+		\end{itemize}
+		\item metoda derivací --- postupně derivujeme všemi znaky abecedy, každý nový regulární výraz je nový stav
+		\item metoda postupné konstrukce --- sestavujeme automat od elementárních výrazů
+	\end{itemize}
+	\item KA $\rightarrow$ RV
+	\begin{itemize}
+		\item metoda regulárních rovnic --- odchozí přechody --- sestavíme soustavu rovnic, každý stav je neznámá, pro odchozí přechody stavíme pravé rovnice, ke koncovým stavům přidáme $+\varepsilon$ a výsledkem je výraz pro počáteční stav
+		\item RR --- příchozí přechody --- podobně jako odchozí, ale staví se levé rovnice, $+\varepsilon$ se přidá k počátečnímu stavu, a výsledkem je sjednocení (+) výrazů koncových stavů
+		\item eliminace stavů --- přidáme nový počáteční stav (a také nový koncový, pokud původních koncových je víc) a postupně odebíráme stavy s tím, že postupně sestavujeme regulární výraz
+	\end{itemize}
+	\item RG $\rightarrow$ RV
+	\begin{itemize}
+		\item metoda regulárních rovnic --- vezmeme pravidla, předěláme na reg. rovnice a vyřešíme pro počáteční neterminál
+		\item eliminace neterminálních symbolů --- jako eliminace stavů
+	\end{itemize}
+	\item RV $\rightarrow$ RG
+	\begin{itemize}
+		\item metoda derivací
+		\item postupná konstrukce
+	\end{itemize}
+\end{itemize}
+
+\subsubsection*{Pumping lemma}
+\begin{itemize}
+	\item regulární jazyk $\Rightarrow$ pumpující vlastnost
+	\item používá se pro důkaz neregularity jazyka
+	\item najdeme nějakou větu z jazyka, rozdělíme ji na 3 části $xyz$, $|xy| \leq p$, $|y| \geq 1$, a najdeme $k$ takové, aby $xy^k z \not\in L$
+\end{itemize}
