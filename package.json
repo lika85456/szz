@@ -1,0 +1,23 @@
+{
+  "name": "szz",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "anki-apkg-export": "^4.0.3",
+    "chokidar": "^4.0.3",
+    "glob": "^11.0.1",
+    "gray-matter": "^4.0.3",
+    "marked": "^15.0.9",
+    "remark-frontmatter": "^5.0.0",
+    "remark-parse": "^11.0.0",
+    "unified": "^11.0.5",
+    "yanki-connect": "^2.2.1"
+  }
+}
