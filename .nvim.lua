@@ -1,4 +1,35 @@
 
+-- Image paster
+-- local function get_filename()
+--     local datetime = os.date("%Y-%m-%d_%H-%M-%S")
+--     return "screenshot_" .. datetime .. ".png"
+-- end
+--
+-- local function paste_image()
+--     local filename = get_filename()
+--     local path = vim.fn.expand("%:p:h") .. "/" .. filename
+--
+--     local command = string.format("pngpaste '%s'", path)
+--     if vim.fn.has("macunix") == 0 then
+--         command = string.format("xclip -selection clipboard -t image/png -o > '%s'", path)
+--     end
+--
+--     local result = os.execute(command)
+--
+--     if result == 0 then
+--         vim.api.nvim_put({ filename }, "", true, true)
+--     else
+--         vim.notify("Failed to paste image from clipboard", vim.log.levels.ERROR)
+--     end
+-- end
+--
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--     callback = function(args)
+--         vim.keymap.set("n", "p", paste_image, { desc = "Paste clipboard image filename", buffer = args.buf })
+--     end,
+-- })
+
+-- Anki card
 local function create_anki_card()
     local anki_text = [[
 # 
@@ -32,28 +63,28 @@ wk.add(
     { mode = {"n", "v"} }
 
 )
-vim.api.nvim_create_autocmd("VimEnter", {
-    pattern = "*",
-    callback = function()
-        vim.fn.jobstart({ "bun", "index.ts" }, {
-            cwd = vim.fn.getcwd(),
-            stdout_buffered = true,
-            stderr_buffered = true,
-            on_stdout = function(_, data)
-                if data then
-                    local output = table.concat(data, " ")  -- Concatenate output to a single line
-                    vim.notify("bun index.ts output: " .. output, vim.log.levels.INFO, { title = "bun" })
-                end
-            end,
-            on_stderr = function(_, data)
-                if data then
-                    local error_output = table.concat(data, " ")  -- Concatenate stderr to a single line
-                    vim.notify("bun index.ts error: " .. error_output, vim.log.levels.ERROR, { title = "bun" })
-                end
-            end,
-        })
-    end,
-})
+-- vim.api.nvim_create_autocmd("VimEnter", {
+--     pattern = "*",
+--     callback = function()
+--         vim.fn.jobstart({ "bun", "index.ts" }, {
+--             cwd = vim.fn.getcwd(),
+--             stdout_buffered = true,
+--             stderr_buffered = true,
+--             on_stdout = function(_, data)
+--                 if data then
+--                     local output = table.concat(data, " ")  -- Concatenate output to a single line
+--                     vim.notify("bun index.ts output: " .. output, vim.log.levels.INFO, { title = "bun" })
+--                 end
+--             end,
+--             on_stderr = function(_, data)
+--                 if data then
+--                     local error_output = table.concat(data, " ")  -- Concatenate stderr to a single line
+--                     vim.notify("bun index.ts error: " .. error_output, vim.log.levels.ERROR, { title = "bun" })
+--                 end
+--             end,
+--         })
+--     end,
+-- })
 
 vim.api.nvim_create_autocmd("BufWritePost", {
     pattern = "*.tex",

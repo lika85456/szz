@@ -1,0 +1,54 @@
+\subsection{W-2 (AWD)}
+Protokol HTTP a jeho vlastnosti, komunikace klient-server a její bezpečnostní aspekty.
+
+\subsubsection*{Protokol HTTP}
+
+\begin{itemize}
+    \item HTTP je aplikační protokol pro přenos textových dat mezi klientem a serverem.
+    \item Pracuje na principu architektury klient-server.
+    \item Je bezstavový. "Stav" se uchovává externě, např. pomocí cookies, URL params nebo session storage.
+    \item Pracuje nad protokolem TCP/IP (porty 80 pro HTTP a 443 pro HTTPS).
+    \item Lze používat hlavičky pro přenos metadat.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/screenshot_2025-04-25_11-53-53.png}
+    \caption{URI, URL, URN}
+\end{figure}
+
+%screenshot_2025-04-25_21-05-04.png
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/screenshot_2025-04-25_21-05-04.png}
+    \caption{Komunikace klient server přes internet}
+\end{figure}
+
+Všeobecně můžeme mluvit o 3 hlavních verzích HTTP protokolu:
+
+%Vlastnost | HTTP/1.1 | HTTP/2 | HTTP/3
+%Multiplexace | Ne | Ano (1 TCP spojení) | Ano (QUIC – UDP)
+%Binární protokol | Ne (textový) | Ano | Ano
+%Server push | Ne | Ano | Ano
+%Prioritizace | Ne | Ano | Ano
+%Transportní protokol | TCP | TCP | QUIC (UDP)
+
+\begin{table*}
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Vlastnost & HTTP/1.1 & HTTP/2 & HTTP/3 \\
+        \hline
+        Multiplexace & Ne & Ano (1 TCP spojení) & Ano (QUIC – UDP) \\
+        \hline
+        Binární protokol & Ne (textový) & Ano & Ano \\
+        \hline
+        Server push & Ne & Ano & Ano \\
+        \hline
+        Prioritizace & Ne & Ano & Ano \\
+        \hline
+        Transportní protokol & TCP & TCP & QUIC (UDP) \\
+        \hline
+    \end{tabular}
+    \caption{Srovnání verzí HTTP}
+\end{table*}

@@ -41,8 +41,8 @@ const hashPath = (p: string): string => {
 
 const latexify = (input: string): string => {
     return input
-        .replace(/\$\$(.*?)\$\$/gs, (_, expr) => `<anki-mathjax block>${expr}</anki-mathjax>`)
-        .replace(/\$(.+?)\$/g, (_, expr) => `<anki-mathjax>${expr}</anki-mathjax>`);
+        .replace(/\$\$(.*?)\$\$/gs, (_, expr) => `\\(${expr}\\)`)
+        .replace(/\$(.+?)\$/g, (_, expr) => `\\[${expr}\\]`);
 };
 
 const extractImagePaths = (markdown: string): string[] => {
@@ -150,17 +150,19 @@ const parseFile = async (
     return cards;
 };
 
-const ensureDeckExists = async () => {
+const ensureDeckExists = async (deckName:string) => {
     const existingDecks = await client.deck.deckNames();
-    if (!existingDecks.includes(DECK_NAME)) {
-        await client.deck.createDeck({ deck: DECK_NAME });
-        console.log(`📦 Created deck: ${DECK_NAME}`);
+    if (!existingDecks.includes(deckName)) {
+        await client.deck.createDeck({ deck: deckName });
+        console.log(`📦 Created deck: ${deckName}`);
     }
 };
 
 const syncFile = async (filePath: string, map: MapJson, seenMedia: Set<string>, imageMap: Record<string, Buffer>) => {
     console.log(`🔄 Syncing: ${filePath}`);
     const cards = await parseFile(filePath, seenMedia, imageMap);
+
+    await ensureDeckExists(`${DECK_NAME}::${path.basename(filePath, '.md')}`);
 
     for (const card of cards) {
         if (map[card.id]) {
@@ -177,7 +179,7 @@ const syncFile = async (filePath: string, map: MapJson, seenMedia: Set<string>, 
         } else {
             const noteId = await client.note.addNote({
                 note: {
-                    deckName: DECK_NAME,
+                    deckName: `${DECK_NAME}::${path.basename(filePath, '.md')}`,
                     modelName: MODEL_NAME,
                     fields: {
                         Front: card.front,
@@ -197,7 +199,7 @@ const syncFile = async (filePath: string, map: MapJson, seenMedia: Set<string>, 
 };
 
 const watchAndSync = async () => {
-    await ensureDeckExists();
+    await ensureDeckExists(DECK_NAME);
 
     const map = await readMap();
     const seenMedia = new Set<string>();
@@ -206,6 +208,20 @@ const watchAndSync = async () => {
     const watcher = chokidar.watch(['anki', 'img'], {
         ignoreInitial: false,
     });
+
+    // first call on every file in there
+    const files = await glob('anki/**/*.md');
+    await Promise.all(
+        files.map(async (filePath) => {
+            try {
+                await syncFile(filePath, map, seenMedia, imageMap);
+            } catch (err) {
+                console.error(`❌ Error syncing ${filePath}:`, err);
+            }
+        })
+    );
+
+    await writeMap(map);
 
     watcher.on('change', async (filePath) => {
         if (filePath.endsWith('.md')) {
