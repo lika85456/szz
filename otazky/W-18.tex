@@ -1,0 +1,34 @@
+\subsection{W-18 (TWA)}
+Základní postupy, technologie a standardy na straně serveru. Architektura webové aplikace a související návrhové vzory. REST.
+
+\subsubsection*{Architektury}
+\begin{itemize}
+  \item Monolitická
+  \item Microservices
+  \item Serverless
+\end{itemize}
+
+\subsubsection*{REST - representational state transfer}
+\begin{itemize}
+  \item klient-server
+  \item stateless
+  \item cacheable  
+  \item uniform interface - založené na zdrojích (resources)
+  \item layered system - klient není schopný rozlišit load balancing, proxy, skutečný server
+\end{itemize}
+
+Identifikace zdroje - /books/[id]/authors
+
+Idempotent - vícenásobné volání metody má na zdroji stejný efekt (nastav na 10 vs inkrementuj o 1).
+
+Safe - nemění stav zdroje, lze cachovat.
+
+Metody RESTU:
+
+\begin{itemize}
+  \item GET - idempotent i safe
+  \item PUT - idempotent
+  \item DELETE - idempotent
+  \item POST - není safe ani idempotent
+  \item PATCH - není safe ani idempotent
+\end{itemize}

@@ -1,160 +1,180 @@
 
 # SP-6-1
 ## front
-Jaké jsou základní požadavky na databázi z hlediska ochrany dat a přístupu více uživatelů? Vyjmenujte příslušné moduly.
+Jaké dva hlavní požadavky jsou kladeny na databázi z hlediska ochrany a přístupu k datům?
 ## back
-- Ochrana dat před chybami a havárií serveru 
-  - Řeší recovery modul (obnova po systémových/hardwarových chybách, vždy navrací DB do konzistentního stavu)
-- Korektní, rychlý a asynchronní přístup pro větší počet uživatelů
-  - Řeší concurrency control modul (každý uživatel vidí konzistentní stav)
+- Ochrana dat před chybami a havárií serveru, což zajišťuje recovery modul (DB se vždy vrátí do konzistentního stavu při systémových/hw chybách)
+- Korektní, rychlý a asynchronní přístup pro větší počet uživatelů, což řeší concurrency control modul (každý uživatel vidí konzistentní stav)
 
 # SP-6-2
 ## front
-Vydefinujte pojem transakce v kontextu databází.
+Definuj transakci v databázovém systému.
 ## back
 - Sekvence souvisejících akcí, která dostane databázi z jednoho konzistentního stavu do druhého.
-- Během transakce může databáze přechodně být v nekonzistentním stavu, ale na konci musí znovu být konzistentní.
-- Transakce se provede buď celá, nebo vůbec (vše nebo nic).
+- V průběhu transakce může existovat nekonzistentní stav, ale na konci musí být databáze opět konzistentní.
+- Transakce se provede buď celá, nebo vůbec.
 
 # SP-6-3
 ## front
-V jakých okamžicích může transakce začít a skončit? Jaké jsou klíčové příkazy pro ukončení transakce?
+Kdy začíná a končí transakce v databázovém systému?
 ## back
-- Začátek transakce:
-  - Vznik session (spojení s databází)
-  - Konec předchozí transakce
-- Konec transakce:
-  - Ukončení session
-  - Klíčová slova: COMMIT (potvrzení) nebo ROLLBACK (zrušení)
+- Začátek transakce: vznik session nebo konec předchozí transakce.
+- Konec transakce: ukončení session, nebo klíčová slova COMMIT (potvrzení) / ROLLBACK (zrušení).
 
 # SP-6-4
 ## front
-Vyjmenujte možné stavy transakce a popište je.
+Vyjmenuj stavy transakce a popiš je stručně.
 ## back
-- Aktivní (A): Probíhají DML (Data Manipulation Language) příkazy
-- Částečně potvrzená (PC): Po provedení posledního příkazu transakce, čeká na potvrzení nebo zrušení
-- Potvrzená (C - Committed): Po úspěšném zakončení (COMMIT)
-- Chybná (F): Nelze pokračovat v normálním průběhu transakce
-- Zrušená (AB - Aborted): Po skončení operace ROLLBACK
+- Aktivní (A): Probíhají DML příkazy.
+- Částečně potvrzená (PC): Po provedení poslední operace transakce.
+- Potvrzená (C — Commited): Po úspěšném zakončení transakce (COMMIT).
+- Chybná (F): Nelze pokračovat v normálním průběhu transakce kvůli chybě.
+- Zrušená (AB — Aborted): Po skončení operace ROLLBACK.
 
 # SP-6-5
 ## front
-Doplňte: Vlastnosti transakcí jsou známy pod zkratkou ____.
+Co znamená zkratka ACID u transakcí a jaké vlastnosti zahrnuje?
 ## back
-ACID
+- Atomicity (atomárnost): Transakce proběhne celá, nebo vůbec.
+- Consistency (konzistence): Transakce transformuje DB z jednoho konzistentního stavu do jiného konzistentního stavu.
+- Independence (izolovanost): Dílčí efekty jedné transakce nejsou viditelné jiným transakcím.
+- Durability (trvalost): Uložené efekty transakce jsou trvale uloženy.
 
 # SP-6-6
 ## front
-Co znamená jednotlivé písmeno v ACID vlastnostech transakce?
+Vysvětli atomicitu v rámci ACID vlastností transakce.
 ## back
-- Atomicity (A): Transakce proběhne celá, nebo vůbec (nedělitelnost)
-- Consistency (C): Transakce transformuje databázi z jednoho konzistentního stavu do druhého
-- Independence (Isolation, I): Dílčí efekty jedné transakce nejsou viditelné jiným transakcím
-- Durability (D): Uložené efekty transakce jsou trvalé, přetrvávají i po pádu systému
+Atomicita znamená, že transakce musí být provedena celá, nebo vůbec vůbec — žádná její část nesmí být provedena samostatně.
 
 # SP-6-7
 ## front
-{Obrázek znázorňující jednotlivé stavy transakce jako diagram stavů: Aktivní → Částečně potvrzená → Potvrzená; Aktivní/Částečně potvrzená → Chybná → Zrušená}
-Popište, co diagram transakčních stavů vyjadřuje.
+Co znamená konzistence (consistency) v ACID vlastnostech?
 ## back
-- Diagram ukazuje přechody mezi hlavními stavy transakce:
-  - Aktivní → (po provedení posledního příkazu) → Částečně potvrzená → (COMMIT) → Potvrzená (Committed)
-  - Pokud dojde k chybě (v průběhu nebo po částečném potvrzení), tranzice do stavu Chybná (Failed)
-  - Ze stavu Chybná vede přes ROLLBACK do stavu Zrušená (Aborted)
+Konzistence znamená, že transakce transformuje databázi z jednoho konzistentního stavu do jiného konzistentního stavu, tedy zachovává integritu dat.
 
 # SP-6-8
 ## front
-Popište princip zotavení databáze (recovery) po chybě. Jakou roli zde hraje žurnál/log?
+Co znamená izolovanost (independence) v ACID vlastnostech?
 ## back
-- Pro zotavení se využívá žurnál (log), který obsahuje změnové vektory zaznamenávající změny údajů.
-- Po chybě: 
-  - Nedokončené (nepotvrzené) transakce se odvolávají (provádí se na nich ROLLBACK)
-  - Potvrzené transakce, jejichž efekty nebyly fyzicky zapsány na disk, se znovu aplikují (redo)
-- Typy chyb:
-  - Globální (například pád serveru, ztráta spojení, incident na disku)
-  - Lokální (logické chyby v konkrétní transakci)
+Izolovanost (independence) znamená, že dílčí efekty jedné transakce nejsou viditelné ostatním transakcím — transakce běží izolovaně.
 
 # SP-6-9
 ## front
-Jaký je rozdíl mezi globálními a lokálními chybami v kontextu zotavení databáze?
+Co znamená trvalost (durability) v ACID vlastnostech?
 ## back
-- Globální chyby: Ovlivňují celý systém (například pád serveru, výpadek napájení, incident na disku)
-- Lokální chyby: Týkají se pouze jednotlivé transakce (například logická chyba nebo selhání operace v konkrétní transakci)
+Trvalost znamená, že potvrzené změny způsobené transakcí jsou trvale uložené i v případě například havárie systému.
 
 # SP-6-10
 ## front
-Co znamená rozvrhování transakcí (scheduling) v databázovém systému?
+Jaké hlavní úkoly řeší recovery modul v databázi?
 ## back
-- Proces rozhodování o tom, v jakém pořadí a jak budou transakce a jejich dílčí operace prováděny.
-- Cílem je zajistit korektní a asynchronní přístup pro více uživatelů.
-- Používají se techniky jako zamykání a uzamykací protokoly.
+- Ochrana dat před chybami a havárií serveru.
+- Zajištění návratu databáze do konzistentního stavu při systémových nebo hardwarových chybách.
 
 # SP-6-11
 ## front
-Vysvětlete pojem legální rozvrh transakcí.
+Jak funguje recovery (obnova) databáze při chybách?
 ## back
-- Legální rozvrh zajišťuje, že:
-  - Transakce musí mít objekt zamknutý, aby na něm mohla pracovat.
-  - Transakce nemůže zamykat objekty, které jsou již zamčené jinými transakcemi.
+- Využívá se žurnál (log) obsahující změnové vektory.
+- Nedokončené transakce se odvolávají (ROLLBACK).
+- Potvrzené (committed) transakce, jejichž efekt nebyl zapsán na disk, se zopakují.
 
 # SP-6-12
 ## front
-Definujte dobře formovanou transakci z pohledu zamykání objektů.
+Jaké typy chyb recovery modul řeší?
 ## back
-- Dobře formovaná transakce splňuje:
-  - Zamyká objekt pouze pokud k němu chce přistupovat.
-  - Nezamyká objekt, pokud ho již má zamčený.
-  - Neodemyká objekt, který nezamkla.
-  - Na konci transakce nesmí zůstat žádný objekt zamčený.
+- Globální chyby: Pád serveru, ztráta spojení, incident na disku.
+- Lokální chyby: Logické chyby v konkrétní transakci.
 
 # SP-6-13
 ## front
-Proč je třeba zavádět uzamykací protokoly při rozvrhování transakcí?
+Co se stane s transakcemi při globálních a lokálních chybách?
 ## back
-- Protokoly jsou potřebné k zajištění:
-  - Korektnosti a asynchronního přístupu více uživatelů k datům.
-  - Zamezení nekonzistence, deadlockům a jiným konfliktům mezi transakcemi.
+- Nedokončené transakce se odvolávají (ROLLBACK).
+- Potvrzené transakce, jejichž efekt nebyl zapsán na disk (např. kvůli výpadku) se po obnovení zopakují.
 
 # SP-6-14
 ## front
-Jak funguje dvoufázový (two-phase) uzamykací protokol a jak zabraňuje deadlocku?
+Co znamená rozvrhování (plánování) transakcí v databázi?
 ## back
-- 1. fáze: Zamykání
-  - Transakce pouze zamyká objekty (postupně, jak potřebuje), nesmí žádný odemykat.
-- 2. fáze: Odemýkání
-  - Po prvním odemčení objektu už nesmí žádný další objekt zamykat.
-- Pokud všechny transakce používají tento protokol, lze je uspořádat tak, aby nedošlo k vzájemným zablokováním (deadlockům).
+- Proces plánování pořadí a způsobu provedení transakcí a jejich dílčích operací.
+- Musí zajistit korektní a asynchronní přístup více uživatelům bez narušení konzistence databáze.
 
 # SP-6-15
 ## front
-{Obrázek: časová osa transakce rozdělená na fázi zamykání a fázi odemykání, znázorňující dvoufázový uzamykací protokol}
-Co diagram dvoufázového uzamykacího protokolu ukazuje?
+Jaké techniky se používají pro rozvrhování transakcí v databázích?
 ## back
-- Diagram znázorňuje, že transakce nejprve pouze zamyká potřebné objekty (první fáze).
-- Jakmile začne odemykat byť jeden objekt, nezačne už nikdy zamykat další objekty (druhá fáze).
-- Tento postup zabrání tomu, aby více transakcí zůstalo navzájem zablokovaných kvůli čekání na zamčené objekty.
+- Zamykání a uzamykací protokoly.
+- Používání dobře formovaných transakcí a dvoufázového uzamykacího protokolu pro zamezení deadlocků.
 
 # SP-6-16
 ## front
-Jakým způsobem lze řešit vznik deadlocku mezi transakcemi, pokud dvoufázové zamykání nestačí?
+Co je to legální rozvrh u transakcí?
 ## back
-- Používají se další strategie rozvrhování (například timeouty nebo detekce deadlocků).
-- Pokud dojde k deadlocku, jedna z operací/transakcí je ukončena provedením ROLLBACK.
+- Rozvrh, kde:
+  - Transakce musí mít objekt zamknutý, aby s ním mohla pracovat.
+  - Transakce nemůže zamykat již zamknutý objekt.
 
 # SP-6-17
 ## front
-Vyjmenujte hlavní kroky, které jsou nutné, aby byl rozvrh transakcí uspořádatelný.
+Popiš pravidla dobře formovaných transakcí v souvislosti s uzamykáním.
 ## back
-- Všechny transakce musí být:
-  - Dobře formované (správné zamykání a odemykání objektů)
-  - Dvoufázové (tj. dodržovat dvoufázový uzamykací protokol)
-- Uspořádatelný rozvrh zaručuje, že výsledek bude jako při sériovém (postupném) provádění transakcí.
+- Transakce zamyká objekt, pokud k němu chce přistupovat.
+- Transakce nezamyká objekt, pokud ho již dříve zamkla.
+- Transakce neodemyká objekt, který nezamkla.
+- Na konci transakce nezůstane žádný objekt zamčený.
 
 # SP-6-18
 ## front
-Napište, proč je důležité plánovat sekvenci operací meziněkolika transakcemi ve víceuživatelském prostředí.
+Jak funguje dvoufázový uzamykací protokol (2PL)?
 ## back
-- Aby byl zajištěn:
-  - Korektní a konzistentní výsledek (databáze se nedostane do nekonzistentního stavu)
-  - Současný a bezpečný přístup více uživateli
-  - Prevence ztráty nebo nekonzistence dat při souběžných operacích
+- 1. fáze: Uzamykají se objekty podle potřeby, ale nesmí se nic odemykat.
+- 2. fáze: Odemykají se objekty, přičemž po prvním odemknutí se již nesmí nic zamykat.
+
+# SP-6-19
+## front
+K čemu slouží dvoufázový uzamykací protokol v databázích?
+## back
+- Zamezuje vzniku deadlocků (záseků při čekání na zámky).
+- Umožňuje vytvořit uspořádatelný rozvrh pro dobře formované transakce.
+
+# SP-6-20
+## front
+Jak lze řešit vzniklý deadlock při rozvrhování transakcí?
+## back
+V případě deadlocku se u jedné operace prostě provede rollback dané transakce nebo operace.
+
+# SP-6-21
+## front
+Vyjmenuj fáze běhu transakce a přiřaď k nim charakteristickou akci.
+## back
+- Aktivní (A): Probíhají DML příkazy.
+- Částečně potvrzená (PC): Po skončení poslední operace.
+- Potvrzená (C): Po provedení COMMIT.
+- Chybná (F): Detekována chyba, nelze pokračovat.
+- Zrušená (AB): Po provedení ROLLBACK.
+
+# SP-6-22
+## front
+Doplň: Recovery využívá ______ obsahující změnové vektory, k obnově dat po havárii.
+## back
+recovery využívá žurnál (log) obsahující změnové vektory.
+
+# SP-6-23
+## front
+Vysvětli pojem “asynchronní přístup” v kontextu databází.
+## back
+- Možnost, aby více uživatelů mohlo současně, nezávisle a efektivně pracovat s databází, aniž by narušili integritu dat.
+- Řeší concurrency control modul.
+
+# SP-6-24
+## front
+Proč musí být na konci transakce databáze v konzistentním stavu?
+## back
+Protože jen tak je zajištěna integrita a správnost dat — pouze konzistentní databáze poskytuje správné a důvěryhodné informace.
+
+# SP-6-25
+## front
+Co se stane, když transakce způsobí nekonzistentní stav databáze a následně dojde k havárii?
+## back
+Recovery modul pomocí žurnálu (logu) provede rollback neúspěšné/nedokončené transakce a obnoví databázi do posledního konzistentního stavu.

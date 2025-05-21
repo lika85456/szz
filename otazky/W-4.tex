@@ -1,0 +1,108 @@
+\subsection {W-4}
+CAP teorém a jeho vztah k NoSQL databázím.
+
+\subsubsection*{Definice a původ}
+
+\textbf{CAP teorém}, známý také jako \textbf{Brewerův teorém}, je princip v teorii distribuovaných systémů. Tvrdí, že jakýkoli distribuovaný datový úložiště může současně zajistit pouze dvě z následujících tří vlastností:
+
+\begin{itemize}
+    \item \textbf{Konzistence (C):} Každé čtení vrací buď nejnovější záznam, nebo chybu. (Pozor: konzistence v CAP je jiná než konzistence v ACID.)
+    \item \textbf{Dostupnost (A):} Každý požadavek zaslaný neporušenému uzlu musí vést k odpovědi (bez chyby).
+    \item \textbf{Tolerování rozdělení (P):} Systém funguje navzdory libovolnému počtu ztracených nebo zpožděných zpráv mezi uzly v síti.
+\end{itemize}
+
+\subsubsection*{Vysvětlení principu}
+
+Pokud dojde k \textbf{rozdělení sítě (network partition)}, je třeba se rozhodnout mezi:
+
+\begin{itemize}
+    \item \textbf{Zachování konzistence:} Operace se zruší (chyba nebo timeout), aby byla zajištěna konzistence.
+    \item \textbf{Zachování dostupnosti:} Operace proběhne, ale může dojít k dočasné nekonzistenci.
+\end{itemize}
+
+\subsubsection*{Důsledek:}
+
+Pokud dojde k výpadku sítě, nelze současně zachovat konzistenci i dostupnost. Systém musí jednu z těchto vlastností obětovat.
+
+\subsubsection*{Normální stav (bez rozdělení)}
+
+V případě, že k rozdělení sítě nedojde, může systém poskytovat jak konzistenci, tak dostupnost zároveň.
+
+\subsection*{ACID vs. BASE: rozdíl mezi SQL a NoSQL databázemi}
+
+\subsubsection*{SQL databáze (relační)}
+
+Relační databáze (např. PostgreSQL, MySQL, Oracle) používají tradiční model \textbf{ACID}:
+
+\begin{itemize}
+    \item \textbf{A - Atomicita:} Transakce se provádí celá, nebo vůbec.
+    \item \textbf{C - Konzistence:} Data musí být vždy v konzistentním stavu.
+    \item \textbf{I - Izolace:} Paralelní transakce se navzájem neovlivňují.
+    \item \textbf{D - Trvalost (Durability):} Po potvrzení jsou data trvale uložena.
+\end{itemize}
+
+ACID zajišťuje silnou konzistenci a je vhodný pro systémy, kde je integrita dat klíčová (např. bankovnictví, účetnictví).
+
+\subsubsection*{NoSQL databáze}
+
+NoSQL databáze (např. Cassandra, MongoDB, CouchDB) typicky implementují model \textbf{BASE}:
+
+\begin{itemize}
+    \item \textbf{B - Basically Available:} Systém poskytuje odpověď na každý požadavek, i když některá data mohou být momentálně nedostupná.
+    \item \textbf{S - Soft state:} Stav systému se může měnit bez vstupu uživatele, kvůli asynchronní replikaci.
+    \item \textbf{E - Eventual consistency:} Systém dosáhne konzistence v čase, ale ne okamžitě.
+\end{itemize}
+
+BASE obětuje okamžitou konzistenci pro vyšší dostupnost a škálovatelnost, což je vhodné pro webové aplikace, sociální sítě, analytické systémy a další rozsáhlé systémy.
+
+\subsubsection*{Shrnutí rozdílů}
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Vlastnost} & \textbf{SQL (ACID)} & \textbf{NoSQL (BASE)} \\
+\hline
+Konzistence & Silná & Postupná (eventual) \\
+\hline
+Dostupnost & Méně důležitá & Vysoce preferovaná \\
+\hline
+Transakce & Ano & Omezené nebo žádné \\
+\hline
+Škálovatelnost & Vertikální & Horizontální \\
+\hline
+Použití & Kritické systémy & Velké distribuované systémy \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{Vztah k CAP teorému}
+
+\begin{itemize}
+    \item \textbf{SQL databáze (ACID)}: upřednostňují \textbf{Konzistenci} před Dostupností $\Rightarrow$ typicky \textbf{CP}.
+    \item \textbf{NoSQL databáze (BASE)}: upřednostňují \textbf{Dostupnost} před Konzistencí $\Rightarrow$ typicky \textbf{AP}.
+\end{itemize}
+
+\subsection*{Odpovědi na otázky}
+
+\subsubsection*{Proč není možné mít v distribuovaném systému všechny tři vlastnosti CAP současně?}
+
+Protože během výpadku komunikace (partition) musí systém buď:
+\begin{itemize}
+    \item odmítnout operace (ztrácí dostupnost), nebo
+    \item provést operace bez záruky aktuálnosti dat (ztrácí konzistenci).
+\end{itemize}
+
+\subsubsection*{Jaký dopad má CAP teorém na výběr databáze pro kritický finanční systém?}
+
+Finanční systémy vyžadují silnou konzistenci. Je proto vhodné použít \textbf{ACID} databázi, která implementuje model \textbf{CP} (např. PostgreSQL, Oracle, HBase).
+
+\subsubsection*{Vysvětlete rozdíl mezi eventual consistency a strong consistency.}
+
+\begin{itemize}
+    \item \textbf{Strong consistency:} Všichni klienti vždy čtou nejnovější záznam.
+    \item \textbf{Eventual consistency:} Klienti mohou číst starší hodnoty, ale data se časem sjednotí.
+\end{itemize}
+
+\subsubsection*{Proč je partition tolerance u moderních NoSQL databází považována za nevyhnutelnou?}
+
+Protože v distribuovaném prostředí jsou výpadky a ztráty zpráv nevyhnutelné. Aby systém zůstal funkční, musí být schopen tyto poruchy tolerovat $\Rightarrow$ \textbf{Partition Tolerance (P)} je nutností.

@@ -1,0 +1,14 @@
+\subsection{W-17 (TWA)}
+Obsluha a struktura HTTP požadavku a odpovědi ve webové aplikaci. Stav webové aplikace.
+
+\subsubsection*{Stav webové aplikace}
+
+HTTP je bezstavový protokol, je tedy nutné řešit stav následujícími způsoby:
+
+\begin{itemize}
+  \item URL - params, query string - nehodí se pro citlivá data, stav aplikace se dá jednoduše sdílet.
+  \item Cookies - úložiště na straně klienta, omezená velikost, klíč-hodnota, platnost 
+  \item Session - úložiště na serveru (v databázi), session id se ukládá do cookie.
+  \item Local storage - nebo lokální databáze.
+  \item "Javascript" proměnné.
+\end{itemize}

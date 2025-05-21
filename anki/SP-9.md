@@ -1,239 +1,211 @@
 
 # SP-9-1
 ## front
-Co jsou asymetrické kryptosystémy a jak se liší od symetrických šifer?
+Co je základním principem asymetrických kryptosystémů? Uveď minimálně 3 charakteristiky.
 ## back
-- Asymetrické kryptosystémy používají dva různé klíče:
-  - Veřejný klíč pro šifrování
-  - Soukromý (privátní) klíč pro dešifrování
-- Privátní klíč nelze prakticky odvodit z veřejného klíče v rozumném čase
-- Každý subjekt má svůj unikátní pár veřejného a privátního klíče
-- Umožňují bezpečnou komunikaci a digitální podpis bez nutnosti předem sdílet tajný klíč
+- Pro šifrování a dešifrování se používají různé klíče (veřejný a soukromý).
+- Pomocí veřejného klíče se šifruje, soukromým klíčem se dešifruje.
+- Privátní klíč nelze v rozumném čase odvodit z veřejného klíče.
+- Každý subjekt má svůj vlastní pár veřejný-privátní klíč.
 
 # SP-9-2
 ## front
-Jaký je princip šifrovacího algoritmu RSA?
+Vysvětli princip RSA a popiš, jak vypadají veřejný a soukromý klíč.
 ## back
-- RSA je založené na modulárním umocňování
-- Veřejný klíč: dvojice $(e, n)$, kde $e$ je veřejný exponent a $n = pq$ (součin dvou velkých prvočísel)
-- $gcd(e, \varphi(n)) = 1$
-- Šifrování: $E(m) = c = |m^e|_n$, kde $m$ je blok plaintextu, $c$ ciphertext
-- Dešifrování: $D(c) = |c^d|_n = |m|_n$, kde $d$ je inverze čísla $e$ modulo $\varphi(n)$
-- Soukromý klíč: dvojice $(d, n)$
-- Bezpečnost je založena na obtížnosti faktorizace velkých čísel
+- RSA je asymetrická šifra založená na modulárním umocňování.
+- Veřejný klíč je dvojice $(e, n)$, kde $e$ je veřejný exponent a $n = pq$ je součin dvou velkých prvočísel.
+- Soukromý klíč je dvojice $(d, n)$, kde $d$ je inverzí k $e$ modulo $\varphi(n)$.
+- Šifrování: $E(m) = c = |m^e|_n$, $0 < c < n$.
+- Dešifrování: $D(c) = |c^d|_n = |m^{ed}|_n$, kde $ed \equiv 1 \pmod{\varphi(n)}$.
 
 # SP-9-3
 ## front
-Jak se generují RSA klíče? Jaká je pravděpodobnost vybrání prvočísel?
+Jak probíhá generování klíčů v RSA? Na co je třeba dbát při volbě prvočísel?
 ## back
-- Generování:
-  - Najdou se dvě velká náhodná čísla $p$ a $q$ (cca 340 decimálních číslic)
-  - Pravděpodobnost, že náhodně vybrané číslo této délky je prvočíslo, je přibližně $2 / \log(10^{340})$
-  - Pro nalezení prvočísla je potřeba v průměru cca 400 testů čísel
-- Veřejný exponent $e$ by měl být větší než $p$ a $q$
+- Subjekt náhodně vybírá dvě velká prvočísla $p$ a $q$ (s cca 340 číslicemi).
+- $n = pq$.
+- Pravděpodobnost, že velké náhodné číslo je prvočíslo, je cca $2/\log(10^{340})$.
+- Pro nalezení prvočísla je potřeba v průměru asi $400$ testů.
+- Exponent $e$ volíme větší než $p$, $q$; $2^e > n$.
+- Pro bezpečnost je dobré, aby $p-1$ i $q-1$ měly velký prvočíselný faktor a $p-q$ byl dostatečně velký.
 
 # SP-9-4
 ## front
-Jaké faktory ovlivňují bezpečnost RSA?
+Napiš postup šifrování a dešifrování zprávy pomocí RSA.
 ## back
-- Bezpečnost je založena na obtížnosti faktorizace $n = pq$
-- Modulární umocňování pro běžné velikosti je rychlé (milisekundy)
-- Získání dešifrovacího exponentu $d$ z $(e, n)$ je obtížné bez znalosti $\varphi(n)$ (tedy bez znalosti faktorizace $n$)
-- Moderní algoritmy potřebují stovky let pro faktorizaci 200-číslicového $n$
-- Ochrana proti speciálním rychlým technikám:
-  - $p-1$ a $q-1$ by měly mít velké prvočíselné faktory
-  - Malý $gcd(p-1, q-1)$
-  - Dostatečně velký rozdíl $p-q$
+- Zpráva $m$ se převede na číslo menší než $n$.
+- Šifrování: $c = E(m) = m^e \mod n$.
+- Dešifrování: $m = D(c) = c^d \mod n$.
+- $e$ a $d$ jsou zvoleny tak, aby $ed \equiv 1 \;(\mathrm{mod} \;\varphi(n))$.
 
 # SP-9-5
 ## front
-Popiš princip digitálního podpisu s použitím RSA.
+Co zajišťuje bezpečnost RSA? Proč nelze snadno vygenerovat soukromý klíč z veřejného?
 ## back
-- Každý subjekt má svůj veřejný/privátní klíč ($PK_1, VK_1$, $PK_2, VK_2$)
-- Subjekt 1 podepíše zprávu: $S = D_{PK_1}(m) = |m^{d_1}|_{n_1}$
-- Zpráva pro subjekt 2 se šifruje: $c = E_{VK_2}(S) = |S^{e_2}|_{n_2}$
-- Subjekt 2 dešifruje svým privátním klíčem a poté ověří podpis veřejným klíčem subjektu 1
-- Zajišťuje autenticitu (odesílatel nemůže podpis popřít) a integritu
+- Nelze jednoduše spočítat $\varphi(n)$ bez znalosti faktorizace $n = pq$.
+- Faktorizace velkého $n$ je výpočetně velmi náročná i pro nejlepší známé algoritmy.
+- Bez znalosti $p$ a $q$ nemůžeme určit $d$.
+- Bezpečnost RSA proto závisí na složitosti faktorizace velkých čísel.
 
 # SP-9-6
 ## front
-Jak lze urychlit výpočty v RSA šifrování a dešifrování?
+Jak funguje digitální podpis s použitím RSA?
 ## back
-- Urychlení šifrování: Volba veřejného exponentu $e$ s nízkou Hammingovou vahou
-- Urychlení dešifrování: Použití Čínské věty o zbytcích (RSA-CRT), což umožňuje počítat s čísly poloviční délky
+- Odesílatel (subjekt 1) podepíše zprávu svým privátním klíčem: $S = D_{PK_1}(m) = |m^{d_1}|_{n_1}$.
+- Pak zprávu zašifruje veřejným klíčem příjemce: $c = E_{VK_2}(S) = |S^{e_2}|_{n_2}$.
+- Příjemce nejprve dešifruje svým privátním klíčem, poté veřejným klíčem odesílatele odhalí původní obsah.
+- Příjemce si tím ověří, že zpráva skutečně přišla od subjektu 1 a podpis nelze popřít.
 
 # SP-9-7
 ## front
-Jaký je princip algoritmu Diffie-Hellman pro dohodu na klíči?
+Jak lze urychlit operace RSA při šifrování a dešifrování?
 ## back
-- Subjekty A a B se dohodnou na prvočísle $m$ a bázi $a$ ($1 < a < m$)
-- A zvolí $k_A$, spočítá $y_A = |a^{k_A}|_m$ a pošle B
-- B zvolí $k_B$, spočítá $y_B = |a^{k_B}|_m$ a pošle A
-- Oba spočítají sdílený klíč $K = |a^{k_A \cdot k_B}|_m$
-- Útočník nemůže z $|a^{k_A}|_m$ nebo z $|a^{k_B}|_m$ spočítat $K$ (DHP – Diffie-Hellmanův problém)
+- Urychlení šifrování: Volba public exponentu $e$ s nízkou Hammingovou váhou.
+- Urychlení dešifrování: Čínská věta o zbytcích (RSA-CRT) – výpočty probíhají s čísly poloviční délky.
 
 # SP-9-8
 ## front
-Jaký je vztah mezi Diffie-Hellmanovým problémem (DHP) a problémem diskrétního logaritmu (DLP)?
+Popiš algoritmus Diffie-Hellman pro výměnu klíče.
 ## back
-- DHP (nelze snadno spočítat sdílený klíč z veřejných hodnot) není složitější než DLP (nalezení exponentu v $y = a^k \bmod m$), podle aktuálních znalostí však není DHP ani jednodušší než DLP
+- Veřejně se dohodne prvočíslo $m$ a báze $a$ ($1 < a < m$).
+- A zvolí tajné $k_A$, spočítá $y_A = a^{k_A}\ \text{mod}\ m$ a odešle B.
+- B zvolí $k_B$, spočítá $y_B = a^{k_B}\ \text{mod}\ m$ a odešle A.
+- Oba spočítají sdílený klíč: $K = y_B^{k_A}\ \text{mod}\ m = y_A^{k_B}\ \text{mod}\ m = a^{k_A k_B}\ \text{mod}\ m$.
+- Útočník nedokáže z $y_A$ nebo $y_B$ spočítat $K$ (tzv. Diffie-Hellmanův problém, DHP).
 
 # SP-9-9
 ## front
-Popiš šifrovací systém El Gamal – jak vzniká a jak funguje?
+Jak funguje šifra El Gamal a jak se liší od základního Diffie-Hellman protokolu?
 ## back
-- El Gamal vzniká úpravou Diffie-Hellmana
-- A zvolí $g$ (generátor grupy) a prvočíslo $m$
-- A zvolí privátní klíč $k_A$, spočítá $y_A = |g^{k_A}|_m$, zveřejní $(m, g, y_A)$ jako veřejný klíč
-- B chce poslat zprávu $p$:
-  - Zvolí $k_B$, spočítá $y_B = |g^{k_B}|_m$ a sdílený klíč $K = |y_A^{k_B}|_m$
-  - Zašifruje: $c = |p \cdot K|_m$
-  - Odešle $A$ dvojici $(y_B, c)$
-- A spočítá $K = |y_B^{k_A}|_m$, after computes $K^{-1}$, dešifruje: $p = |c \cdot K^{-1}|_m$
+- Vyžaduje generátor $g$ a prvočíslo $m$.
+- A vygeneruje $k_A$, spočítá $y_A = g^{k_A}\ \text{mod}\ m$ (soukromý klíč $k_A$, veřejný klíč $(m, q, y_A)$).
+- B chce odeslat zprávu $p$, vygeneruje $k_B$ a $y_B = g^{k_B}\ \text{mod}\ m$.
+- Sdílený klíč: $K = y_A^{k_B}\ \text{mod}\ m$.
+- Zašifruje zprávu jako $c = (y_B, p \cdot K\ \text{mod}\ m)$.
+- A dešifruje zprávu pomocí $K = y_B^{k_A}\ \text{mod}\ m$, dopočítá $p = c \cdot K^{-1}\ \text{mod}\ m$.
 
 # SP-9-10
 ## front
-Co je hashovací funkce a které bezpečnostní vlastnosti jsou požadované?
+Vyjmenuj vlastnosti dobré kryptografické hashovací funkce.
 ## back
-- Hashovací funkce: z libovolně dlouhého vstupu vytvoří pevně dlouhý hash
-- Požadované vlastnosti:
-  - Jednosměrnost (snadno $x \to h(x)$, zpětně nelze)
-  - Bezkoliznost (obtížnost najít dva různé vstupy se stejným hashem)
-  - Pro různé vstupy stejný output délky
-- Hashy se využívají v digitálních podpisech (podepisuje se hash, ne dlouhá data)
+- Jednosměrnost: Nelze najít $x$ pro dané $y = f(x)$.
+- Bezkoliznost 1. řádu: Je výpočetně nemožné najít dvě různé zprávy $M \neq M'$, aby $h(M) = h(M')$.
+- Bezkoliznost 2. řádu: Pro daný vstup $x$ je těžké najít $y \neq x$ tak, že $h(x) = h(y)$.
+- Pro různé vstupy vždy stejně dlouhý výstup.
+- Hash funkce by se měla chovat jako náhodné orákulum.
 
 # SP-9-11
 ## front
-Vysvětli rozdíl mezi bezkolizností hashovacích funkcí 1. a 2. řádu.
+Vysvětli rozdíl mezi bezkolizností 1. a 2. řádu u hashovací funkce.
 ## back
-- Bezkoliznost 1. řádu:
-  - Obtížné najít dvě různé zprávy $M$ a $M'$ tak, aby $h(M) = h(M')$
-- Bezkoliznost 2. řádu:
-  - Pro daný vstup $x$ je obtížné najít druhý vstup $y \neq x$ tak, že $h(x) = h(y)$
+- Bezkoliznost 1. řádu: Nalezení dvou libovolných různých zpráv se stejným hashem ($h(M) = h(M')$).
+- Bezkoliznost 2. řádu: Pro daný vzor $x$ je výpočetně nemožné najít $y \neq x$ tak, aby $h(x) = h(y)$.
 
 # SP-9-12
 ## front
-Jaká je odolnost hash funkce délky $n$ proti nalezení kolize 1. řádu? (narozeninový paradox)
+Proč se hashe používají při digitálních podpisech místo samotné zprávy?
 ## back
-- Pokud se hash funkce chová jako náhodné orákulum:
-  - Složitost nalezení kolize s 50% pravděpodobností je přibližně $2^{n/2}$
+- Hash celou zprávu reprezentuje krátkým otiskem, šetří výpočetní náročnost (např. při podpisu dlouhé zprávy).
+- Bezkoliznost hashovací funkce zajistí, že je těžké nalézt dvě zprávy se stejným hashem, takže podpis odkazuje jednoznačně na konkrétní zprávu.
 
 # SP-9-13
 ## front
-Jaká je odolnost hash funkce délky $n$ proti nalezení druhého vzoru konkrétního hashe (2. řád)?
+Jakou bezpečnost z hlediska složitosti poskytuje náhodné orákulum hashů délky $n$ pro nalezení:
+- kolize 1. řádu,
+- kolize 2. řádu?
 ## back
-- Pokud se hash funkce chová jako náhodné orákulum:
-  - Složitost nalezení druhého vzoru je přibližně $2^n$
+- Pro kolizi 1. řádu: Složitost $\approx 2^{n/2}$ (narozeninový paradox).
+- Pro kolizi 2. řádu: Složitost $\approx 2^{n}$.
 
 # SP-9-14
 ## front
-Jak se konstruuje hashovací funkce pomocí kompresní funkce? (popiš základní princip)
+Popiš základní konstrukci hash funkce na základě blokové šifry s kompresní funkcí.
 ## back
-- Zpráva rozdělena na bloky, poslední blok doplněn (např. '1' a pak '0')
-- Pro každý blok použita kompresní funkce $f$, která z předchozího kontextu $H_{i-1}$ a bloku $M_i$ vytvoří $H_i$
-- Bezkoliznost kompresní funkce zajistí bezkoliznost celé hashovací funkce
-- Obvykle se jako kompresní funkce používá bloková šifra – kontext $H_{i-1}$ je vstup, blok $M_i$ je klíč
+- Zpráva se rozdělí na bloky.
+- Každý blok vstupuje do kompresní funkce $f$ spolu s předchozím hashem $H_{i-1}$ a vytvoří nový hash $H_i$.
+- Typicky se používá bloková šifra, kde $H_{i-1}$ je vstup a blok $M_i$ je klíč.
+- Podle Davies–Meyerovy konstrukce se po zašifrování ještě přičte/XOR původní kontext.
+- Bezkoliznost kompresní funkce zaručuje bezkoliznost celé hashovací funkce.
 
 # SP-9-15
 ## front
-Co znamená Davies-Meyerova konstrukce pro hash funkce?
+Co je HMAC a k čemu slouží?
 ## back
-- Davies-Meyerova konstrukce:
-  - Po zašifrování kompresní funkcí se ještě k výsledku přičte (XOR) původní kontext $H_{i-1}$
-  - Zvyšuje odolnost proti určitým typům útoků na hash funkce
+- HMAC (Keyed-Hash Message Authentication Code) je integritní kód založený na hash funkci a tajném klíči $K$.
+- Používá se k ověření integrity a autenticity zprávy.
+- Detekuje chyby při přenosu a brání neoprávněné změně zprávy.
 
 # SP-9-16
 ## front
-Co je HMAC a k čemu se používá?
+Doplň obrázek: Jak vypadá princip blokového hashování?  
+![schéma hashovací funkce](img/SP-9_0.jpg)
 ## back
-- HMAC: Hash-based Message Authentication Code
-- Integritní kód, bránící padělání zprávy
-- Používá tajný klíč $K$ a hashovací funkci
-- Detekuje chyby při přenosu a zabraňuje neoprávněné změně zprávy
+- Princip: Zpráva je rozdělena na bloky, každý blok spolu s předchozím kontextem vstupuje do kompresní funkce, z jejíž výstupu vzniká hash celé zprávy.
+- Na obrázku je vidět sekvenční zpracování bloků s aktualizací hashe po každém kroku.
 
 # SP-9-17
 ## front
-{Obrázek znázorňující konstrukci HMAC}
-Co ukazuje tento diagram HMAC a jaký je jeho princip?
+Vysvětli, jak funguje HMAC podle schématu:
+![schéma HMAC](img/SP-9_1.jpg)
 ## back
-- Diagram ilustruje, že HMAC kombinuje tajný klíč $K$ se zprávou, používá hash funkci a dvě různé konstanty (ipad, opad)
-- Používá dvoufázové hashování s prefixací klíče a specifických hodnot pro posílení bezpečnosti
-- Výsledkem je autentizační hashový kód zprávy
+- HMAC kombinuje hashovací funkci a tajný klíč ve dvou krocích: Vnitřní a vnější hash.
+- Nejprve je zpráva spojena s klíčem, zhashována, pak výsledek znovu spojován s klíčem a opět zhashován.
+- Posiluje tak odolnost proti útokům na hash funkci.
 
 # SP-9-18
 ## front
-Pojmy orákulum a náhodné orákulum – jaký mají význam v kontextu hashovacích funkcí?
+K čemu slouží Public Key Infrastructure (PKI) a jaké jsou hlavní problémy distribuce klíčů?
 ## back
-- Orákulum: stroj, který na stejný vstup vždy dává stejný výstup
-- Náhodné orákulum: pro nové vstupy dává náhodně zvolené hodnoty, pro opakované stejné
-- Hash funkce by se z hlediska bezpečnosti měla chovat jako náhodné orákulum
+- PKI umožňuje bezpečnou distribuci veřejných klíčů a správu certifikátů.
+- Hlavní problémy: 
+  - Jak distribuovat veřejné klíče, aby nemohly být podvrženy (man-in-the-middle útok)?
+  - Jak zajistit autenticitu a důvěryhodnost veřejných klíčů?
 
 # SP-9-19
 ## front
-Proč se hash zprávy podepisuje místo celé zprávy v digitálním podpisu?
+Jaké jsou možné způsoby zveřejnění veřejných klíčů a co je jejich slabina?
 ## back
-- Podepisování přímo celé zprávy je příliš náročné (dlouhé zprávy)
-- Hash má konstantní délku, podpis je tím efektivnější
-- Bezkoliznost hashů zajišťuje, že není snadné vyrobit jinou zprávu se stejným hashem (odolnost proti podvržení)
+- Přímé zasílání veřejných klíčů (rychlé, jednoduché, ale zranitelné vůči podvržení).
+- Veřejně dostupný adresář (zajišťuje správa autoritou, zvýšená bezpečnost).
 
 # SP-9-20
 ## front
-Jaké jsou varianty distribuce veřejných klíčů a jaké mají nevýhody?
+Jak funguje veřejně dostupný adresář pro klíče?  
+![schéma veřejného adresáře](img/SP-9_2.jpg)
 ## back
-- Přímé zasílání veřejného klíče:
-  - Rychlé, jednoduché, ale snadné podvržení
-- Veřejně dostupný adresář:
-  - Důvěryhodná autorita zajišťuje distribuci, vyšší bezpečnost
+- Veřejný adresář provádí distribuci a správu veřejných klíčů důvěryhodnou autoritou.
+- Uživateli jsou klíče poskytovány z bezpečného adresáře, což brání jejich podvržení.
 
 # SP-9-21
 ## front
-{Obrázek infrastruktury s veřejným adresářem veřejných klíčů}
-Co znázorňuje tento obrázek a jaké vlastnosti má tento způsob distribuce klíčů?
+Co je to certifikační autorita (CA) a jak zabezpečuje distribuci veřejných klíčů?  
+![schéma CA](img/SP-9_3.jpg)
 ## back
-- Obrázek ukazuje centrální důvěryhodnou autoritu, která spravuje veřejně přístupný adresář veřejných klíčů uživatelů
-- Zajišťuje vyšší úroveň bezpečnosti oproti přímé distribuci, ale uživatelé musí důvěřovat správci adresáře
+- Autorita pro veřejné klíče spravuje distribuci klíčů z adresáře se svým vlastním párem klíčů (veřejný/privátní).
+- Každý účastník musí znát veřejný klíč CA.
+- Klíče distribuované CA jsou podepsané a ověřitelné prostřednictvím veřejného klíče CA.
 
 # SP-9-22
 ## front
-Jak funguje autorita pro veřejné klíče (PKA) a jak chrání distribuci klíčů?
+Popiš, co je to certifikát, co obsahuje a kdo ho vydává.
 ## back
-- Přísnější dohled na distribuci veřejných klíčů z adresáře
-- Autorita má vlastní pár klíčů (veřejný, privátní)
-- Účastníci musí znát veřejný klíč autority pro ověření pravosti klíčů ostatních
+- Certifikát obsahuje veřejný klíč držitele, identifikační údaje držitele, dobu platnosti, další údaje vytvořené CA a podpis CA.
+- Vydává ho Certifikační Autorita (CA).
+- Certifikát lze ověřit pomocí veřejného klíče CA.
 
 # SP-9-23
 ## front
-{Obrázek infrastruktury s autoritou pro veřejné klíče}
-Jakou roli hraje autorita v distribuční infrastruktuře klíčů na tomto obrázku?
+Jak funguje certifikace veřejných klíčů?  
+![schéma certifikátu a CA](img/SP-9_4.jpg)
 ## back
-- Autorita má centrální roli při ověřování a přidělování veřejných klíčů
-- Uživatelé si z adresáře stáhnou klíče a jejich pravost ověřují podpisem autority
+- Distribuce veřejného klíče bez kontaktu se třetí stranou: uživatel má svůj veřejný klíč podepsaný důvěryhodnou autoritou (CA).
+- Certifikát je strukturovaný dokument, který lze ověřit veřejným klíčem CA.
+- V praxi mohou být certifikáty podepsány ve stromové struktuře (řetězení důvěry, root CA).
 
 # SP-9-24
 ## front
-Co je certifikát, co obsahuje a jak funguje certifikační autorita (CA)?
+Jak je řešena správa a důvěra v root/kořenové certifikáty?
 ## back
-- Certifikát: struktura obsahující:
-  - veřejný klíč držitele
-  - identifikační údaje držitele
-  - dobu platnosti a další údaje
-  - podpis certifikační autority (CA)
-- CA je důvěryhodná třetí strana, která vydává a podepisuje certifikáty
-- Ověřitelnost certifikátu je pomocí veřejného klíče CA
+- Root certifikáty musí být distribuovány jiným způsobem (např. s operačním systémem).
+- Dál se využívá hierarchie CA – certifikáty jsou podepsány v řetězci na důvěryhodný root certifikát.
 
-# SP-9-25
-## front
-{Obrázek certifikační autority vystavující a podepisující certifikáty}
-Co znázorňuje tento obrázek? Jaký je tok informací mezi uživatelem a CA?
-## back
-- Uživateli je vystaven certifikát obsahující jeho veřejný klíč a identitu
-- CA podepisuje tento certifikát svým soukromým klíčem
-- Validitu certifikátu může kdokoliv ověřit pomocí veřejného klíče CA
-
-# SP-9-26
-## front
-Jaká je stromová struktura certifikátů a k čemu slouží kořenové certifikáty?
-## back
-- Certifikáty mohou být podepsané ve stromové struktuře (řetězec důvěry)
-- Certifikát držitele je podepsaný CA$_1$, její certifikát podepsaný CA$_2$, atd.
-- Kořenové certifikáty tvoří vrchol stromu; musí být distribuovány jiným způsobem (např. s operačním systémem nebo preinstalované v softwaru)

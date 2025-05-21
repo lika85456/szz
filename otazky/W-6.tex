@@ -1,0 +1,68 @@
+\subsection{W-6 (BIG)}
+
+Typické databázové stroje pro Big Data (Cassandra nebo HBase) - architektura, databázový model, distribuce dat.
+
+\subsubsection*{Cassandra}
+
+Všeobecné vlastnosti CassandraDB:
+
+\begin{itemize}
+  \item Data ukládána po sloupcích.
+  \item Distribuovaná databáze. 
+  \item Z Dynama si bere principy pro replikaci a distribuci dat:
+  \begin{itemize}
+    \item Dělení datovýsch setů pomocí konzistentního hashování
+    \item Replikace dat pomocí verzovaných dat.
+    \item Detekce a oprava chyb pomocí protokolu Gossip.
+  \end{itemize}
+  \item Vlastní dotazovací jazyk CQL (Cassandra Query Language) (neumí joiny a subqueries).
+  \item Vysoká škálovatelnost - automaticky se vyvažuje i opravuje.
+\end{itemize}
+
+Výhody a nevýhody ukládání dat po sloupcích:
+\begin{itemize}
+  \item Výhody:
+  \begin{itemize}
+    \item Efektivní a rychlé agregační funkce.
+    \item Komprese dat po sloupcích - ukládají se pouze existující data, ne null.
+    \item Rychlý přístup k většímu množství dat.
+  \end{itemize}
+  \item Nevýhody:
+  \begin{itemize}
+    \item Nízký výkon pro úpravy dat - nutná úprava všech sloupců, mazání dat může být také pomalé, protože je potřeba opět smazat data v každém sloupci.
+    \item Nižší výkon pro výběr omezeného množství malých dat.
+    \item Méně flexibilní pro složitější dotazy (je to prostě tupá databáze).
+  \end{itemize}
+\end{itemize}
+
+Infrastruktura CassandraDB:
+\begin{itemize}
+  \item Všechny uzly jsou si rovny (peer-to-peer).
+  \item Cluster < Datacenter (machine) < Node.
+\end{itemize}
+
+CAP theorem:
+Defaultně běží v AP módu, tedy Availability a Partition tolerance. Nesplňuje požadavky na Consistency - data se sice zapíšou, ale není zaručeno kdy. Cassandru lze nakonfigurovat tak, aby splňovala CP.
+
+Optimalizace přístupu k datům:
+\begin{itemize}
+  \item Commit log - obdoba WAL, zapisuje se do něj každá změna a je používán pro obnovu.
+  \item Memtable - datová struktura v paměti, do které se data zapisují po zápisu do commit logu.
+  \item SSTable - diskový soubor, do kterého se flushují data z memtable jakmile začne přetékat. Při zápisu z memtable do SSTable se propsaná data odebírají z commit logu.
+  \item Bloom filter - rychlý a nedeterministický vyhledávač, který určuje, zda je hodnota v SSTable.
+\end{itemize}
+
+Programovatelná konzistence:
+Existují tři míry konzistence:
+\begin{itemize}
+  \item ONE - stačí přečíst jednu repliku. 
+  \item QUORUM - stačí přečíst nadpoloviční většinu replik.
+  \item ALL - musí se přečíst všechny repliky.
+\end{itemize}
+
+Architektura dělení dat:
+\begin{itemize}
+  \item Data se do uzlů dělí na základě Partition Key - součást primárního klíče, definuje na který uzel se data uloží.
+  \item Ve vybraném uzlu poté určí fyzickou adresu dat Clustering Key.
+  \item Data jsou v uzlech uložena do kruhu - uložená data se navzájem mohou překrývat (uzel může pokrýt více "stupňů v kruhu").
+\end{itemize}

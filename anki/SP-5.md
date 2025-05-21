@@ -1,175 +1,180 @@
+
 # SP-5-1
 ## front
-Co je databáze a jaké jsou její hlavní charakteristiky?
+Co je relační databáze? Uveďte hlavní charakteristiky a přínosy databázových technologií.
 ## back
-- Databáze je soubor záznamů se systematickou strukturou, která umožňuje počítačové vyhledávání dat.
+- Relační databáze je soubor záznamů se systematickou strukturou umožňující efektivní vyhledávání pomocí počítače.
 - Existence dat v DB je nezávislá na aplikačních programech.
-- Pracuje s velkým množstvím, perzistentních, spolehlivých a sdílených dat:
-  - Velké množství: nestačí operační paměť.
-  - Perzistentní: data přetrvávají od zpracování ke zpracování.
-  - Spolehlivá: lze rekonstruovat po chybě.
-  - Sdílená: přístupná více uživatelům.
+- Zaměřuje se na řízení velkého množství, perzistentních, spolehlivých a sdílených dat:
+  - Velké množství – nestačí operační paměť
+  - Perzistentní – data přetrvávají mezi zpracováními
+  - Spolehlivá – lze rekonstruovat po chybě
+  - Sdílená – přístupná více uživatelům
+- Hlavní přínosy:
+  - Nezávislost dat na aplikaci
+  - Efektivní přístup k datům
+  - Urychlení vývoje aplikací
+  - Integrita a ochrana dat
+  - Správa a zálohování dat
+  - Transakční zpracování
+  - Paralelní přístup
+  - Zotavení po chybě
 
 # SP-5-2
 ## front
-Vyjmenuj hlavní přínosy databázových technologií.
+Jaké jsou základní pojmy relačních databází? Vysvětlete pojem relace a schéma relační databáze.
 ## back
-- Nezávislost dat na aplikaci
-- Efektivní přístup k datům
-- Urychlení vývoje aplikací
-- Integrita a ochrana dat
-- Správa a zálohování dat
-- Transakční zpracování
-- Paralelní přístup k datům
-- Zotavení po chybě
+- Relace – dvourozměrná struktura (tabulka):
+  - Atributy (sloupce) – jména a domény atributů
+  - N-tice (řádky) – prvky relace (unikátní)
+- Schéma relační databáze: množina relací $R$ a množina integritních omezení $I$
 
 # SP-5-3
 ## front
-Co znamenají pojmy DBS a DBMS?
+Popište základní operace relační algebry.
 ## back
-- DBS (Database System): databázový systém, zahrnuje databázi, DBMS a aplikační software.
-- DBMS (Database Management System): systém pro správu databáze, software umožňující vytváření, správu a manipulaci s databázemi.
+- Dotazovací formalismus – specifikujeme CO chceme, ne JAK to získat.
+- Výsledkem dotazu je opět relace (může být použitá pro další dotaz).
+- Základní operace:
+  - **Selecke:** $název\_relace('atribut' = hodnota)$ – výběr záznamů na základě podmínky.
+  - **Projekce:** $název\_relace(podmínka)[atribut1, atribut2]$ – výběr atributů pro výsledek.
+  - **Přirozené spojení:** $relace1 * relace2$ – spojení dle stejně pojmenovaných atributů.
+  - **Přejmenování atributu:** $název\_relace[atribut1 \rightarrow jiné\_jméno]$
+  - **Množinové operace:** sjednocení ($\cup$), průnik ($\cap$), rozdíl ($\setminus$), kartézský součin ($\times$)
+  - **Polospojení:** left/right join ($relace1 *\!>\; relace2$)
 
 # SP-5-4
 ## front
-Jaký je rozdíl mezi relací, atributem a n-ticí v relační databázi?
+Jaké jsou základní části a příkazy jazyka SQL? Uveďte, která část slouží k čemu.
 ## back
-- Relace: dvourozměrná struktura (tabulka).
-- Atribut (sloupec): jméno a doména atributu, popisuje sloupce tabulky.
-- N-tice (řádek): prvek relace, konkrétní záznam v tabulce; každý řádek je unikátní.
+- **SQL – Structured Query Language**
+  - Relačně úplný; řešíme výsledek, ne konkrétní postup.
+- Části SQL:
+  1. **DDL (Data Definition Language):**
+     - create, alter, drop
+     - tvorba relací/tabulek; řeší i integritní omezení
+  2. **DML (Data Manipulation Language):**
+     - insert, update, delete, merge
+     - úprava záznamů v tabulkách, transakce
+  3. **DCL (Data Control Language):**
+     - grant, revoke
+     - správa uživatelských práv a přístupů
+  4. **TCL (Transaction Control Language):**
+     - commit, rollback, savepoint
 
 # SP-5-5
 ## front
-Z čeho se skládá schéma relační databáze?
+Jak lze v DDL vyjádřit integritní omezení (constraints)? Vysvětlete rozdělení a příklady jednotlivých typů.
 ## back
-- Schéma relační databáze se skládá z množiny relací $R$ a množiny integritních omezení $I$.
+- Integritní omezení se realizují pomocí DDL (například v CREATE TABLE).
+- Kontrolují se periodicky či při každé úpravě dat.
+- Typy:
+  1. **Deklarativní** (pro domény atributů):
+     - Kontrola hodnot atributů (např. NOT NULL, CHECK)
+     - Další omezení: UNIQUE, PRIMARY KEY, FOREIGN KEY / REFERENCES
+  2. **Procedurální** (nad tabulkami):
+     - Složitější kontrola, např. pomocí triggeru (spouštění procedur při změně obsahu tabulky)
+- Příklad CREATE TABLE s constraints viz obrázek:
+  - ![Příklad CREATE TABLE s integritními omezeními](img/SP-5_0.jpg)
 
 # SP-5-6
 ## front
-Co je relační algebra a proč je důležitá pro databáze?
+Doplňte chybějící části vět: ___ umožňuje deklarovat PRIMARY KEY, ___ umožňuje zajistit, že hodnota není NULL, ___ umožňuje určit cizí klíč (FOREIGN KEY).
 ## back
-- Relační algebra je dotazovací formalismus pro vyhledávání dat v relačních databázích.
-- Specifikujeme, co chceme najít, ne jak.
-- Výsledkem operací je vždy relace, která může být vstupem pro další dotaz.
-- Jazyk, který umožňuje všechny operace relační algebry, je tzv. "relačně úplný".
+- PRIMARY KEY – deklaruje primární klíč (jedinečnost a NOT NULL na úrovni tabulky)
+- NOT NULL – zajistí, že sloupec nesmí mít hodnotu NULL
+- FOREIGN KEY / REFERENCES – určuje cizí klíč (odkaz na jinou tabulku)
 
 # SP-5-7
 ## front
-Vyjmenuj základní operace relační algebry a krátce je popiš.
+Vysvětlete rozdíl mezi DDL a DML v SQL.
 ## back
-- Selekce: vyhledání záznamů splňujících podmínku v relaci (název_relace(''atribut'' = hodnota)).
-- Projekce: výběr konkrétních atributů do výsledné relace (název_relace[podmínka][atribut1, atribut2]).
-- Přirozené spojení: spojení dvou relací na základě stejně pojmenovaných atributů (relace1 * relace2).
-- Přejmenování atributů: název_relace[atribut1 $\rightarrow$ jine\_jmeno].
-- Množinové operace: sjednocení ($\cup$), průnik ($\cap$), rozdíl ($\setminus$), kartézský součin ($\times$).
-- Polospojení: left/right join (relace1 *$>$ relace2).
+- **DDL (Data Definition Language):** 
+  - Slouží k definici struktury databáze – vytváření, změna, mazání tabulek a dalších objektů (CREATE, ALTER, DROP)
+- **DML (Data Manipulation Language):**
+  - Slouží k manipulaci s daty v tabulkách – vkládání, aktualizace, mazání (INSERT, UPDATE, DELETE, MERGE)
 
 # SP-5-8
 ## front
-Vyplň schéma: název_relace(''atribut'' = hodnota) je operace ________ (v relační algebře).
+K čemu slouží DCL a TCL v SQL? Uveďte alespoň jeden příkaz pro každý typ.
 ## back
-- Selekce
+- **DCL (Data Control Language):**
+  - Správa práv uživatelů a přístupů k datům.
+  - Např.: GRANT, REVOKE
+- **TCL (Transaction Control Language):**
+  - Správa transakcí – potvrzení nebo vrácení změn.
+  - Např.: COMMIT, ROLLBACK, SAVEPOINT
 
 # SP-5-9
 ## front
-Jak lze pomocí relační algebry zapsat projekci vybraných atributů?
+Jak lze pomocí relační algebry vyjádřit projekci a selekci? Uveďte zápis a příklad.
 ## back
-- Formát: název_relace[podmínka][atribut1, atribut2]
-- Hranaté závorky označují výběr (projekci) atributů do výsledné relace.
+- **Selecke:** $název\_relace('atribut' = hodnota)$ – vybere všechny záznamy, kde 'atribut' má danou hodnotu.
+- **Projekce:** $název\_relace(podmínka)[atribut1, atribut2]$ – vybere pouze zadané atributy z výsledné relace.
+- Příklad: $zamestnanci(plát > 30000)[jméno, plát]$
 
 # SP-5-10
 ## front
-Jaká je role SQL v práci s databázemi?
+Co znamená pojem relačně úplný dotazovací jazyk? 
 ## back
-- SQL (Structured Query Language) je jazyk pro práci s relačními databázemi.
-- Je relačně úplný – každý dotaz v relační algebře lze zapisovat v SQL.
-- Řeší požadovaný výsledek, ne konkrétní způsob realizace dotazu.
+- Relačně úplný jazyk je jazyk, ve kterém lze realizovat všechny dotazy vyjádřitelné pomocí relační algebry.
+- Jakýkoliv dotaz v relační algebře lze převést do tohoto jazyka (například SQL je relačně úplný).
 
 # SP-5-11
 ## front
-Vyjmenuj hlavní části SQL a popiš jejich účel.
+Jaký je rozdíl mezi přirozeným spojením (*), kartézským součinem (×) a polospojením v relační algebře?
 ## back
-- DDL (Data Definition Language): tvorba a změny struktury databáze (CREATE, ALTER, DROP), integritní omezení.
-- DML (Data Manipulation Language): manipulace s daty (INSERT, UPDATE, DELETE, MERGE), transakce.
-- DCL (Data Control Language): správa práv uživatelů (GRANT, REVOKE).
-- TCL (Transaction Control Language): řízení transakcí (COMMIT, ROLLBACK, SAVEPOINT).
+- **Přirozené spojení ($*$):** 
+  - Spojuje dvě relace na základě atributů se stejným názvem.
+- **Kartézský součin ($\times$):**
+  - Vytvoří všechny možné kombinace řádků obou relací.
+- **Polospojení (left/right join, $*\!>\;$):**
+  - Vrací řádky z jedné relace, které odpovídají podmínkám v druhé relaci v rámci spojení, ale zachovává pouze některé atributy.
 
 # SP-5-12
 ## front
-K čemu slouží DDL v SQL a jaké příkazy sem patří?
+Vyjmenujte a stručně charakterizujte základní integritní omezení (constraints) v relační databázi.
 ## back
-- DDL (Data Definition Language) se používá pro tvorbu, úpravu a mazání struktur databáze – tabulek, integritních omezení.
-- Příkazy: CREATE, ALTER, DROP.
+- **NOT NULL:** sloupec nesmí mít hodnotu NULL
+- **UNIQUE:** všechny hodnoty ve sloupci musí být jedinečné
+- **PRIMARY KEY:** Unikátní identifikátor řádku v tabulce (NOT NULL + UNIQUE)
+- **FOREIGN KEY / REFERENCES:** Omezení určující odkaz na klíč v jiné tabulce
+- **CHECK:** Ověřuje, že hodnota splňuje určitou podmínku
 
 # SP-5-13
 ## front
-Co znamenají DML, DCL, TCL v SQL? Uveď příklady.
+Jaký je rozdíl mezi deklarativními a procedurálními integritními omezeními?
 ## back
-- DML (Data Manipulation Language): manipulace s daty (INSERT, UPDATE, DELETE, MERGE).
-- DCL (Data Control Language): úprava práv (GRANT, REVOKE).
-- TCL (Transaction Control Language): řízení transakcí (COMMIT, ROLLBACK, SAVEPOINT).
+- **Deklarativní omezení:** 
+  - Kontrolují hodnoty jednotlivých atributů.
+  - Stanovují jednoduchá pravidla (NOT NULL, CHECK, UNIQUE, PRIMARY KEY, FOREIGN KEY).
+- **Procedurální omezení:** 
+  - Mohou kontrolovat složitější podmínky napříč tabulkami.
+  - Realizují se pomocí TRIGGERŮ – spouštějí akce při změnách v tabulkách.
 
 # SP-5-14
 ## front
-Jakým způsobem jsou v SQL vyjadřována integritní omezení a v rámci kterého typu příkazu?
+Jaký je rozdíl mezi SELECT projekcí v relační algebře a v SQL?
 ## back
-- Integritní omezení jsou vyjadřovaná v DDL, zejména v příkazu CREATE (např. při vytváření tabulky).
-- Můžou se kontrolovat periodicky nebo při každé úpravě dat.
+- V relační algebře: $relace(podminka)[atribut1, atribut2]$ – projekce vybírá jen požadované atributy.
+- V SQL:
+  - Projekce v SELECT: `SELECT atribut1, atribut2 FROM tabulka WHERE podmínka;`
 
 # SP-5-15
 ## front
-Vyjmenuj typy integritních omezení v databázích. Jaký je mezi nimi rozdíl?
+Podle obrázku "Příklad CREATE TABLE s integritními omezeními" identifikujte, jak jsou vyjádřeny jednotlivé typy integritních omezení:
+![Příklad CREATE TABLE s integritními omezeními](img/SP-5_0.jpg)
 ## back
-- Deklarativní: pro domény atributů, kontrolují hodnoty atributů (např. NOT NULL, CHECK, UNIQUE, PRIMARY KEY, FOREIGN KEY / REFERENCES).
-- Procedurální: složitější omezení, pracují s celými tabulkami (např. triggery).
+Na obrázku jsou vyjádřena tato omezení:
+- **NOT NULL:** u jednotlivých atributů, např. `prijmeni VARCHAR(255) NOT NULL`
+- **UNIQUE:** např. `cislo_zam UNIQUE`
+- **PRIMARY KEY:** např. `PRIMARY KEY (cislo_zam)`
+- **FOREIGN KEY:** např. `FOREIGN KEY (oddeleni) REFERENCES oddeleni (cislo_odd)`
+- **CHECK:** např. `CHECK (plat > 0)`
 
 # SP-5-16
 ## front
-Vyjmenuj příklady deklarativních integritních omezení v SQL.
+Kdy a jak jsou integritní omezení kontrolována v rámci DDL?
 ## back
-- NOT NULL
-- CHECK
-- UNIQUE
-- PRIMARY KEY
-- FOREIGN KEY (REFERENCES)
-
-# SP-5-17
-## front
-Co jsou procedurální integritní omezení a uveď příklad.
-## back
-- Složitější omezení, definovaná nad celými tabulkami.
-- Typickým příkladem je trigger (spouštěč), který provádí akci na základě určité události (např. před nebo po vložení/úpravě záznamu).
-
-# SP-5-18
-## front
-Jak vypadá vyjádření integritních omezení v příkazu CREATE v SQL? (Uveď příklad nebo popis.)
-## back
-- V příkazu CREATE TABLE lze u každého sloupce zadat omezení, např.
-
-$$
-\text{CREATE TABLE osoba (}
-\\ \qquad \text{id INT PRIMARY KEY,}
-\\ \qquad \text{jmeno VARCHAR(50) NOT NULL,}
-\\ \qquad \text{vek INT CHECK (vek \textgreater= 0)}
-\\ \text{);}
-$$
-
-- Lze přidat i omezení na cizí klíč:
-$$
-\text{FOREIGN KEY (osoba\_id) REFERENCES osoba(id)}
-$$
-
-# SP-5-19
-## front
-{Obrázek znázorňující příkaz CREATE TABLE s deklarovanými integritními omezeními: PRIMARY KEY, NOT NULL, UNIQUE, FOREIGN KEY.}
-## back
-- Příkaz CREATE TABLE obsahuje sloupce s integritními omezeními:
-  - PRIMARY KEY (primární klíč)
-  - NOT NULL (nesmí být prázdné)
-  - UNIQUE (unikátní hodnota)
-  - FOREIGN KEY (cizí klíč, vazba na jinou tabulku)
-- Například:
-  - id INT PRIMARY KEY
-  - jmeno VARCHAR(50) NOT NULL
-  - email VARCHAR(50) UNIQUE
-  - osoba_id INT REFERENCES osoba(id)
+- Integritní omezení se kontrolují buď při každé úpravě dat (například při každém INSERT/UPDATE/DELETE), nebo periodicky (například při reindexaci nebo kontrole databáze).
+- Vymezení integritních omezení v DDL se provádí přímo při definici tabulky, například v příkazu CREATE TABLE.

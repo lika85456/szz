@@ -63,7 +63,7 @@ Základní pojmy teorie grafů. Grafové algoritmy: procházení grafu do šíř
 	\item Jarník
 	\begin{itemize}
 		\item výsledkem je minimální kostra ohodnoceného grafu
-		\item začne v jednom vrcholu, postupně přidává další vrcholy podle toho, jaká je v aktuálním řezu grafu (mezi již vybranými vrcholy a ostatními) hrana s nejmenší hodnotou
+		\item vybere si náhodný vrchol, postupně přidává další vrcholy podle toho, jaká je v aktuálním řezu grafu (mezi již vybranými vrcholy a ostatními) hrana s nejmenší hodnotou(tj. hrana s nejmenší hodnotou mezi vrcholy už v kostře a vrcholy mimo kostru)
 		\item paměťová složitost $O(n + m)$, naivní implementace má časovou složitost $O(mn)$, implementace s použitím binárních minimových hald $O(m\log n)$
 	\end{itemize}
 	\item Kruskal
@@ -72,6 +72,7 @@ Základní pojmy teorie grafů. Grafové algoritmy: procházení grafu do šíř
 		\item začne se všemi vrcholy, ale bez hran
 		\item postupně přidává hrany od nejlevnějších, zahazuje ty, které by vytvořily cyklus
 		\item implementace s keříky (struktura Union-find) má složitost $O(m\log n)$
+		\item keříci - vždy přidá nejlevnější hranu, která spojí dva keříky, pokud by byla hrana v rámci jednoho keříku je zahozena.
 	\end{itemize}
 	\item Dijkstra
 	\begin{itemize}

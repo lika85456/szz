@@ -1,156 +1,210 @@
+
 # SP-2-1
 ## front
-Co je bezkontextový jazyk a jak jej lze rozpoznat? (uveďte dvě definice)
+Co je bezkontextový jazyk (BJ) a jak lze bezkontextový jazyk generovat nebo přijímat?
 ## back
-- Formální jazyk je **bezkontextový** právě tehdy, když ho lze generovat bezkontextovou gramatikou.
-- Bezkontextový jazyk lze také přijímat pomocí zásobníkového automatu.
+- Bezkontextový jazyk je formální jazyk, který lze generovat bezkontextovou gramatikou.
+- Lze jej také přijímat zásobníkovým automatem (ZA).
 
 # SP-2-2
 ## front
-Jaké uzávěrové vlastnosti mají bezkontextové jazyky?
+Vyjmenuj uzávěrové vlastnosti bezkontextových jazyků (BJ). Pro které operace nejsou uzavřené?
 ## back
-Bezkontextové jazyky jsou uzavřené vůči:
-- sjednocení,
-- zřetězení,
-- iteraci (Kleeneho hvězda).
-
-Nejsou uzavřené vůči:
-- průniku,
-- doplňku,
-- rozdílu.
+- BJ jsou uzavřené vůči:
+  - sjednocení
+  - zřetězení
+  - iteraci (Kleeneho hvězda)
+- Nejsou uzavřené pro:
+  - průnik
+  - doplněk
+  - rozdíl
 
 # SP-2-3
 ## front
-Formálně definujte bezkontextovou gramatiku.
+Jak vypadá definice bezkontextové gramatiky?
 ## back
-Bezkontextová gramatika je uspořádaná čtveřice $G = (N, \Sigma, P, S)$, kde:
-- $N$ je konečná množina neterminálů.
-- $\Sigma$ je konečná množina terminálů.
-- $P$ je konečná množina pravidel tvaru $A \rightarrow \alpha$, kde $A \in N$, $\alpha \in (N \cup \Sigma)^*$.
-- $S \in N$ je startovní symbol.
+Bezkontextová gramatika je uspořádaná čtveřice:
+- $G = (N, \Sigma, P, S)$, kde:
+  - $N$ je konečná množina neterminálních symbolů
+  - $\Sigma$ je konečná množina terminálních symbolů
+  - $P$ je konečná množina pravidel tvaru $A \rightarrow \alpha$ (\(A \in N,\ \alpha \in (N \cup \Sigma)^*\))
+  - $S \in N$ je počáteční symbol
 
 # SP-2-4
 ## front
-Co znamená, že je gramatika zkracující?
+Co je $\varepsilon$-pravidlo a co je jednoduché pravidlo v bezkontextové gramatice?
 ## back
-Bezkontextová gramatika je **zkracující**, pokud obsahuje pravidla, která mohou odvodit prázdnou větu ($\varepsilon$).
+- $\varepsilon$-pravidlo: pravidlo tvaru $A \rightarrow \varepsilon$ (nahrazení neterminálu prázdným řetězcem)
+- Jednoduché pravidlo: pravidlo tvaru $A \rightarrow B$ ($A, B \in N$)
 
 # SP-2-5
 ## front
-Jaký je rozdíl mezi jednoznačnou a nejednoznačnou bezkontextovou gramatikou?
+Kdy je bezkontextová gramatika (BG) nejednoznačná a kdy jednoznačná?
 ## back
-- **Jednoznačná gramatika**: Pro každý řetězec v jazyku existuje právě jeden derivační strom.
-- **Nejednoznačná gramatika**: Existuje alespoň jeden řetězec, pro který lze sestrojit více derivačních stromů.
+- Nejednoznačná BG: pro určitý řetězec lze sestavit alespoň dva různé derivační stromy.
+- Jednoznačná BG: pro každý řetězec existuje právě jeden derivační strom.
 
 # SP-2-6
 ## front
-Jaký je rozdíl mezi jednoznačným a nejednoznačným bezkontextovým jazykem?
+Co je nejednoznačný vs. jednoznačný bezkontextový jazyk?
 ## back
-- **Jednoznačný bezkontextový jazyk**: Existuje k němu jednoznačná bezkontextová gramatika.
-- **Nejednoznačný bezkontextový jazyk**: Neexistuje pro něj žádná jednoznačná bezkontextová gramatika.
+- Nejednoznačný bezkontextový jazyk: neexistuje pro něj jednoznačná gramatika.
+- Jednoznačný bezkontextový jazyk: lze jej generovat jednoznačnou gramatikou.
 
 # SP-2-7
 ## front
-Co je $\varepsilon$-pravidlo a jednoduché pravidlo v bezkontextové gramatice?
+Jaká pravidla nesmí obsahovat gramatika bez cyklů? Co je cyklus v gramatice?
 ## back
-- **$\varepsilon$-pravidlo**: Pravidlo tvaru $A \rightarrow \varepsilon$ (odvodí prázdný řetězec).
-- **Jednoduché pravidlo**: Pravidlo tvaru $A \rightarrow B$, kde $A, B \in N$ (neterminály).
+- Gramatika je bez cyklů ($A \Rightarrow^+ A$), pokud neobsahuje jednoduchá ($A \rightarrow B$) a $\varepsilon$-pravidla ($A \rightarrow \varepsilon$).
+- Cyklus znamená, že z nějakého neterminálu $A$ lze odvodit opět $A$ (alespoň jedním pravidlem).
 
 # SP-2-8
 ## front
-Kdy je bezkontextová gramatika bez cyklů?
+Napište formální definici zásobníkového automatu (ZA).
 ## back
-Bezkontextová gramatika je **bez cyklů** ($A \Rightarrow^+ A$), pokud neobsahuje jednoduchá a $\varepsilon$-pravidla.
+Nedeterministický zásobníkový automat je uspořádaná sedmice:
+- $R = (Q, \Sigma, G, \delta, q_0, Z_0, F)$, kde:
+  - $Q$ je konečná neprázdná množina stavů
+  - $\Sigma$ je konečná vstupní abeceda
+  - $G$ je konečná neprázdná abeceda zásobníku
+  - $\delta$: přechodová funkce, $Q \times (\Sigma \cup \{\epsilon\}) \times G^*$ $\rightarrow$ množina konečných podmnožin $Q \times G^*$
+  - $q_0 \in Q$ je počáteční stav
+  - $Z_0 \in G$ je počáteční symbol zásobníku
+  - $F \subset Q$ je množina koncových stavů
 
 # SP-2-9
 ## front
-Jak formálně vypadá (nedeterministický) zásobníkový automat?
+Jaký rozdíl je mezi deterministickým (DZA) a nedeterministickým zásobníkovým automatem? Jak DZA přijímá řetězce?
 ## back
-(Nedeterministický) zásobníkový automat je sedmice 
-$$R = (Q, \Sigma, G, \delta, q_0, Z_0, F),$$
-kde:
-- $Q$: konečná neprázdná množina stavů,
-- $\Sigma$: konečná vstupní abeceda,
-- $G$: konečná neprázdná abeceda zásobníku,
-- $\delta$: přechodová funkce, zobrazuje $Q \times (\Sigma \cup \{\varepsilon\}) \times G^*$ do konečných podmnožin $Q \times G^*$,
-- $q_0 \in Q$: počáteční stav,
-- $Z_0 \in G$: počáteční symbol na zásobníku,
-- $F \subset Q$: množina koncových stavů.
+- Nedeterministický ZA je výpočetně silnější než deterministický.
+- DZA přijme řetězec, pokud:
+  - Přečte celý řetězec a skončí buď v koncovém stavu, nebo s prázdným zásobníkem (tyto způsoby jsou výpočetně ekvivalentní a lze je převádět jeden na druhý).
 
 # SP-2-10
 ## front
-Jak funguje zásobníkový automat z pohledu uživatele? 
+Co jsou levá a pravá derivace v syntaktické analýze bezkontextových jazyků?
 ## back
-- Zásobníkový automat lze chápat jako konečný automat rozšířený o zásobník.
-- Může zapisovat na zásobník a číst z něho, což mu umožňuje rozpoznávat složitější jazyky než klasické konečné automaty.
+- Levá derivace: v každém kroku se nahradí nejvíce vlevo stojící neterminál.
+- Pravá derivace: v každém kroku se nahradí nejvíce vpravo stojící neterminál.
 
 # SP-2-11
 ## front
-Jaká je rozdílná výpočetní síla nedeterministického a deterministického zásobníkového automatu?
+Jaký je rozdíl mezi levým a pravým rozkladem věty v gramatice?
 ## back
-- **Nedeterministický zásobníkový automat** (NZA) je výpočetně silnější než **deterministický zásobníkový automat** (DZA).
-- Existují jazyky přijatelné NZA, které nejsou přijatelné DZA.
+- Levý rozklad: posloupnost čísel pravidel použitých v levé derivaci (nejlevější neterminál).
+- Pravý rozklad: posloupnost čísel pravidel použitých v pravé derivaci (nejpravější neterminál).
 
 # SP-2-12
 ## front
-Jaké jsou dvě ekvivalentní metody přijímaní řetězce zásobníkovým automatem?
+Co je syntaktická analýza bezkontextového řetězce a jaký je její výsledek?
 ## back
-Deterministický zásobníkový automat (DZA) přijme řetězec, pokud:
-1. Přečte celý vstup a skončí v koncovém stavu.
-2. Přečte celý vstup a skončí s prázdným zásobníkem.
-
-Tyto způsoby jsou výpočetně ekvivalentní a lze je vzájemně převádět.
+- Syntaktická analýza: proces, který pro danou bezkontextovou gramatiku $G$ a řetězec $\omega$ určí, zda $\omega \in L(G)$.
+- Pokud ano, získáme syntaktickou strukturu řetězce (např. levý nebo pravý rozklad, derivační strom).
 
 # SP-2-13
 ## front
-Vysvětlete pojem “levá derivace” v kontextu bezkontextových gramatik.
+Vyjmenujte základní metody syntaktické analýzy bezkontextových jazyků.
 ## back
-**Levá derivace**: V každém kroku generování věty bezkontextovou gramatikou se nahradí ten neterminál, který je nejvíce vlevo.
+- Metody syntaktické analýzy:
+  - Shora dolů (top-down)
+    - nalezne levý rozklad
+  - Zdola nahoru (bottom-up)
+    - nalezne pravý rozklad
 
 # SP-2-14
 ## front
-Vysvětlete pojem “pravá derivace” v kontextu bezkontextových gramatik.
+Popište princip konstrukce zásobníkového automatu jako modelu syntaktického analyzátoru metodou shora dolů.
 ## back
-**Pravá derivace**: V každém kroku generování věty bezkontextovou gramatikou se nahradí ten neterminál, který je nejvíce vpravo.
+- 1 stav, přijímá prázdným zásobníkem.
+- Provádí 2 operace:
+  - Expanze: pokud je na vrcholu zásobníku neterminál, nahradí jej pravou stranou pravidla gramatiky, ze vstupu nečte nic.
+  - Srovnání: pokud je na vrcholu terminál, vyjme ho a přečte terminál ze vstupu.
+- Na začátku je na zásobníku počáteční neterminál.
 
 # SP-2-15
 ## front
-Co je levý a pravý rozklad věty v bezkontextové gramatice?
+Jaké operace provádí zásobníkový automat při syntaktické analýze shora dolů?
 ## back
-- **Levý rozklad věty**: Posloupnost čísel pravidel použitých v levé derivaci dané věty.
-- **Pravý rozklad věty**: Posloupnost čísel pravidel použitých v pravé derivaci dané věty.
+- Expanze: nahradí neterminál na vrcholu zásobníku pravou stranou pravidla, nic nečte ze vstupu.
+- Srovnání: odstraní terminál z vrcholu zásobníku a zároveň čte tento znak ze vstupu.
 
 # SP-2-16
 ## front
-K čemu slouží syntaktická analýza pro bezkontextové gramatiky?
+Popište model zásobníkového automatu jako syntaktického analyzátoru metodou zdola nahoru.
 ## back
-Syntaktická analýza:
-- Určuje, zda daný řetězec $\omega$ patří do jazyka $L(G)$ generovaného gramatikou $G$.
-- V kladném případě poskytuje syntaktickou strukturu řetězce ve formě levého nebo pravého rozkladu.
+- 2 stavy, přijímá přechodem do koncového stavu.
+- Provádí 3 operace:
+  - Redukce: pokud je na vrcholu zásobníku pravá strana pravidla, nahradí ji neterminálem, nečte nic ze vstupu.
+  - Přesun: přečte terminál ze vstupu a vloží jej na zásobník, zůstává ve stejném stavu.
+  - Přijetí: pokud je na zásobníku počáteční neterminál, odstraní jej a počáteční symbol, přejde do koncového stavu.
 
 # SP-2-17
 ## front
-Jaké existují dvě základní metody syntaktické analýzy a jaký rozklad naleznou?
+Vyjmenujte a stručně popište operace zásobníkového automatu při metodě zdola nahoru.
 ## back
-- **Shora dolů (top-down):** Nalezne levý rozklad.
-- **Zdola nahoru (bottom-up):** Nalezne pravý rozklad.
+- Redukce: nahradí sérii symbolů na vrcholu zásobníku neterminálem (podle pravidla), nečte vstup.
+- Přesun: přečte terminál ze vstupu a vloží na zásobník.
+- Přijetí: na zásobníku je počáteční neterminál, vyjme jej spolu s počátečním symbolem a přejde do koncového stavu.
 
 # SP-2-18
 ## front
-Popište model syntaktického analyzátoru metodou shora dolů pomocí zásobníkového automatu.
+Co znamená 'expanze' a co 'srovnání' v kontextu shora-dolů syntaktické analýzy pomocí zásobníkového automatu?
 ## back
-- 1 stav, přijímá prázdným zásobníkem
-- Na začátku je na zásobníku počáteční neterminál
-- Provádí dvě operace:
-  - **Expanze:** Pokud je na vrcholu zásobníku neterminál, nahradím jej pravou stranou pravidla gramatiky (nic nečtu ze vstupu).
-  - **Srovnání:** Pokud je na vrcholu zásobníku terminál, vyndám jej a zároveň přečtu odpovídající symbol ze vstupu.
+- Expanze: pokud mám na vrcholu zásobníku neterminál, vyndám ho a nahradím pravou stranou pravidla, ze vstupu nic nečtu.
+- Srovnání: pokud mám na vrcholu zásobníku terminál, vyndám ho a zároveň přečtu ze vstupu stejný terminál.
 
 # SP-2-19
 ## front
-Popište model syntaktického analyzátoru metodou zdola nahoru pomocí zásobníkového automatu.
+Jaké základní komponenty tvoří zásobníkový automat?
 ## back
-- 2 stavy, přijímá přechodem do koncového stavu
-- Provádí tři operace:
-  - **Přesun:** Přečtu terminál ze vstupu a vložím jej na zásobník, zůstávám ve stejném stavu.
-  - **Redukce:** Pokud je na vrcholu zásobníku pravá strana pravidla, vyndám ji a nahradím příslušným neterminálem (nic nečtu ze vstupu, zůstávám ve stejném stavu).
-  - **Přijetí:** Na zásobníku je počáteční neterminál — vyndám jej spolu s počátečním symbolem a přejdu do koncového stavu.
+- $Q$: množina stavů
+- $\Sigma$: vstupní abeceda
+- $G$: abeceda zásobníku
+- $\delta$: přechodová funkce
+- $q_0$: počáteční stav
+- $Z_0$: počáteční symbol zásobníku
+- $F$: množina koncových stavů
+
+# SP-2-20
+## front
+Jaký je význam přechodové funkce $\delta$ v zásobníkovém automatu?
+## back
+- Přechodová funkce $\delta$ určuje, při daném aktuálním stavu, čteném znaku (eventuálně $\varepsilon$), a obsahu vrcholu zásobníku, do kterých stavů může automat přejít a jaký bude nový obsah zásobníku.
+- Je definována: $\delta: Q \times (\Sigma \cup \{\epsilon\}) \times G^* \rightarrow \text{množina konečných podmnožin } (Q \times G^*)$
+
+# SP-2-21
+## front
+Co je počáteční stav $q_0$ a počáteční symbol zásobníku $Z_0$ u zásobníkového automatu?
+## back
+- $q_0$ je stav, ve kterém automat začíná výpočet.
+- $Z_0$ je symbol, který je při spuštění automatu umístěn na vrcholu zásobníku.
+
+# SP-2-22
+## front
+Co znamená, že deterministický a nedeterministický zásobníkový automat jsou výpočetně ekvivalentní pro přijetí řetězce?
+## back
+Oba automaty mohou přijímat jazyk dvěma způsoby, které lze mezi sebou převádět:
+- přijetím prázdným zásobníkem
+- přijetím koncovým stavem
+
+# SP-2-23
+## front
+Při syntaktické analýze shora dolů – co je na počátku na zásobníku a co je cílem analyzátoru?
+## back
+- Na počátku je na zásobníku počáteční neterminál gramatiky.
+- Cílem je prázdný zásobník po úspěšné syntaktické analýze vstupního řetězce.
+
+# SP-2-24
+## front
+Při syntaktické analýze zdola nahoru – jaký je význam přechodu do koncového stavu?
+## back
+Přechodem do koncového stavu automat potvrzuje, že vstupní řetězec byl správně rozpoznán jako věta jazyka (syntakticky korektní).
+
+# SP-2-25
+## front
+Popište stručně architekturu a princip zásobníkového automatu.
+## back
+- Zásobníkový automat je konečný automat rozšířený o zásobník.
+- Pracuje se vstupní abecedou a zásobníkovou abecedou, stavovou proměnnou a přechodovou funkcí, podle které manipuluje zásobníkem.
+- Umožňuje rozpoznávat bezkontextové jazyky.
+```

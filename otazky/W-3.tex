@@ -1,0 +1,139 @@
+\subsection{W-3}
+Zpracování požadavků a poskytování zdrojů webovým serverem, statický a dynamický obsah, paralelní zpracování požadavků.
+
+% GENEROVÁNO PŘES CHATGPT, BUDE TO NEJSPÍŠ BLBOST
+\subsubsection*{1. Úvod do webových serverů}
+
+Webový server je software (a často i hardware), který přijímá HTTP(S) požadavky od klientů (např. webových prohlížečů), zpracovává je a vrací odpovědi — obvykle ve formě HTML dokumentů, souborů, nebo výstupu generovaného skriptem. Nejrozšířenějším protokolem pro komunikaci je HTTP/1.1, HTTP/2 a nově i HTTP/3.
+
+\subsubsection*{2. Zpracování požadavků}
+
+\textbf{Obecný průběh zpracování HTTP požadavku}
+
+\begin{enumerate}
+    \item Klient odešle HTTP požadavek na IP adresu serveru, obvykle přes port 80 (HTTP) nebo 443 (HTTPS).
+    \item Server naslouchá na daném portu a příjme požadavek.
+    \item Server analyzuje požadavek: metodu (např. GET, POST), URI, hlavičky a další parametry.
+    \item Na základě URI identifikuje, jaký zdroj je požadován.
+    \item Server určí způsob obsluhy požadavku:
+    \begin{itemize}
+        \item Přímo vrátí statický soubor.
+        \item Předá požadavek zpracovat dynamickému skriptu.
+    \end{itemize}
+    \item Server vygeneruje HTTP odpověď a odešle ji klientovi.
+\end{enumerate}
+
+\subsubsection*{3. Statický a dynamický obsah}
+
+\textbf{Statický obsah}
+
+\begin{itemize}
+    \item Obsah uložený jako soubory na disku (např. \texttt{.html}, \texttt{.css}, \texttt{.js}, obrázky, PDF).
+    \item Server pouze přečte soubor ze souborového systému a odešle ho klientovi.
+    \item Výhoda: velmi rychlé a efektivní.
+    \item Nevýhoda: nelze přizpůsobit uživateli.
+\end{itemize}
+
+\textbf{Dynamický obsah}
+
+\begin{itemize}
+    \item Generuje se za běhu na základě požadavku (např. PHP skripty, Python aplikace, Node.js).
+    \item Může záviset na vstupu uživatele, datech z databáze atd.
+    \item Obvykle realizováno pomocí CGI, FastCGI, mod\_php, mod\_python, proxy\_pass apod.
+    \item Výhoda: personalizace, interaktivita.
+    \item Nevýhoda: větší nároky na výkon serveru.
+\end{itemize}
+
+\subsubsection*{4. Paralelní zpracování požadavků}
+
+\textbf{Obecné principy}
+
+\begin{itemize}
+    \item Moderní servery obsluhují více požadavků současně.
+    \item Techniky paralelizace:
+    \begin{itemize}
+        \item \textbf{Víceprocesové zpracování} – každý požadavek obsluhuje samostatný proces.
+        \item \textbf{Vláknové zpracování} – každý požadavek obsluhuje samostatné vlákno v rámci jednoho procesu.
+        \item \textbf{Asynchronní (event-driven)} – jeden proces obsluhuje více požadavků pomocí událostí (např. Nginx).
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{5. Apache HTTPD – konkrétní implementace}
+
+Apache HTTP Server (httpd) je modulární a konfigurovatelný server. Obsahuje různé MPM (Multi-Processing Modules), které definují způsob paralelního zpracování požadavků.
+
+\textbf{MPM (Multi-Processing Modules)}
+
+\begin{itemize}
+    \item \textbf{prefork} – každý požadavek zpracovává samostatný proces.
+        \begin{itemize}
+            \item Nepoužívá vlákna, vhodné pro starší CGI nebo ne-thread-safe moduly.
+            \item Vyšší paměťová náročnost.
+        \end{itemize}
+    \item \textbf{worker} – každý proces má více vláken.
+        \begin{itemize}
+            \item Efektivnější než \texttt{prefork}.
+            \item Nutná thread-safe implementace modulů.
+        \end{itemize}
+    \item \textbf{event} – rozšíření \texttt{worker} o neblokující obsluhu KeepAlive požadavků.
+        \begin{itemize}
+            \item Moderní a výkonná varianta.
+            \item Doporučovaná pro většinu produkčních nasazení.
+        \end{itemize}
+\end{itemize}
+
+\textbf{Obsluha statického obsahu v Apache}
+
+\begin{itemize}
+    \item Realizováno pomocí modulu \texttt{mod\_alias}, \texttt{mod\_autoindex} a \texttt{mod\_mime}.
+    \item Např. konfigurace:
+
+\begin{verbatim}
+DocumentRoot "/var/www/html"
+<Directory "/var/www/html">
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+</Directory>
+\end{verbatim}
+
+    \item Soubor \texttt{index.html} je vrácen jako odpověď při požadavku na kořenový adresář.
+\end{itemize}
+
+\textbf{Obsluha dynamického obsahu v Apache}
+
+\begin{itemize}
+    \item Pomocí modulů:
+        \begin{itemize}
+            \item \texttt{mod\_php} – přímo interpretuje PHP skripty.
+            \item \texttt{mod\_cgi}, \texttt{mod\_fcgid} – spouští externí programy jako CGI (např. Python, Perl).
+            \item \texttt{mod\_proxy\_fcgi} – proxy pro FastCGI procesy (např. PHP-FPM).
+        \end{itemize}
+    \item Příklad pro FastCGI:
+
+\begin{verbatim}
+<FilesMatch \.php$>
+    SetHandler "proxy:unix:/run/php/php8.1-fpm.sock|fcgi://localhost"
+</FilesMatch>
+\end{verbatim}
+
+    \item Požadavek na PHP skript je přesměrován na FastCGI backend.
+\end{itemize}
+
+\subsubsection*{6. Shrnutí}
+
+\begin{itemize}
+    \item Webový server zpracovává požadavky na základě URI a hlaviček.
+    \item Může obsluhovat statický (rychlý, neměnný) i dynamický (generovaný) obsah.
+    \item Pro efektivitu obsluhuje více požadavků paralelně (procesy, vlákna, události).
+    \item Apache HTTPD nabízí různé MPM moduly a flexibilní obsluhu obsahu pomocí rozšiřitelných modulů.
+\end{itemize}
+
+\subsubsection*{7. Doporučení pro praxi}
+
+\begin{itemize}
+    \item Pro moderní produkční nasazení používejte MPM \texttt{event}.
+    \item Statické soubory pokud možno obsluhujte přímo webovým serverem, bez skriptů.
+    \item Dynamický obsah oddělujte do specializovaných backendů (např. PHP-FPM, uWSGI).
+    \item Sledujte zátěž a upravte počet vláken/procesů dle možností serveru.
+\end{itemize}

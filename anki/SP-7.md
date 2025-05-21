@@ -1,201 +1,194 @@
 
 # SP-7-1
 ## front
-Co je to prvotní výrok ve výrokové logice?
+Co je prvotní výrok (prvotní formule) ve výrokové logice?
 ## back
-- Prvotní výrok je jednoduchá oznamovací věta, u které má smysl se ptát, zda je či není pravdivá.
-- Prvotní výroky označujeme velkými písmeny a říkáme jim prvotní formule.
+- Jednoduchá oznamovací věta, u které má smysl se ptát, zda je či není pravdivá.
+- Prvotní výroky označujeme velkými písmeny.
+- Nazýváme je také **prvotní formule**.
 
 # SP-7-2
 ## front
-Co rozumíme pod pojmem pravdivostní ohodnocení výrokové formule?
+Co znamená pravdivostní ohodnocení ve výrokové logice?
 ## back
-- Pravdivostní ohodnocení je přiřazení $v$, které každé prvotní formuli přiřadí hodnotu 0 nebo 1.
-  - $v(A) = 1$ — $A$ je pravdivý při ohodnocení $v$.
-  - $v(A) = 0$ — $A$ je nepravdivý při ohodnocení $v$.
+- Pravdivostní ohodnocení je přiřazení $v$, které každé prvotní formuli přiřadí hodnotu $0$ nebo $1$:
+  - $v(A) = 1$ znamená, že $A$ je pravdivý při ohodnocení $v$.
+  - $v(A) = 0$ znamená, že $A$ je nepravdivý při ohodnocení $v$.
 
 # SP-7-3
 ## front
-Jaká je pravdivost negace výrokové formule $\neg A$?
+Co je negace $\neg A$ výroku $A$ a kdy je pravdivá?
 ## back
-- Negace $\neg A$ je pravdivá pro všechna ohodnocení, při kterých je $A$ nepravdivý; pro ostatní je nepravdivá.
+- Negace $\neg A$ je pravdivá právě tehdy, když je $A$ nepravdivý.
+- Pro ostatní ohodnocení je nepravdivá.
 
 # SP-7-4
 ## front
-Kdy je pravdivá konjunkce $A \land B$ dvou výroků?
+Jak je definována konjunkce ($A \land B$) dvou výroků?
 ## back
-- $A \land B$ je pravdivá právě tehdy, jsou-li obě formule $A$ i $B$ současně pravdivé. Pro ostatní ohodnocení je nepravdivá.
+- $A \land B$ je pravdivá, pokud jsou $A$ i $B$ současně pravdivé.
+- Pro ostatní ohodnocení je nepravdivá.
 
 # SP-7-5
 ## front
-Vyplňte: Disjunkce $A \lor B$ je pravdivá, pokud ...
+Jak je definována disjunkce ($A \lor B$) dvou výroků?
 ## back
-- ... alespoň jeden z výroků $A$ a $B$ je pravdivý. Pro ostatní ohodnocení je nepravdivá.
+- $A \lor B$ je pravdivá, pokud alespoň jeden z výroků $A$ a $B$ je pravdivý.
+- Pro ostatní ohodnocení je nepravdivá.
 
 # SP-7-6
 ## front
-Kdy je implikace $A \Rightarrow B$ nepravdivá?
+Kdy je implikace ($A \Rightarrow B$) nepravdivá?
 ## back
-- $A \Rightarrow B$ je nepravdivá pouze tehdy, když předpoklad $A$ platí (je pravdivý) a závěr $B$ neplatí (je nepravdivý). Jinak je pravdivá.
+- Implikace $A \Rightarrow B$ je nepravdivá tehdy, když:
+  - $A$ (předpoklad) je pravdivý
+  - $B$ (závěr) je nepravdivý
+- Ve všech ostatních případech je pravdivá.
 
 # SP-7-7
 ## front
-Jaká je podmínka pravdivosti ekvivalence $A \Leftrightarrow B$?
+Kdy je ekvivalence ($A \Leftrightarrow B$) pravdivá?
 ## back
-- $A \Leftrightarrow B$ je pravdivá právě tehdy, když mají $A$ a $B$ stejnou pravdivostní hodnotu při daném ohodnocení; jinak je nepravdivá.
+- $A \Leftrightarrow B$ je pravdivá pro všechna ohodnocení, při kterých mají výroky $A$ a $B$ stejnou pravdivostní hodnotu.
+- Jinak je nepravdivá.
 
 # SP-7-8
 ## front
-Co je to tautologie ($\top$) a kontradikce ($\bot$) ve výrokové logice?
+Co je tautologie ($\top$) a kontradikce ($\bot$)?
 ## back
-- Tautologie ($\top$): Formule, která je pro každé ohodnocení pravdivá.
-- Kontradikce ($\bot$): Formule, která je pro každé ohodnocení nepravdivá.
+- **Tautologie ($\top$):**
+  - Formule, která je pro každé ohodnocení pravdivá.
+- **Kontradikce ($\bot$):**
+  - Formule, která je pro každé ohodnocení nepravdivá.
 
 # SP-7-9
 ## front
 Co znamená, že formule je splnitelná?
 ## back
-- Formule je splnitelná, pokud je alespoň pro jedno ohodnocení pravdivá.
+- Formule je splnitelná, pokud existuje alespoň jedno pravdivostní ohodnocení, při kterém je pravdivá.
 
 # SP-7-10
 ## front
-Doplň vztah: Pokud platí $E \Rightarrow F$, pak ...
+Jak se liší nutná, postačující a nutná i postačující podmínka mezi výroky $E$ a $F$?
 ## back
-- ... $E$ je postačující podmínka pro $F$, $F$ je nutná podmínka pro $E$.
+- $E \Rightarrow F$: $E$ je **postačující podmínka** pro $F$, $F$ je **nutná podmínka** pro $E$.
+- $E \Leftrightarrow F$: $E$ je **nutná i postačující podmínka** pro $F$ a naopak.
 
 # SP-7-11
 ## front
-Kdy je $E$ nutná a postačující podmínka pro $F$?
+Co znamená, že formule $E$ a $F$ jsou logicky ekvivalentní?
 ## back
-- Pokud $E \Leftrightarrow F$, pak je $E$ nutná a postačující podmínka pro $F$ (a obráceně).
+- $E$ a $F$ jsou logicky ekvivalentní, právě když pro každé ohodnocení $v$ platí $v(E) = v(F)$.
+- Značíme $E \modeleq F$.
 
 # SP-7-12
 ## front
-Co znamená, že dvě výrokové formule $E$ a $F$ jsou logicky ekvivalentní?
+Kdy je formule $F$ logickým důsledkem formule $E$?
 ## back
-- Formule $E$ a $F$ jsou logicky ekvivalentní, právě když pro každé ohodnocení $v$ je $v(E) = v(F)$. Značí se $E \modeleq F$.
+- $F$ je logickým důsledkem $E$, právě když pro každé ohodnocení $v$, pro které $v(E) = 1$, je zároveň $v(F) = 1$.
+- Značíme $E \models F$.
 
 # SP-7-13
 ## front
-Jak se zapisuje, že $F$ je logickým důsledkem $E$?
+Vysvětli zákon vyloučení sporu, zákon vyloučení třetího a zákon dvojí negace pomocí formule.
 ## back
-- $F$ je logickým důsledkem $E$ ($E \models F$), právě když pro každé ohodnocení $v$, pro které $v(E) = 1$, je i $v(F) = 1$.
+- **Zákon vyloučení sporu:** $A \land \neg A \modeleq \bot$
+- **Zákon vyloučení třetího:** $A \lor \neg A \modeleq \top$
+- **Zákon dvojí negace:** $\neg\neg A \Leftrightarrow A \modeleq \top$
 
 # SP-7-14
 ## front
-Jak zní základní principy logiky? Vyjmenujte alespoň dva.
+Jak zní obměněná implikace a jaký je její symbolický zápis?
 ## back
-- Zákon vyloučení sporu: $A \land \neg A \modeleq \bot$
-- Zákon vyloučení třetího: $A \lor \neg A \modeleq \top$
-- Zákon dvojí negace: $\neg\neg A \Leftrightarrow A \modeleq \top$
+- Obměněná implikace: $(E \Rightarrow F) \modeleq (\neg F \Rightarrow \neg E)$
 
 # SP-7-15
 ## front
-Jaká je obměněná implikace k $E \Rightarrow F$?
+Kdy je množina logických spojek universální systém?
 ## back
-- $(E \Rightarrow F) \modeleq (\neg F \Rightarrow \neg E)$
+- Množina logických spojek tvoří **universální systém** právě tehdy, když ke každé formuli existuje logicky ekvivalentní formule, která obsahuje pouze tyto spojky.
 
 # SP-7-16
 ## front
-Co znamená, že množina logických spojek tvoří universální systém?
+Uveď příklady dvouprvkových universálních systémů logických spojek.
 ## back
-- Množina logických spojek tvoří universální systém, právě když ke každé formuli existuje logicky ekvivalentní formule, která obsahuje pouze tyto spojky.
+- $\{\neg, \lor\}$
+- $\{\neg, \land\}$
+- $\{\neg, \Rightarrow\}$
 
 # SP-7-17
 ## front
-Vyjmenujte nějaké dvouprvkové universální systémy logických spojek.
+Existují i jednoprvkové universální systémy logických spojek? Pokud ano, uveď je.
 ## back
-- Například: $\{\neg, \lor\}$, $\{\neg, \land\}$, $\{\neg, \Rightarrow\}$
+- Ano, existují:
+  - Pouze NAND ($\uparrow$)
+  - Pouze NOR ($\downarrow$)
 
 # SP-7-18
 ## front
-Existují jednoprvkové universální systémy? Pokud ano, jaké?
+Co je literál ve výrokové logice?
 ## back
-- Ano, jednoprvkové universální systémy tvoří například spojky NAND ($\uparrow$) a NOR ($\downarrow$).
+- Literál je:
+  - Prvotní formule, nebo
+  - Negace prvotní formule.
 
 # SP-7-19
 ## front
-Definujte literál ve výrokové logice.
+Co je implikant a klausule ve výrokové logice?
 ## back
-- Literál je výroková formule, která je buď prvotní formulí, nebo negací prvotní formule.
+- **Implikant:** Literál nebo konjunkce několika literálů.
+- **Klausule:** Literál nebo disjunkce několika literálů.
 
 # SP-7-20
 ## front
-Co je to implikant?
+Kdy je výroková formule v disjunktivním normálním tvaru (DNT)?
 ## back
-- Implikant je buď literál, nebo konjunkce několika literálů.
+- Jsou-li splněny:
+  - Je implikantem, nebo
+  - Je disjunkcí několika implikantů (tj. konjunkcí literálů nebo jejich disjunkcí).
 
 # SP-7-21
 ## front
-Jak vypadá formule v disjunktivním normálním tvaru (DNT)?
+Kdy je výroková formule v konjunktivním normálním tvaru (KNT)?
 ## back
-- Výroková formule je v DNT, pokud je implikantem, nebo disjunkcí několika implikantů.
+- Jsou-li splněny:
+  - Je klausulí, nebo
+  - Je konjunkcí několika klausulí (tj. disjunkcí literálů nebo jejich konjunkcí).
 
 # SP-7-22
 ## front
-Co je klausule a co je konjunktivní normální tvar (KNT)?
+Lze každou výrokovou formuli převést na DNT nebo KNT?
 ## back
-- Klausule: Literál nebo disjunkce několika literálů.
-- Výroková formule je v KNT, pokud je klausulí, nebo konjunkcí několika klausulí.
+- Ano:
+  - Každá výroková formule lze převést do logicky ekvivalentního DNT i KNT.
 
 # SP-7-23
 ## front
-Lze každou výrokovou formuli převést do DNT i KNT?
+Co je minterm a maxterm ve výrokové logice?
 ## back
-- Ano, každá výroková formule je logicky ekvivalentní k formuli v DNT i KNT.
+- **Minterm:** Implikant formule $F$, který obsahuje všechny prvotní formule vyskytující se v $F$, každou právě jednou.
+- **Maxterm:** Klausule formule $F$, která obsahuje všechny prvotní formule vyskytující se v $F$, každou právě jednou.
 
 # SP-7-24
 ## front
-Co je minterm pro formuli $F$?
+Definuj úplný disjunktivní a úplný konjunktivní normální tvar (ÚDNT, ÚKNT).
 ## back
-- Minterm $F$ je takový její implikant, který obsahuje všechny prvotní formule vyskytující se v $F$ a každou právě jednou.
+- **Úplný disjunktivní normální tvar (ÚDNT):**
+  - Formule je mintermem, nebo
+  - Disjunkcí různých (logicky neekvivalentních) mintermů.
+- **Úplný konjunktivní normální tvar (ÚKNT):**
+  - Formule je maxtermem, nebo
+  - Konjunkcí různých (logicky neekvivalentních) maxtermů.
 
 # SP-7-25
 ## front
-Jaký je rozdíl mezi běžným a úplným disjunktivním normálním tvarem (ÚDNT)?
+Lze každou výrokovou formuli převést do logicky ekvivalentního ÚKNT a ÚDNT?
 ## back
-- ÚDNT je disjunkce mintermů, které obsahují všechny prvotní formule vyskytující se v původní formuli, a každou právě jednou.
-- DNT nemusí obsahovat všechny prvotní formule.
+- Ano:
+  - Každou výrokovou formuli lze převést do logicky ekvivalentního ÚKNT i ÚDNT.
 
 # SP-7-26
 ## front
-Definujte maxterm a úplný konjunktivní normální tvar (ÚKNT).
+Doplň větu: Výroková formule je ______, pokud existuje alespoň jedno ohodnocení, při kterém je pravdivá.
 ## back
-- Maxterm je klausule obsahující všechny prvotní formule vyskytující se ve formuli a každou právě jednou (buď v přímém, nebo v negovaném tvaru).
-- ÚKNT je konjunkce různých (logicky neekvivalentních) maxtermů.
-
-# SP-7-27
-## front
-Je pravda, že každou výrokovou formuli lze převést do logicky ekvivalentního ÚKNT i ÚDNT?
-## back
-- Ano, každou výrokovou formuli lze převést do logicky ekvivalentního úplného konjunktivního i disjunktivního normálního tvaru.
-
-# SP-7-28
-## front
-{Obrázek: Pravdivostní tabulka pro operace AND, OR, NOT, IMPLIKACE, EKVIVALENCE}
-## back
-{Obrázek: Pravdivostní tabulka pro operace AND ($\land$), OR ($\lor$), NOT ($\neg$), IMPLIKACE ($\Rightarrow$), EKVIVALENCE ($\Leftrightarrow$)}
-
-# SP-7-29
-## front
-Uveďte příklad převodu formule do disjunktivního normálního tvaru (DNT) na základě pravdivostní tabulky.
-## back
-Například pro formule $F(A, B) = A \lor B$:
-- Pravdivostní tabulka:
-
-  | A | B | $A \lor B$ |
-  |---|---|-------------|
-  | 0 | 0 |      0      |
-  | 0 | 1 |      1      |
-  | 1 | 0 |      1      |
-  | 1 | 1 |      1      |
-
-- DNT: $(A \land \neg B) \lor (\neg A \land B) \lor (A \land B)$
-
-# SP-7-30
-## front
-Převod formule do úplného disjunktivního normálního tvaru (ÚDNT) — jak postupujeme?
-## back
-- Najdeme všechny ohodnocení, při kterých je formule pravdivá.
-- Pro každé takové ohodnocení vytvoříme minterm: zvolíme kladnou nebo zápornou podobu každé prvotní formule podle hodnoty v ohodnocení.
-- Výsledná formule je disjunkcí všech těchto mintermů.
+- Výroková formule je **splnitelná**, pokud existuje alespoň jedno ohodnocení, při kterém je pravdivá.

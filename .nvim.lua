@@ -1,33 +1,35 @@
 
 -- Image paster
--- local function get_filename()
---     local datetime = os.date("%Y-%m-%d_%H-%M-%S")
---     return "screenshot_" .. datetime .. ".png"
--- end
---
--- local function paste_image()
---     local filename = get_filename()
---     local path = vim.fn.expand("%:p:h") .. "/" .. filename
---
---     local command = string.format("pngpaste '%s'", path)
---     if vim.fn.has("macunix") == 0 then
---         command = string.format("xclip -selection clipboard -t image/png -o > '%s'", path)
---     end
---
---     local result = os.execute(command)
---
---     if result == 0 then
---         vim.api.nvim_put({ filename }, "", true, true)
---     else
---         vim.notify("Failed to paste image from clipboard", vim.log.levels.ERROR)
---     end
--- end
---
--- vim.api.nvim_create_autocmd("BufEnter", {
---     callback = function(args)
---         vim.keymap.set("n", "p", paste_image, { desc = "Paste clipboard image filename", buffer = args.buf })
---     end,
--- })
+local function get_filename()
+    local datetime = os.date("%Y-%m-%d_%H-%M-%S")
+    return "screenshot_" .. datetime .. ".png"
+end
+
+local function paste_image()
+    local filename = get_filename()
+    -- local path = vim.fn.expand("%:p:h") .. "/" .. filename
+    -- paste into currently open directory (not the directory of the file, the project directory) into ./img folder
+    local path = vim.fn.getcwd() .. "/img/" .. filename
+
+    local command = string.format("pngpaste '%s'", path)
+    if vim.fn.has("macunix") == 0 then
+        command = string.format("xclip -selection clipboard -t image/png -o > '%s'", path)
+    end
+
+    local result = os.execute(command)
+
+    if result == 0 then
+        vim.api.nvim_put({ filename }, "", true, true)
+    else
+        vim.notify("Failed to paste image from clipboard", vim.log.levels.ERROR)
+    end
+end
+
+vim.api.nvim_create_autocmd("BufEnter", {
+    callback = function(args)
+        vim.keymap.set("n", "p", paste_image, { desc = "Paste clipboard image filename", buffer = args.buf })
+    end,
+})
 
 -- Anki card
 local function create_anki_card()

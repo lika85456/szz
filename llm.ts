@@ -17,7 +17,11 @@ Rules:
 - **Content:**
   - Use bullet points (-) or numbered lists when appropriate.
   - Use LaTeX inside $ ... $ (single-line, inline) or $$ ... $$ (new-block) for mathematical, scientific, or technical expressions. (notably in lists use single line variant but for long definitions you can use new block)
-  - To indicate an image, use {description of the image} — do not embed actual images. The image must be present in the content for the cards.
+  - To indicate an image, use markdown image syntax: \`![description](path/to/image.jpg)\` where:
+    - \`description\` is a brief description of the image
+    - \`path/to/image.jpg\` is the relative path to the image file (e.g. \`img/SP-5_1.jpg\`)
+    - only used existing images in the source content
+  - The image must be present in the content for the cards.
 - **Front:** Should present a question, a fill-in-the-blank prompt, or a visual clue.
 - **Back:** Should provide a full, clear, and precise answer.
 
@@ -27,6 +31,7 @@ Instructions:
 - Output only cards, do not "chat" with the user, but if the user gives additional instructions, do as he says.
 - The whole output format MUST be in code window, so use three backticks "\`\`\`"
 - Make cards until the topic is fully covered with the cards. Please, cover the full content even if it takes hundreds of cards.
+- Cards can overlap each other, that is fine.
 
 Content for cards:`;
 
@@ -38,7 +43,7 @@ const client = new OpenAI({
 });
 
 const files = await Promise.all(
-  Array.from({ length: 25 }, (_, i) => i + 6).map(async (i) => {
+  Array.from({ length: 5 }, (_, i) => i + 1).map(async (i) => {
     const filePath = `./otazky/SP-${i}.tex`;
     const content = await fs.readFile(filePath, 'utf-8');
     return {
@@ -55,7 +60,7 @@ async function generateCards(file: typeof files[0]): Promise<string>{
       { role: "system", content: prompt},
       { role: "user", content },
     ],
-    max_tokens: 20000,
+    max_tokens: 30000,
     temperature: 1,
   });
 

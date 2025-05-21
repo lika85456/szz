@@ -1,0 +1,54 @@
+\subsection{W-19 (TWA)}
+Bezpečnost webových aplikací. Rizika a jejich opatření. Autentizace a autorizace uživatele.
+
+\subsubsection*{Autentizace a její dělení}
+
+\begin{itemize}
+  \item Něco ví - jméno a heslo, PIN, ověřovací otázka
+  \item Něco má - telefon, token, certifikát
+  \item Někým je - otisk prstu, snímek duhovky, DNA
+\end{itemize}
+
+HTTP Basic:
+\begin{itemize}
+  \item uživatelské jméno a heslo se posílá v base64 
+  \item není šifrované - je vždy nutné použít HTTPS
+  \item Authorization: Basic base64(username:password)
+\end{itemize}
+
+HTTP Digest: 
+\begin{itemize}
+  \item Celý protokol - klient pošle požadavek že se chce přihlásit, server odpoví 401 s "nonce" - náhodný token (a další parametry)
+  \item Klient spočítá hash MD5 z nonce, uživatelského jména a hesla a url a odešle ho na server
+  \item Server si pomocí hashe ověří, že klient zná co potřebuje
+  \item Stejně jako HTTP Basic je to zastaralá metoda
+\end{itemize}
+
+
+API klíč:
+\begin{itemize}
+  \item Slouží k autentizaci služeb/aplikací.
+  \item Aplikace klientovi vydá náhodný token, který poté aplikace použije v hlavičce (případně jinde)
+  \item Token musí být náhodný, neuhodnutelný a \textbf{odvolatelný} - lze ho zrušit.
+\end{itemize}
+
+OAuth:
+\begin{itemize}
+  \item Protokol pro autentizaci pomocí třetí strany
+\end{itemize}
+
+\subsubsection*{Autorizace}
+\begin{itemize}
+  \item Role - .hasRole, staticky definované role
+  \item ACL - Access Control List - práva jsou přiřazována jednotlivým uživatelům pro konkrétní objekty 
+  \item RBAC - Role Based Access Control - uživatelé mají role a role mají oprávnění
+\end{itemize}
+
+\subsubsection*{Zranitelosti}
+
+\begin{itemize}
+  \item SQL Injection
+  \item XSS - Cross Site Scripting
+  \item Remote code execution 
+  \item CSRF - Cross Site Request Forgery - zneužití uživatelské relace - např. pošlu uživateli obrázek s src="http://mojeaplikace.cz/transfer?amount=1000\&to=mojeid"
+\end{itemize}

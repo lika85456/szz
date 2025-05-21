@@ -1,0 +1,92 @@
+\subsection{W-7 (BIG)}
+Principy výpočtů v distribuovaných systémech - Spark framework. Principy distribuované indexace - Elastic.
+
+\subsubsection*{Apache Spark – principy distribuovaného výpočtu}
+
+\textbf{Apache Spark} je open-source výpočetní framework pro distribuované zpracování dat. Hlavní výhody oproti MapReduce (Hadoop) zahrnují rychlost (díky in-memory zpracování) a jednoduché API pro práci s daty.
+
+\paragraph{Architektura Spark}
+Spark pracuje na principu \textbf{Master-Worker} architektury:
+\begin{itemize}
+    \item \textbf{Driver Program} – řídí aplikaci, plánuje úlohy, spravuje metadata.
+    \item \textbf{Cluster Manager} – přiděluje prostředky (např. YARN, Mesos, Kubernetes).
+    \item \textbf{Executors} – vykonávají úlohy, zpracovávají data.
+\end{itemize}
+
+\paragraph{RDD (Resilient Distributed Dataset)}
+Základní datová abstrakce ve Sparku. RDD je:
+\begin{itemize}
+    \item \textbf{Imutabilní} – neměnné.
+    \item \textbf{Paralelně distribuované} – rozdělitelné mezi uzly.
+    \item \textbf{Odolné vůči chybám} – díky \textbf{lineage} (zachování historie operací).
+\end{itemize}
+
+\paragraph{Transformace vs Akce}
+\begin{itemize}
+    \item \textbf{Transformace} (např. \texttt{map}, \texttt{filter}) – definují nové RDD, ale nespouští výpočet (jsou \textbf{lazy}).
+    \item \textbf{Akce} (např. \texttt{collect}, \texttt{count}) – spustí výpočet a vrací výsledek.
+\end{itemize}
+
+\paragraph{DAG – Directed Acyclic Graph}
+Spark interně reprezentuje výpočetní úlohu jako DAG – graf, kde uzly představují RDD a hrany transformace. Tento DAG je optimalizován a rozdělen na etapy (stages).
+
+\paragraph{Shuffle operace}
+Při operacích jako \texttt{groupByKey} nebo \texttt{reduceByKey} dochází ke \textbf{shuffle} – přerozdělení dat mezi uzly, což je náročné na čas i zdroje.
+
+\paragraph{Odolnost vůči chybám}
+Spark nepoužívá tradiční replikaci jako Hadoop, ale obnovuje data pomocí \textbf{lineage}, tedy znovuvýpočtem původních transformací.
+
+\paragraph{Příklad jednoduchého programu}
+\begin{verbatim}
+val data = sc.parallelize(Seq(1, 2, 3, 4))
+val result = data.map(x => x * 2).reduce(_ + _)
+\end{verbatim}
+
+\subsubsection*{Elasticsearch – principy distribuované indexace}
+
+\textbf{Elasticsearch} je vyhledávací engine postavený nad knihovnou \textbf{Lucene}. Umožňuje distribuované indexování a vyhledávání dokumentů.
+
+\paragraph{Základní pojmy}
+\begin{itemize}
+    \item \textbf{Cluster} – skupina uzlů, které spolupracují.
+    \item \textbf{Node} – jeden server v clusteru.
+    \item \textbf{Index} – kolekce dokumentů, podobné databázi.
+    \item \textbf{Document} – základní jednotka dat (v JSON formátu).
+    \item \textbf{Shard} – část indexu, umožňuje paralelizaci.
+    \item \textbf{Replica} – kopie shardu pro zvýšení dostupnosti a výkonu.
+\end{itemize}
+
+\paragraph{Inverzní index}
+Základní struktura pro vyhledávání v textu:
+\begin{itemize}
+    \item Umožňuje rychlé vyhledání dokumentů obsahujících určitý termín.
+    \item Místo uložení dokumentů jako celků uchovává mapování termín → seznam dokumentů.
+\end{itemize}
+
+\paragraph{Distribuované indexování}
+Při vložení dokumentu:
+\begin{itemize}
+    \item Elasticsearch podle hash funkce určí primární shard.
+    \item Dokument je indexován a distribuován mezi uzly.
+    \item Repliky jsou vytvořeny podle nastavení (např. 1 replika = 2 kopie dokumentu).
+\end{itemize}
+
+\paragraph{Dotazovací jazyk (Query DSL)}
+Elasticsearch poskytuje flexibilní dotazovací jazyk v JSON formátu:
+\begin{verbatim}
+GET /index/_search
+{
+  "query": {
+    "match": {
+      "title": "Distribuované systémy"
+    }
+  }
+}
+\end{verbatim}
+
+\paragraph{Vyhledávání ve více šardech}
+Dotaz je paralelně poslán na všechny primární a replikované shardy. Výsledky jsou agregovány a seřazeny podle relevance.
+
+\subsubsection*{Shrnutí}
+Spark a Elasticsearch představují dva zásadní přístupy k distribuovanému zpracování – Spark se zaměřuje na výpočty, zatímco Elasticsearch na indexaci a vyhledávání. Oba systémy využívají shardování, paralelismus, a odolnost vůči chybám jako základní stavební prvky distribuovaných architektur.
+

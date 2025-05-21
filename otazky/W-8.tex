@@ -1,0 +1,40 @@
+\subsection{W-8 (IDO)}
+Nástroje pro podporu tvorby softwarových produktů: Sledování chyb a správa úkolů (používané nástroje, typický životní cyklus úkolu/chyby), správa a sdílení zdrojových kódů (principy řešení spolupráce, hlavní přínosy, používané nástroje).
+
+\subsubsection*{Sledování chyb a správa úkolů}
+\begin{itemize}
+  \item \textbf{Jira} – robustní nástroj pro správu projektů a sledování chyb, často používaný v agilním vývoji (Scrum, Kanban).
+  \item \textbf{Trello/Notion} – vizuální nástroj pro jednoduchou správu úkolů s podporou drag-and-drop systému.
+  \item \textbf{Asana} – nástroj pro řízení týmových projektů s přehledným rozhraním.
+  \item \textbf{GitHub Issues / GitLab Issues} – integrované systémy správy chyb a požadavků přímo v rámci verzovacích systémů.
+  \item \textbf{Redmine, YouTrack, Bugzilla, MantisBT} – alternativy s různým rozsahem funkcí pro issue tracking.
+\end{itemize}
+
+\subsubsection*{Typický životní cyklus úkolu nebo chyby}
+\begin{enumerate}
+  \item \textbf{Zachycení (Reporting)} – uživatel nebo vývojář zadá nový úkol/chybu s popisem, prioritou, kroků k reprodukci, případně přiloží screenshoty/logy.
+  \item \textbf{Přidělení (Assignment)} – úkol je přiřazen konkrétnímu vývojáři nebo týmu.
+  \item \textbf{Analýza (Analysis)} – vývojář analyzuje problém, zhodnotí složitost, navrhne řešení.
+  \item \textbf{Implementace (Implementation)} – vývojář opraví chybu nebo implementuje požadavek.
+  \item \textbf{Testování (Testing)} – změna je testována, často automatizovaně i ručně (QA tým).
+  \item \textbf{Uzavření (Closure)} – po ověření je úkol/chyba označena jako vyřešená/zavřená.
+  \item \textbf{Reopen (případně)} – pokud chyba přetrvává, znovu se otevře.
+\end{enumerate}
+
+\subsubsection*{Principy řešení spolupráce}
+\begin{itemize}
+  \item \textbf{Verzování (Versioning)} – každá změna kódu je zaznamenána s unikátním identifikátorem (commit hash).
+  \item \textbf{Branchování (Branching)} – umožňuje paralelní vývoj funkcí, opravy chyb nebo experimenty bez narušení hlavní větve (např. \texttt{main} nebo \texttt{master}).
+  \item \textbf{Sloučení (Merging)} – sloučení změn z jedné větve do druhé, často po schválení pomocí \textbf{pull request} nebo \textbf{merge request}.
+  \item \textbf{Rebase, Squash} – techniky úpravy historie commitů před sloučením do hlavní větve.
+  \item \textbf{Code review} – mechanismus kontroly kvality, kde jiný vývojář posoudí změny před jejich začleněním.
+  \item \textbf{Continuous Integration (CI)} – automatizované testy a buildy při každé změně kódu.
+\end{itemize}
+
+\subsubsection*{Druhy Git Flows}
+\begin{itemize}
+  \item \textbf{Git Flow} – Main a Develop větve, feature branches pro nové funkce, hotfix branches pro opravy chyb.
+  \item \textbf{GitHub Flow} – jednoduchý model s main větví do které se mergují feature větve.
+  \item \textbf{GitLab Flow} – kombinuje Git Flow a GitHub Flow + má stage branche.
+  \item \textbf{Trunk Based Development} – všechny změny se provádějí přímo na hlavní větvi, časté commity.
+\end{itemize}
