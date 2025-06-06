@@ -35,6 +35,36 @@ export class CardParser {
             .replace(/\$(.+?)\$/g, (_, expr) => `\\(${expr}\\)`);
     }
 
+    private extractAndReplaceLatex(input: string): { replaced: string, map: Record<string, string> } {
+        const map: Record<string, string> = {};
+        let id = 0;
+        // Replace block LaTeX first
+        let replaced = input.replace(/\$\$(.*?)\$\$/gs, (_match, expr) => {
+            const uniqueId = crypto.randomBytes(8).toString('hex');
+            const placeholder = `LATEX_NOTATION_${uniqueId}`;
+            map[placeholder] = `$$${expr}$$`;
+            return placeholder;
+        });
+        // Then inline LaTeX
+        replaced = replaced.replace(/\$(.+?)\$/g, (_match, expr) => {
+            const uniqueId = crypto.randomBytes(8).toString('hex');
+            const placeholder = `LATEX_NOTATION_${uniqueId}`;
+            map[placeholder] = `$${expr}$`;
+            return placeholder;
+        });
+        return { replaced, map };
+    }
+
+    private restoreLatexPlaceholders(input: string, map: Record<string, string>): string {
+        let output = input;
+        for (const [placeholder, latex] of Object.entries(map)) {
+            // Only latexify the latex, not the whole content
+            let latexified = this.latexify(latex);
+            output = output.split(placeholder).join(latexified);
+        }
+        return output;
+    }
+
     private extractImagePaths(markdown: string): string[] {
         const regex = /!\[.*?\]\((.*?)\)/g;
         const paths: string[] = [];
@@ -102,14 +132,19 @@ export class CardParser {
         for (const line of lines) {
             if (line.startsWith('# ') && !line.startsWith('##')) {
                 if (currentId && front.length && back.length) {
-                    const frontContent = await marked.parse(front.join('\n'));
-                    const backContent = await marked.parse(back.join('\n'));
-                    const contentHash = this.calculateContentHash(frontContent, backContent);
-                    
+                    // Replace LaTeX with placeholders before markdown parsing
+                    const { replaced: frontWithPlaceholders, map: frontLatexMap } = this.extractAndReplaceLatex(front.join('\n'));
+                    const { replaced: backWithPlaceholders, map: backLatexMap } = this.extractAndReplaceLatex(back.join('\n'));
+                    const frontContent = await marked.parse(frontWithPlaceholders);
+                    const backContent = await marked.parse(backWithPlaceholders);
+                    const restoredFront = this.restoreLatexPlaceholders(frontContent, frontLatexMap);
+                    const restoredBack = this.restoreLatexPlaceholders(backContent, backLatexMap);
+                    const contentHash = this.calculateContentHash(restoredFront, restoredBack);
+
                     cards.push({
                         id: currentId,
-                        front: this.latexify(frontContent),
-                        back: this.latexify(backContent),
+                        front: restoredFront,
+                        back: restoredBack,
                         contentHash,
                     });
                 }
@@ -128,18 +163,22 @@ export class CardParser {
         }
 
         if (currentId && front.length && back.length) {
-            const frontContent = await marked.parse(front.join('\n'));
-            const backContent = await marked.parse(back.join('\n'));
-            const contentHash = this.calculateContentHash(frontContent, backContent);
-            
+            const { replaced: frontWithPlaceholders, map: frontLatexMap } = this.extractAndReplaceLatex(front.join('\n'));
+            const { replaced: backWithPlaceholders, map: backLatexMap } = this.extractAndReplaceLatex(back.join('\n'));
+            const frontContent = await marked.parse(frontWithPlaceholders);
+            const backContent = await marked.parse(backWithPlaceholders);
+            const restoredFront = this.restoreLatexPlaceholders(frontContent, frontLatexMap);
+            const restoredBack = this.restoreLatexPlaceholders(backContent, backLatexMap);
+            const contentHash = this.calculateContentHash(restoredFront, restoredBack);
+
             cards.push({
                 id: currentId,
-                front: this.latexify(frontContent),
-                back: this.latexify(backContent),
+                front: restoredFront,
+                back: restoredBack,
                 contentHash,
             });
         }
 
         return cards;
     }
-} 
+}

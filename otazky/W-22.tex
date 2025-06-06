@@ -1,0 +1,10 @@
+\subsection{W-22 (VWM)}
+
+Vyhledávání v multimediálních databázích, podobnostní vyhledávání podle obsahu, podobnostní dotazování, agregační operátory, indexování metrické podobnosti, aproximativní vyhledávání.
+
+\subsubsection*{Vyhledávání podle obsahu}
+
+- feature extraction - extrakce vlastností z multimediálního obsahu
+- similarity function - různé druhy pro různé typy dat
+
+Lower-bound optimalizace - do databáze se přidají Pivot body (mohou být dokumenty), u kterých se vypočítá vzdálenost nejbližších dat, pokud je vzdálenost query od pivot pointu+vzdálenost dokumentu od pivot pointu moc velká, není třeba hledat vzdálenost mezi query a dokumentem. Databáze se takhle rozdělí do "equivalence classes" a vybírají se jen třídy zasahující do zóny query.

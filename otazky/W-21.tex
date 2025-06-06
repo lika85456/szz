@@ -1,0 +1,65 @@
+\subsection{W-21 (VWM)}
+
+Techniky pro vyhledávání textových, webových a multimediálních dokumentů: modely, algoritmy, aplikace. Optimalizace webových stránek pro vyhledávače.
+
+\subsubsection*{Základní pojmy}
+
+Crawling - stahování obsahu stránek
+indexing - úprava dat do podoby, ve které se dobře vyhledává
+Searching - hledání na základě dotazu
+
+dokument - entita obsahující text
+kolekce - množina dokumentů
+
+Vyhledávání v plaintextu - obří množství dat, které je potřeba prohledat - je nutné využít index.
+
+\subsubsection*{Optimalizace indexování}
+
+- odstranění stopwords - často se opakující slova (the, is, a), ale i čísla nebo jména
+- stemming - zjednodušení slov (např. "running" na "run")
+
+\subsubsection*{Metriky vyhledávání}
+
+- effectivness - míra uspokojení uživatele s výsledky
+- precision - pravděpodobnost, že dokument ve výsledku je relevantní
+- recall - pravděpodobnost, že relevantní dokument je ve výsledku
+
+precision klesá s vyšším recallem.
+
+\subsubsection*{Boolean retrieval model}
+
+- založený na logice "dokument obsahuje nebo neobsahuje slovo"
+- dotazovatelný "jazyk" pomocí operátorů AND, OR, NOT - Caesar AND salad
+- implementováno pomocí invertovaného indexu v podobě výraz-seřazený seznam dokumentů ve kterých se vyskytuje
+
+lze optimalizovat:
+- ke každému výrazu si pamatujeme počet výskytů
+- časté výrazy se neindexují, protože by měly dlouhé seznamy
+
+výhody: jednoduché na implementaci, profesionálové (právníci) často využívají, protože ví přesně co hledají
+nevýhody: vysoká přesnost dotazu znamená nízkou efektivitu (precision a recall), dokumenty nejsou seřazené podle relevance - nemají hodnocení
+
+existuje rozšířený boolean model, který využívá score výrazů - kombinuje boolean retrieval model a vektorové vyhledávání (vzdálenosti)
+
+\subsubsection*{Vector retrieval model}
+
+- dokumenty a dotazy jsou reprezentovány jako vektory
+- euklidovská vzdálenost se nepoužívá, lepší je cosine
+- jedna z nejlepších metod vážení je TF-IDF - term frequency - inverse document frequency (čím častěji se slovo vyskytuje v dokumentu, tím je důležitější, čím méně se vyskytuje v kolekci, tím je důležitější)
+- výsledkem je matice dokumentů a výrazů, kde každý dokument je reprezentován jako vektor výrazů
+
+\subsubsection*{Latent semantic indexing}
+
+- rozšíření vektorového modelu
+- dokument je reprezentován jako vektor, ale místo výrazů se používají latentní koncepty
+- latentní koncepty jsou získány pomocí SVD (singular value decomposition)
+- SVD je metoda pro redukci dimenzí, která se používá k nalezení latentních konceptů (převede "sparse" vektory na "dense" vektory "vybráním" nejdůležitějších dimenzí)
+- výsledná matice dokumentů a konceptů je dense a menší než původní matice 
+- náročný výpočet, ale dobré výsledky pokud hledáme koncepty / významy
+
+\subsubsection*{Word2Vec}
+
+- machine learning metoda na získávání vektorových reprezentací slov (případně genů, kódu, a dalších druhů dat)
+- využívá dvě neuronové sítě
+- rychlejší než LSI, má i lepší výsledky (window contexts, not entire documents)
+- vec("king") - vec("man") + vec("woman") = vec("queen")
